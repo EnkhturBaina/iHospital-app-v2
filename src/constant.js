@@ -1,0 +1,48 @@
+export const MAIN_COLOR = "#2D8CFF"; //tapatrip main button color
+export const MAIN_COLOR_BG = "#ECF5FF"; //tapatrip main button color
+export const MAIN_COLOR_GRAY = "#F2F2F2";
+export const TEXT_COLOR_GRAY = "#616E7C";
+export const MAIN_BACKGROUND_COLOR_GRAY = "#efefef";
+export const INPUT_BORDER_RADIUS = 12;
+export const BUTTON_BORDER_RADIUS = 30;
+export const FONT_FAMILY_BOLD = "Nunito-Bold";
+export const FONT_FAMILY_LIGHT = "Nunito-Light";
+
+export const DEV_URL = "http://192.168.5.101:8000/";
+export const API_KEY =
+  "cH5BFgWYzUxUpFVjA98Cbp8UzOBqsqAJYniFMRKJCEpX6dePoMp0rfhKXUa3U1aGItLAw4s9FHbT3q3Our8yDuAhu2kMicgcqRJjnxMFhJohvT8qlpcbTu2UCLZfE1tY";
+
+export const REG_CHARS = [
+  "А",
+  "Б",
+  "В",
+  "Г",
+  "Д",
+  "Е",
+  "Ё",
+  "Ж",
+  "З",
+  "И",
+  "Й",
+  "К",
+  "Л",
+  "М",
+  "Н",
+  "О",
+  "Ө",
+  "П",
+  "Р",
+  "С",
+  "Т",
+  "У",
+  "Ү",
+  "Ф",
+  "Х",
+  "Ц",
+  "Ч",
+  "Ш",
+  "Щ",
+  "Э",
+  "Ю",
+  "Я",
+];
