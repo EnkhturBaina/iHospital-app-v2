@@ -162,7 +162,14 @@ const HomeScreen = (props) => {
         <View style={styles.menusContainer}>
           {menus.map((el, index) => {
             return (
-              <TouchableOpacity style={styles.menuItem} key={index}>
+              <TouchableOpacity
+                style={[styles.menuItem, { opacity: !el.active ? 0.3 : 1 }]}
+                key={index}
+                onPress={() =>
+                  el.nav ? props.navigation.navigate(el.nav) : null
+                }
+                disabled={!el.active}
+              >
                 <Image source={el.img} style={{ width: 25, height: 25 }} />
                 <Text style={styles.menuText}>{el.label}</Text>
               </TouchableOpacity>
