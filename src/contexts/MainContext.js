@@ -32,8 +32,8 @@ export const MainStore = (props) => {
 
   const getCustomFont = async () => {
     await Font.loadAsync({
-      "Nunito-Bold": require("../../assets/fonts/Nunito-Bold.ttf"),
-      "Nunito-Light": require("../../assets/fonts/Nunito-Light.ttf"),
+      "Inter-Bold": require("../../assets/fonts/Inter-Bold.ttf"),
+      "Inter-Light": require("../../assets/fonts/Inter-Light.ttf"),
     }).then(() => {
       getLocalUserData();
     });

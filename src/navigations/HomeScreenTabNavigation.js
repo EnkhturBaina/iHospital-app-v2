@@ -26,7 +26,7 @@ const HomeScreenTabNavigation = (props) => {
   const state = useContext(MainContext);
   if (state.isLoading) {
     return <SplashScreen />;
-  } else if (!state.isLoading && !state.isLoggedIn) {
+  } else if (!state.isLoading && state.isLoggedIn) {
     // return <LoginScreen />;
     return <LoginStackNavigator />;
   } else {
@@ -64,7 +64,7 @@ const HomeScreenTabNavigation = (props) => {
           name="MeetTab"
           component={MeetStackNavigator}
           options={{
-            tabBarLabel: "Уулзалт",
+            tabBarLabel: "Календарь",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <Icon

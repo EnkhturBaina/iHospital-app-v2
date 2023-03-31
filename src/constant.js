@@ -1,12 +1,14 @@
-export const MAIN_COLOR = "#2D8CFF"; //tapatrip main button color
-export const MAIN_COLOR_BG = "#ECF5FF"; //tapatrip main button color
+// export const MAIN_COLOR = "#2D8CFF"; //tapatrip main button color
+export const MAIN_COLOR = "#4A7FC1"; //tapatrip main button color
+
+export const MAIN_COLOR_BG = "#F7F8FA"; //tapatrip main button color
 export const MAIN_COLOR_GRAY = "#F2F2F2";
 export const TEXT_COLOR_GRAY = "#616E7C";
 export const MAIN_BACKGROUND_COLOR_GRAY = "#efefef";
 export const INPUT_BORDER_RADIUS = 12;
 export const BUTTON_BORDER_RADIUS = 30;
-export const FONT_FAMILY_BOLD = "Nunito-Bold";
-export const FONT_FAMILY_LIGHT = "Nunito-Light";
+export const FONT_FAMILY_BOLD = "Inter-Bold";
+export const FONT_FAMILY_LIGHT = "Inter-Light";
 
 export const DEV_URL = "http://192.168.5.101:8000/";
 export const API_KEY =
