@@ -15,6 +15,7 @@ import {
   MeetStackNavigator,
   BlogStackNavigator,
   ProfileStackNavigator,
+  ReferenceStackNavigator,
 } from "./MainStackNavigation";
 import MainContext from "../contexts/MainContext";
 import SplashScreen from "../screens/SplashScreen";
@@ -84,33 +85,10 @@ const HomeScreenTabNavigation = (props) => {
           }}
         />
         <Tab.Screen
-          name="HistoryTab"
-          component={HistoryStackNavigator}
-          options={{
-            tabBarLabel: "Түүх",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <Icon
-                name="hipchat"
-                type="fontisto"
-                size={25}
-                style={styles.inputIcon}
-                active={focused}
-                color={color}
-              />
-            ),
-            tabBarInactiveTintColor: TEXT_COLOR_GRAY,
-            tabBarActiveTintColor: MAIN_COLOR,
-            tabBarLabelStyle: {
-              fontFamily: FONT_FAMILY_BOLD,
-            },
-          }}
-        />
-        <Tab.Screen
           name="BlogTab"
           component={BlogStackNavigator}
           options={{
-            tabBarLabel: "Нийтлэл",
+            tabBarLabel: "Мэдээ",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <Icon
@@ -130,15 +108,15 @@ const HomeScreenTabNavigation = (props) => {
           }}
         />
         <Tab.Screen
-          name="ProfileTab"
-          component={ProfileStackNavigator}
+          name="ReferenceTab"
+          component={ReferenceStackNavigator}
           options={{
-            tabBarLabel: "Профайл",
+            tabBarLabel: "Лавлах",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <Icon
-                name="user"
-                type="font-awesome"
+                name="phone"
+                type="feather"
                 size={25}
                 style={styles.inputIcon}
                 active={focused}

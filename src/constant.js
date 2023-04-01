@@ -1,7 +1,7 @@
 // export const MAIN_COLOR = "#2D8CFF"; //tapatrip main button color
 export const MAIN_COLOR = "#4A7FC1"; //tapatrip main button color
 
-export const MAIN_COLOR_BG = "#F7F8FA"; //tapatrip main button color
+export const MAIN_COLOR_BG = "#F5F6F8"; //tapatrip main button color
 export const MAIN_COLOR_GRAY = "#F2F2F2";
 export const TEXT_COLOR_GRAY = "#616E7C";
 export const MAIN_BACKGROUND_COLOR_GRAY = "#efefef";

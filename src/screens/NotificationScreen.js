@@ -11,6 +11,7 @@ import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
+  MAIN_COLOR_BG,
   TEXT_COLOR_GRAY,
 } from "../constant";
 import { Icon } from "@rneui/base";
@@ -40,7 +41,7 @@ const NotificationScreen = (props) => {
   return (
     <ScrollView
       contentContainerStyle={{
-        backgroundColor: "#fff",
+        backgroundColor: MAIN_COLOR_BG,
         flexGrow: 1,
         paddingHorizontal: 10,
       }}

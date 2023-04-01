@@ -13,6 +13,7 @@ import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
+  MAIN_COLOR_BG,
   MAIN_COLOR_GRAY,
   TEXT_COLOR_GRAY,
 } from "../constant";
@@ -70,17 +71,34 @@ const SearchScreen = (props) => {
     return (
       <View>
         <View style={styles.searchContainer}>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+            }}
+          >
+            <Icon
+              name="search"
+              type="feather"
+              size={20}
+              color={TEXT_COLOR_GRAY}
+            />
+            <Text
+              style={{
+                fontFamily: FONT_FAMILY_BOLD,
+                color: TEXT_COLOR_GRAY,
+                marginLeft: 10,
+              }}
+            >
+              Хайх
+            </Text>
+          </View>
           <Icon
-            name="search"
+            name="sliders"
             type="feather"
             size={20}
             color={TEXT_COLOR_GRAY}
-          />
-          <TextInput
-            style={styles.searchInput}
-            onChangeText={(text) => setText(text)}
-            value={text}
-            placeholder="Хайх"
           />
         </View>
         {hospitalList.map((el, index) => {
@@ -121,17 +139,34 @@ const SearchScreen = (props) => {
     return (
       <View>
         <View style={styles.searchContainer}>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+            }}
+          >
+            <Icon
+              name="search"
+              type="feather"
+              size={20}
+              color={TEXT_COLOR_GRAY}
+            />
+            <Text
+              style={{
+                fontFamily: FONT_FAMILY_BOLD,
+                color: TEXT_COLOR_GRAY,
+                marginLeft: 10,
+              }}
+            >
+              Хайх
+            </Text>
+          </View>
           <Icon
-            name="search"
+            name="sliders"
             type="feather"
             size={20}
             color={TEXT_COLOR_GRAY}
-          />
-          <TextInput
-            style={styles.searchInput}
-            onChangeText={(text) => setText(text)}
-            value={text}
-            placeholder="Хайх"
           />
         </View>
         <TouchableOpacity
@@ -184,7 +219,7 @@ const SearchScreen = (props) => {
       <View style={{ height: 50, paddingVertical: 5 }}>
         <ScrollView
           horizontal={true}
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{ flexGrow: 1, marginHorizontal: 10 }}
           showsHorizontalScrollIndicator={false}
         >
           {menus.map((el, index) => {
@@ -195,7 +230,7 @@ const SearchScreen = (props) => {
                   styles.menuContainer,
                   {
                     backgroundColor:
-                      el.value == selectedMenu ? MAIN_COLOR : "#fff",
+                      el.value == selectedMenu ? MAIN_COLOR : "#F2F3F5",
                   },
                 ]}
                 onPress={() => setSelectedMenu(el.value)}
@@ -204,7 +239,7 @@ const SearchScreen = (props) => {
                   style={[
                     styles.menuText,
                     {
-                      color: el.value == selectedMenu ? "#fff" : MAIN_COLOR,
+                      color: el.value == selectedMenu ? "#fff" : "#4E5969",
                     },
                   ]}
                 >
@@ -231,26 +266,36 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: MAIN_COLOR_BG,
   },
   menuContainer: {
     borderRadius: 30,
-    borderColor: MAIN_COLOR,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderWidth: 1,
     marginLeft: 10,
   },
   menuText: {
-    fontFamily: FONT_FAMILY_BOLD,
+    fontFamily: FONT_FAMILY_LIGHT,
   },
   searchContainer: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: MAIN_COLOR_GRAY,
-    borderRadius: 8,
-    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    width: "100%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginBottom: 5,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    elevation: 2,
   },
   searchInput: {
     fontFamily: FONT_FAMILY_BOLD,
@@ -263,13 +308,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    elevation: 2,
     backgroundColor: "#fff",
     borderRadius: 12,
   },
@@ -301,7 +339,7 @@ const styles = StyleSheet.create({
   },
   renderContainer: {
     flexGrow: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     marginTop: 10,
     paddingBottom: 30,
   },
@@ -321,13 +359,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     paddingVertical: 10,
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    elevation: 2,
     borderRadius: 12,
     backgroundColor: "#fff",
   },

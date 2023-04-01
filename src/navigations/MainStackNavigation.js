@@ -7,6 +7,7 @@ import {
   FONT_FAMILY_BOLD,
   MAIN_BACKGROUND_COLOR_GRAY,
   MAIN_COLOR,
+  MAIN_COLOR_BG,
 } from "../constant";
 import HomeScreen from "../screens/HomeScreen";
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -41,6 +42,8 @@ import RegisterScreen from "../screens/RegisterScreen";
 import BlogDtlScreen from "../screens/Blog/BlogDtlScreen";
 import NotificationDtlScreen from "../screens/NotificationDtlScreen";
 import ChatScreen from "../screens/Chat/ChatScreen";
+import BannerScreen from "../screens/BannerScreen";
+import ReferenceScreen from "../screens/ReferenceScreen";
 
 const Stack = createStackNavigator();
 
@@ -206,10 +209,9 @@ const MainStackNavigator = (props) => {
         options={{
           title: "",
           headerStyle: {
-            backgroundColor: MAIN_BACKGROUND_COLOR_GRAY,
-            borderBottomWidth: 0,
-            shadowColor: "transparent", // this covers iOS
-            backgroundColor: "#fff",
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
           },
           headerLeft: () => (
             <TouchableOpacity
@@ -218,8 +220,8 @@ const MainStackNavigator = (props) => {
                 props.navigation.goBack();
               }}
             >
-              <Icon type="feather" name="chevron-left" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Хайх</Text>
             </TouchableOpacity>
           ),
         }}
@@ -302,10 +304,9 @@ const MainStackNavigator = (props) => {
         options={{
           title: "",
           headerStyle: {
-            backgroundColor: MAIN_BACKGROUND_COLOR_GRAY,
-            borderBottomWidth: 0,
-            shadowColor: "transparent", // this covers iOS
-            backgroundColor: "#fff",
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
           },
           headerLeft: () => (
             <TouchableOpacity
@@ -314,8 +315,8 @@ const MainStackNavigator = (props) => {
                 props.navigation.goBack();
               }}
             >
-              <Icon type="feather" name="chevron-left" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Мэдэгдэл</Text>
             </TouchableOpacity>
           ),
         }}
@@ -489,6 +490,29 @@ const MainStackNavigator = (props) => {
           ),
         }}
       />
+      <Stack.Screen
+        name="BannerScreen"
+        component={BannerScreen}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.headerLeftContainer}
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            >
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Баннер</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -538,10 +562,9 @@ const BlogStackNavigator = (props) => {
         options={{
           title: "",
           headerStyle: {
-            backgroundColor: MAIN_BACKGROUND_COLOR_GRAY,
-            borderBottomWidth: 0,
-            shadowColor: "transparent", // this covers iOS
-            backgroundColor: "#fff",
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
           },
           headerLeft: () => (
             <TouchableOpacity
@@ -550,8 +573,8 @@ const BlogStackNavigator = (props) => {
                 props.navigation.navigate("BlogScreen");
               }}
             >
-              <Icon type="feather" name="chevron-left" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Мэдээ</Text>
             </TouchableOpacity>
           ),
         }}
@@ -660,10 +683,24 @@ const ProfileStackNavigator = (props) => {
                 props.navigation.navigate("ProfileScreen");
               }}
             >
-              <Icon type="feather" name="chevron-left" />
+              <Icon type="feather" name="chevron-left" color="#fff" />
               <Text style={styles.headerLeftText}>Буцах</Text>
             </TouchableOpacity>
           ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+const ReferenceStackNavigator = (props) => {
+  return (
+    <Stack.Navigator initialRouteName="ProfileScreen">
+      <Stack.Screen
+        name="ReferenceScreen"
+        component={ReferenceScreen}
+        options={{
+          title: "",
+          headerShown: false,
         }}
       />
     </Stack.Navigator>
@@ -676,6 +713,7 @@ export {
   HistoryStackNavigator,
   BlogStackNavigator,
   ProfileStackNavigator,
+  ReferenceStackNavigator,
 };
 
 const styles = StyleSheet.create({
@@ -683,11 +721,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
   },
   headerLeftText: {
     marginLeft: 10,
     fontFamily: FONT_FAMILY_BOLD,
-    fontSize: 20,
-    width: "100%",
+    fontSize: 16,
+    color: "#fff",
+    textAlign: "center",
   },
 });

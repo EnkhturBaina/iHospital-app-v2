@@ -22,6 +22,7 @@ import {
 } from "../../constant";
 import { Icon } from "@rneui/base";
 import Carousel from "react-native-reanimated-carousel";
+import HeaderUser from "../../components/HeaderUser";
 
 const BlogScreen = (props) => {
   const [text, setText] = useState("");
@@ -47,24 +48,37 @@ const BlogScreen = (props) => {
 
   return (
     <View style={styles.mainContainer}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <HeaderUser isContent={true} />
+      <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
         <View style={styles.searchContainer}>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+            }}
+          >
+            <Icon
+              name="search"
+              type="feather"
+              size={20}
+              color={TEXT_COLOR_GRAY}
+            />
+            <Text
+              style={{
+                fontFamily: FONT_FAMILY_BOLD,
+                color: TEXT_COLOR_GRAY,
+                marginLeft: 10,
+              }}
+            >
+              Хайх
+            </Text>
+          </View>
           <Icon
-            name="search"
+            name="sliders"
             type="feather"
             size={20}
             color={TEXT_COLOR_GRAY}
-          />
-          <TextInput
-            style={{
-              fontFamily: FONT_FAMILY_BOLD,
-              color: TEXT_COLOR_GRAY,
-              marginLeft: 10,
-              width: "90%",
-            }}
-            onChangeText={(text) => setText(text)}
-            value={text}
-            placeholder="Хайх"
           />
         </View>
         <Carousel
@@ -167,17 +181,28 @@ export default BlogScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flexGrow: 1,
-    backgroundColor: "#fff",
-    paddingHorizontal: 10,
-    paddingTop: 10,
+    backgroundColor: MAIN_COLOR_BG,
   },
   searchContainer: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: MAIN_COLOR_GRAY,
-    borderRadius: 8,
-    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    width: "95%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: -50,
+    marginBottom: 5,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    elevation: 2,
   },
   blogScrollContainer: {
     flexGrow: 1,

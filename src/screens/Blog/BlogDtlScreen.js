@@ -105,9 +105,8 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: MAIN_COLOR_BG,
     paddingHorizontal: 20,
-    paddingBottom: 20,
   },
   topInfo: {
     flexDirection: "row",

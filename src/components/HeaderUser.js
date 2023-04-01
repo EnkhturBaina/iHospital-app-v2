@@ -12,15 +12,22 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import MainContext from "../contexts/MainContext";
 
-const HeaderUser = () => {
+const HeaderUser = ({ isContent }) => {
   const navigation = useNavigation();
   const state = useContext(MainContext);
   return (
-    <View style={styles.headerContainer}>
+    <View
+      style={[
+        styles.headerContainer,
+        {
+          height: isContent ? 110 : 80,
+        },
+      ]}
+    >
       <View style={styles.stack1}>
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center" }}
-          onPress={() => navigation.navigate("ProfileTab")}
+          onPress={() => navigation.navigate("ProfileScreen")}
         >
           <View>
             <Image
@@ -78,7 +85,6 @@ const styles = StyleSheet.create({
     backgroundColor: MAIN_COLOR,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
-    height: 110,
     marginBottom: 20,
     alignItems: "center",
   },

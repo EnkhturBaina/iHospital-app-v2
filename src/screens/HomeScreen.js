@@ -95,7 +95,7 @@ const HomeScreen = (props) => {
     >
       <MyStatusBar backgroundColor={MAIN_COLOR} barStyle="light-content" />
 
-      <HeaderUser />
+      <HeaderUser isContent={true} />
       <TouchableOpacity
         style={styles.searchContainer}
         activeOpacity={1}
@@ -141,7 +141,9 @@ const HomeScreen = (props) => {
             <TouchableOpacity
               activeOpacity={0.6}
               key={index}
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate("BannerScreen");
+              }}
               style={{ flex: 1 }}
             >
               <Image
@@ -230,7 +232,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: MAIN_COLOR_GRAY,
+    backgroundColor: "#fff",
     borderRadius: 12,
     paddingVertical: 15,
     paddingHorizontal: 20,
@@ -254,7 +256,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     width: "48%",
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     shadowOpacity: 0.2,
     shadowRadius: 3,
     shadowOffset: {
@@ -270,6 +272,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
     fontWeight: "500",
+    lineHeight: 14,
   },
   newsScrollContainer: {
     paddingVertical: 5,
@@ -295,8 +298,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 12,
   },
   newsText: {
-    padding: 5,
+    padding: 10,
     fontFamily: FONT_FAMILY_LIGHT,
+    fontSize: 12,
   },
   seeAll: {
     fontFamily: FONT_FAMILY_LIGHT,
