@@ -513,52 +513,9 @@ const MainStackNavigator = (props) => {
           ),
         }}
       />
-    </Stack.Navigator>
-  );
-};
-
-const MeetStackNavigator = (props) => {
-  return (
-    <Stack.Navigator initialRouteName="MeetNavTab">
       <Stack.Screen
-        name="MeetNavTab"
-        component={MeetScreen}
-        options={{
-          title: "",
-          headerShown: false,
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-const HistoryStackNavigator = (props) => {
-  return (
-    <Stack.Navigator initialRouteName="HistoryNavTab">
-      <Stack.Screen
-        name="HistoryNavTab"
-        component={HistoryScreen}
-        options={{
-          title: "",
-          headerShown: false,
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-const BlogStackNavigator = (props) => {
-  return (
-    <Stack.Navigator initialRouteName="BlogScreen">
-      <Stack.Screen
-        name="BlogScreen"
-        component={BlogScreen}
-        options={{
-          title: "",
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="BlogDtlScreen"
-        component={BlogDtlScreen}
+        name="ProfileScreen"
+        component={ProfileScreen}
         options={{
           title: "",
           headerStyle: {
@@ -570,27 +527,13 @@ const BlogStackNavigator = (props) => {
             <TouchableOpacity
               style={styles.headerLeftContainer}
               onPress={() => {
-                props.navigation.navigate("BlogScreen");
+                props.navigation.goBack();
               }}
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
-              <Text style={styles.headerLeftText}>Мэдээ</Text>
+              <Text style={styles.headerLeftText}>Профайл</Text>
             </TouchableOpacity>
           ),
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
-const ProfileStackNavigator = (props) => {
-  return (
-    <Stack.Navigator initialRouteName="ProfileScreen">
-      <Stack.Screen
-        name="ProfileScreen"
-        component={ProfileScreen}
-        options={{
-          title: "",
-          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -599,20 +542,19 @@ const ProfileStackNavigator = (props) => {
         options={{
           title: "",
           headerStyle: {
-            backgroundColor: MAIN_BACKGROUND_COLOR_GRAY,
-            borderBottomWidth: 0,
-            shadowColor: "transparent", // this covers iOS
-            backgroundColor: "#fff",
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
           },
           headerLeft: () => (
             <TouchableOpacity
               style={styles.headerLeftContainer}
               onPress={() => {
-                props.navigation.navigate("ProfileScreen");
+                props.navigation.goBack();
               }}
             >
-              <Icon type="feather" name="chevron-left" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Профайл засах</Text>
             </TouchableOpacity>
           ),
         }}
@@ -691,6 +633,75 @@ const ProfileStackNavigator = (props) => {
       />
     </Stack.Navigator>
   );
+};
+
+const MeetStackNavigator = (props) => {
+  return (
+    <Stack.Navigator initialRouteName="MeetNavTab">
+      <Stack.Screen
+        name="MeetNavTab"
+        component={MeetScreen}
+        options={{
+          title: "",
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+const HistoryStackNavigator = (props) => {
+  return (
+    <Stack.Navigator initialRouteName="HistoryNavTab">
+      <Stack.Screen
+        name="HistoryNavTab"
+        component={HistoryScreen}
+        options={{
+          title: "",
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+const BlogStackNavigator = (props) => {
+  return (
+    <Stack.Navigator initialRouteName="BlogScreen">
+      <Stack.Screen
+        name="BlogScreen"
+        component={BlogScreen}
+        options={{
+          title: "",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="BlogDtlScreen"
+        component={BlogDtlScreen}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.headerLeftContainer}
+              onPress={() => {
+                props.navigation.navigate("BlogScreen");
+              }}
+            >
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Мэдээ</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+const ProfileStackNavigator = (props) => {
+  return <Stack.Navigator initialRouteName="ProfileScreen"></Stack.Navigator>;
 };
 const ReferenceStackNavigator = (props) => {
   return (

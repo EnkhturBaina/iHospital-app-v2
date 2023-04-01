@@ -12,6 +12,8 @@ import avatar from "../../assets/avatar.png";
 import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
+  MAIN_COLOR,
+  MAIN_COLOR_BG,
   TEXT_COLOR_GRAY,
 } from "../constant";
 import { Icon } from "@rneui/base";
@@ -32,13 +34,13 @@ const ProfileScreen = (props) => {
           style={{
             flexDirection: "column",
             alignItems: "center",
-            marginTop: 50,
+            marginVertical: 20,
           }}
         >
           <Image
             source={avatar}
             resizeMode="contain"
-            style={{ width: 140, height: 140, borderRadius: 280 }}
+            style={styles.avatarStyle}
           />
           <Text
             style={{
@@ -57,69 +59,95 @@ const ProfileScreen = (props) => {
             ID дугаар: {state.userData ? state.userData?.id : null}
           </Text>
         </View>
-        <Divider style={{ marginTop: 10 }} />
+        <View style={styles.infoContainer}>
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>И-мэйл</Text>
+            <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#86909C" }}>
+              tuul123@email.com
+            </Text>
+          </View>
+          <Divider orientation="vertical" />
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>Утасны дугаар</Text>
+            <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#86909C" }}>
+              (+976) 8803-2985
+            </Text>
+          </View>
+        </View>
+        <TouchableOpacity style={styles.resultContainer}>
+          <Text style={{ fontSize: 18, color: "#fff" }}>
+            Шинжилгээ/Оношилгооны хариу
+          </Text>
+        </TouchableOpacity>
         <View style={styles.menuContainer}>
           <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("EditUserDataScreen")}
           >
             <View style={styles.stack1}>
-              <Icon
-                name="user-o"
-                type="font-awesome"
-                style={{ marginRight: 5 }}
-              />
               <Text style={styles.cardText}>Профайл засах</Text>
             </View>
-            <Icon name="keyboard-arrow-right" type="material-icons" />
+            <Icon
+              name="keyboard-arrow-right"
+              type="material-icons"
+              color="#86909C"
+            />
           </TouchableOpacity>
+          <Divider style={{ marginHorizontal: 20 }} />
           <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("AccountScreen")}
           >
             <View style={styles.stack1}>
-              <Icon
-                name="newspaper-outline"
-                type="ionicon"
-                style={{ marginRight: 5 }}
-              />
               <Text style={styles.cardText}>Дансны мэдээлэл</Text>
             </View>
-            <Icon name="keyboard-arrow-right" type="material-icons" />
+            <Icon
+              name="keyboard-arrow-right"
+              type="material-icons"
+              color="#86909C"
+            />
           </TouchableOpacity>
+          <Divider style={{ marginHorizontal: 20 }} />
           <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("PrivacyScreen")}
           >
             <View style={styles.stack1}>
-              <Icon
-                name="shield-check"
-                type="octicon"
-                style={{ marginRight: 5 }}
-              />
               <Text style={styles.cardText}>Нууцлал</Text>
             </View>
-            <Icon name="keyboard-arrow-right" type="material-icons" />
+            <Icon
+              name="keyboard-arrow-right"
+              type="material-icons"
+              color="#86909C"
+            />
           </TouchableOpacity>
+          <Divider style={{ marginHorizontal: 20 }} />
           <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("QAScreen")}
           >
             <View style={styles.stack1}>
-              <Icon name="question" type="octicon" style={{ marginRight: 5 }} />
               <Text style={styles.cardText}>Түгээмэл асуулт</Text>
             </View>
-            <Icon name="keyboard-arrow-right" type="material-icons" />
+            <Icon
+              name="keyboard-arrow-right"
+              type="material-icons"
+              color="#86909C"
+            />
           </TouchableOpacity>
+          <Divider style={{ marginHorizontal: 20 }} />
           <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => setVisibleDialog(true)}
           >
             <View style={styles.stack1}>
-              <Icon name="log-out" type="feather" style={{ marginRight: 5 }} />
-              <Text style={styles.cardText}>Системээс гарах</Text>
+              <Text style={styles.cardTextLogout}>Системээс гарах</Text>
             </View>
-            <Icon name="keyboard-arrow-right" type="material-icons" />
+            <Icon
+              name="keyboard-arrow-right"
+              type="material-icons"
+              color="#86909C"
+            />
           </TouchableOpacity>
         </View>
 
@@ -147,11 +175,14 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: MAIN_COLOR_BG,
     paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   menuContainer: {
     marginTop: 10,
+    borderRadius: 12,
+    backgroundColor: "#fff",
   },
   profileMenuContainer: {
     height: 50,
@@ -170,5 +201,36 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY_BOLD,
     marginLeft: 10,
   },
-  stack1: { flexDirection: "row", alignItems: "center" },
+  cardTextLogout: {
+    fontFamily: FONT_FAMILY_BOLD,
+    marginLeft: 10,
+    color: "red",
+  },
+  stack1: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  avatarStyle: {
+    width: 140,
+    height: 140,
+    borderRadius: 280,
+    borderColor: MAIN_COLOR,
+    borderWidth: 3,
+  },
+  infoContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    borderRadius: 14,
+    alignItems: "center",
+    height: 60,
+    backgroundColor: "#fff",
+    marginBottom: 10,
+  },
+  resultContainer: {
+    backgroundColor: MAIN_COLOR,
+    borderRadius: 14,
+    alignItems: "center",
+    height: 50,
+    justifyContent: "center",
+  },
 });
