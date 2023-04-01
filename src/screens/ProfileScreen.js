@@ -21,7 +21,6 @@ import { Divider } from "react-native-paper";
 import CustomDialog from "../components/CustomDialog";
 import MainContext from "../contexts/MainContext";
 import { useNavigation } from "@react-navigation/native";
-
 const ProfileScreen = (props) => {
   const state = useContext(MainContext);
   const navigation = useNavigation();
