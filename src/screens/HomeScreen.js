@@ -1,18 +1,16 @@
 import {
   ScrollView,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
   Text,
   View,
   Image,
   Platform,
   NativeModules,
-  StatusBar,
   Dimensions,
 } from "react-native";
 const { StatusBarManager } = NativeModules;
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import MainContext from "../contexts/MainContext";
 import { Icon } from "@rneui/base";
 import {
@@ -20,12 +18,12 @@ import {
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
   MAIN_COLOR_BG,
-  MAIN_COLOR_GRAY,
   TEXT_COLOR_GRAY,
 } from "../constant";
 import HeaderUser from "../components/HeaderUser";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Carousel from "react-native-reanimated-carousel";
+import MyStatusBar from "../components/CustomStatusBar";
 
 const HomeScreen = (props) => {
   const state = useContext(MainContext);
@@ -77,13 +75,6 @@ const HomeScreen = (props) => {
   ];
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
-  const MyStatusBar = ({ backgroundColor, ...props }) => (
-    <View style={[styles.statusBar, { backgroundColor }]}>
-      <SafeAreaView>
-        <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-      </SafeAreaView>
-    </View>
-  );
 
   return (
     <SafeAreaProvider

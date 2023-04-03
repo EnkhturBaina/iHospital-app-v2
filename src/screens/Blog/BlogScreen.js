@@ -5,11 +5,12 @@ import {
   View,
   TouchableOpacity,
   Image,
-  TextInput,
+  Platform,
   SafeAreaView,
   Dimensions,
   ImageBackground,
   RefreshControl,
+  NativeModules,
 } from "react-native";
 import React, { useRef, useState, useCallback } from "react";
 import {
@@ -23,6 +24,9 @@ import {
 import { Icon } from "@rneui/base";
 import Carousel from "react-native-reanimated-carousel";
 import HeaderUser from "../../components/HeaderUser";
+import MyStatusBar from "../../components/CustomStatusBar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+const { StatusBarManager } = NativeModules;
 
 const BlogScreen = (props) => {
   const [text, setText] = useState("");
@@ -47,7 +51,14 @@ const BlogScreen = (props) => {
   const height = Dimensions.get("window").height;
 
   return (
-    <View style={styles.mainContainer}>
+    <SafeAreaProvider
+      style={{
+        flexGrow: 1,
+        paddingTop: Platform.OS === "android" ? StatusBarManager.HEIGHT : 0,
+        backgroundColor: MAIN_COLOR_BG,
+      }}
+    >
+      <MyStatusBar backgroundColor={MAIN_COLOR} barStyle="light-content" />
       <HeaderUser isContent={true} />
       <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
         <View style={styles.searchContainer}>
@@ -172,7 +183,7 @@ const BlogScreen = (props) => {
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
-    </View>
+    </SafeAreaProvider>
   );
 };
 

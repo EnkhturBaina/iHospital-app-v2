@@ -14,13 +14,13 @@ import {
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
   MAIN_COLOR_BG,
-  TEXT_COLOR_GRAY,
 } from "../constant";
 import { Icon } from "@rneui/base";
 import { Divider } from "react-native-paper";
 import CustomDialog from "../components/CustomDialog";
 import MainContext from "../contexts/MainContext";
 import { useNavigation } from "@react-navigation/native";
+
 const ProfileScreen = (props) => {
   const state = useContext(MainContext);
   const navigation = useNavigation();
@@ -65,7 +65,7 @@ const ProfileScreen = (props) => {
               tuul123@email.com
             </Text>
           </View>
-          <Divider orientation="vertical" />
+          <Divider orientation="vertical" style={{ width: 1, height: "60%" }} />
           <View style={{ alignItems: "center" }}>
             <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>Утасны дугаар</Text>
             <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#86909C" }}>
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginHorizontal: 10,
-    marginBottom: 10,
+    marginLeft: 10,
+    marginRight: 15,
   },
   icon: {
     height: 40,
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   cardText: {
-    fontFamily: FONT_FAMILY_BOLD,
+    fontFamily: FONT_FAMILY_LIGHT,
     marginLeft: 10,
   },
   cardTextLogout: {

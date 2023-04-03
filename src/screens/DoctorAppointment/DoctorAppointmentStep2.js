@@ -15,6 +15,8 @@ import {
   FONT_FAMILY_BOLD,
   MAIN_COLOR,
   MAIN_COLOR_BG,
+  MONTHS,
+  WEEKDAYS,
 } from "../../constant";
 import { Button } from "@rneui/base";
 import CalendarPicker from "react-native-calendar-picker";
@@ -26,22 +28,6 @@ const DoctorAppointmentStep2 = () => {
 
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
-
-  const WEEKDAYS = ["Да", "Мя", "Лх", "Пү", "Ба", "Бя", "Ня"];
-  const MONTHS = [
-    "1 сар",
-    "2 сар",
-    "3 сар",
-    "4 сар",
-    "5 сар",
-    "6 сар",
-    "7 сар",
-    "8 сар",
-    "9 сар",
-    "10 сар",
-    "11 сар",
-    "12 сар",
-  ];
 
   const onDateChange = (date) => {
     var temp_date = new Date(date);

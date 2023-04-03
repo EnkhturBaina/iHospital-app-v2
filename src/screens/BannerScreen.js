@@ -13,6 +13,7 @@ import Carousel from "react-native-reanimated-carousel";
 import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
+  MAIN_BACKGROUND_COLOR_GRAY,
   MAIN_COLOR,
   MAIN_COLOR_BG,
   TEXT_COLOR_GRAY,
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     height: 35,
     width: "32%",
     textAlign: "center",
-    backgroundColor: "#E5E6EB",
+    backgroundColor: MAIN_BACKGROUND_COLOR_GRAY,
     color: "#86909C",
     overflow: "hidden",
     alignItems: "center",

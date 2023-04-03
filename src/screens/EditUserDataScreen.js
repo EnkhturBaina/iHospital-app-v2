@@ -11,14 +11,9 @@ import {
   Image,
 } from "react-native";
 import React, { useState, useRef, useContext } from "react";
-import {
-  BUTTON_BORDER_RADIUS,
-  MAIN_COLOR,
-  REG_CHARS,
-  MAIN_COLOR_BG,
-} from "../constant";
+import { MAIN_COLOR, REG_CHARS, MAIN_COLOR_BG } from "../constant";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { Button, Icon } from "@rneui/base";
+import { Button } from "@rneui/base";
 import BottomSheetReg from "../components/BottomSheetReg";
 import CustomSnackbar from "../components/CustomSnackbar";
 import CustomDialog from "../components/CustomDialog";
@@ -229,7 +224,7 @@ const EditUserDataScreen = () => {
             </>
           }
           color={MAIN_COLOR}
-          radius={BUTTON_BORDER_RADIUS}
+          radius={12}
           onPress={() => {}}
           titleStyle={{
             fontWeight: "bold",
@@ -279,14 +274,12 @@ const styles = StyleSheet.create({
   btnContainer: {
     marginRight: "auto",
     marginLeft: "auto",
-    marginTop: 20,
     width: "100%",
   },
   sectionStyle: {
     flexDirection: "row",
     alignItems: "center",
-    height: 56,
-    borderRadius: BUTTON_BORDER_RADIUS,
+    height: 50,
     marginRight: "auto",
     marginLeft: "auto",
     width: "100%",
@@ -305,7 +298,7 @@ const styles = StyleSheet.create({
   },
   regCharOpacity: {
     height: 50,
-    borderRadius: 14,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
     width: 50,
@@ -319,7 +312,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     width: "100%",
     height: 50,
-    marginVertical: 10,
+    marginBottom: 10,
   },
   onlyRegNum: {
     borderRadius: 12,
@@ -333,11 +326,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   avatarStyle: {
-    width: 140,
-    height: 140,
+    width: 160,
+    height: 160,
     borderRadius: 280,
     borderColor: MAIN_COLOR,
-    borderWidth: 3,
+    borderWidth: 5,
     alignSelf: "center",
+    marginVertical: 10,
   },
 });

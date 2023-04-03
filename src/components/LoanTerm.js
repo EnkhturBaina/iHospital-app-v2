@@ -23,10 +23,7 @@ export default function (props) {
   const screen = Dimensions.get("screen");
   return (
     <View style={styles.termSection}>
-      <TouchableOpacity
-        style={styles.termContainer}
-        onPress={() => refRBSheet.current.open()}
-      >
+      <View style={styles.termContainer}>
         <CheckBox
           containerStyle={{
             marginLeft: 0,
@@ -37,27 +34,28 @@ export default function (props) {
             position: "absolute",
           }}
           title=""
-          disabled
           iconType="material-community"
           checkedIcon="checkbox-outline"
           uncheckedIcon="checkbox-blank-outline"
           checked={state.termCheck}
-          onPress={() => refRBSheet.current.open()}
+          onPress={() => state.setTermCheck(!state.termCheck)}
           checkedColor={MAIN_COLOR}
           uncheckedColor={MAIN_COLOR}
           size={30}
         />
-        <Text
-          style={{
-            fontFamily: FONT_FAMILY_LIGHT,
-            width: "90%",
-            paddingTop: 10,
-            marginLeft: 10,
-          }}
-        >
-          Үйлчилгээний нөхцөл зөвшөөрөх
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => refRBSheet.current.open()}>
+          <Text
+            style={{
+              fontFamily: FONT_FAMILY_LIGHT,
+              width: "100%",
+              paddingTop: 10,
+              marginLeft: 10,
+            }}
+          >
+            Үйлчилгээний нөхцөл зөвшөөрөх
+          </Text>
+        </TouchableOpacity>
+      </View>
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}

@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  NativeModules,
+} from "react-native";
 import React from "react";
 import {
   FONT_FAMILY_BOLD,
@@ -8,10 +15,20 @@ import {
 } from "../constant";
 import { Icon } from "@rneui/base";
 import HeaderUser from "../components/HeaderUser";
+import MyStatusBar from "../components/CustomStatusBar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+const { StatusBarManager } = NativeModules;
 
 export default function ReferenceScreen() {
   return (
-    <View style={{ flex: 1, backgroundColor: MAIN_COLOR_BG }}>
+    <SafeAreaProvider
+      style={{
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBarManager.HEIGHT : 0,
+        backgroundColor: MAIN_COLOR_BG,
+      }}
+    >
+      <MyStatusBar backgroundColor={MAIN_COLOR} barStyle="light-content" />
       <HeaderUser isContent={false} />
       <TouchableOpacity style={styles.cardContainer}>
         <View
@@ -61,7 +78,7 @@ export default function ReferenceScreen() {
           style={styles.iconStyle}
         />
       </TouchableOpacity>
-    </View>
+    </SafeAreaProvider>
   );
 }
 

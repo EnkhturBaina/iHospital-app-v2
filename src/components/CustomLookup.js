@@ -17,9 +17,10 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1,
     borderColor: MAIN_COLOR_GRAY,
-    borderRadius: 8,
+    borderRadius: 12,
     paddingLeft: 15,
     paddingRight: 10,
+    marginBottom: 10,
   },
   textInput: {
     fontFamily: FONT_FAMILY_LIGHT,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
 
 const CustomLookup = ({ label, value, press, disabled }) => (
   <View style={styles.container}>
-    <Text style={styles.label}>{label}</Text>
+    {label ? <Text style={styles.label}>{label}</Text> : null}
     <TouchableOpacity
       style={[
         styles.containerTouchable,

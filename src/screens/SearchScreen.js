@@ -12,6 +12,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
+  MAIN_BACKGROUND_COLOR_GRAY,
   MAIN_COLOR,
   MAIN_COLOR_BG,
   MAIN_COLOR_GRAY,
@@ -19,6 +20,7 @@ import {
 } from "../constant";
 import avatar from "../../assets/avatar.png";
 import hospital from "../../assets/hospital.png";
+import hospitalAvatar from "../../assets/hospitalAvatar.png";
 import { Divider } from "react-native-paper";
 import { Icon } from "@rneui/base";
 
@@ -110,7 +112,7 @@ const SearchScreen = (props) => {
               activeOpacity={0.6}
             >
               <Image
-                source={hospital}
+                source={hospitalAvatar}
                 resizeMode="contain"
                 style={styles.logo}
               />
@@ -230,7 +232,9 @@ const SearchScreen = (props) => {
                   styles.menuContainer,
                   {
                     backgroundColor:
-                      el.value == selectedMenu ? MAIN_COLOR : "#F2F3F5",
+                      el.value == selectedMenu
+                        ? MAIN_COLOR
+                        : MAIN_BACKGROUND_COLOR_GRAY,
                   },
                 ]}
                 onPress={() => setSelectedMenu(el.value)}
@@ -363,9 +367,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   logo: {
-    width: 30,
-    height: 30,
-    marginHorizontal: 20,
+    width: 50,
+    height: 50,
+    marginHorizontal: 10,
   },
   title: {
     fontFamily: FONT_FAMILY_BOLD,
