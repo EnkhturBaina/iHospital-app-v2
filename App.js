@@ -10,8 +10,8 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <MainStore>
-          {/* <MainDrawerNavigation /> */}
-          <HomeScreenTabNavigation />
+          <MainDrawerNavigation />
+          {/* <HomeScreenTabNavigation /> */}
         </MainStore>
       </NavigationContainer>
     </SafeAreaProvider>

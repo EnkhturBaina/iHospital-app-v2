@@ -29,6 +29,7 @@ import google from "../../assets/google.png";
 import apple from "../../assets/apple.png";
 import { useHeaderHeight } from "@react-navigation/elements";
 import CustomSnackbar from "../components/CustomSnackbar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = (props) => {
   const state = useContext(MainContext);
@@ -56,6 +57,14 @@ const LoginScreen = (props) => {
   const hideShowPassword = () => {
     setHidePassword(!hidePassword);
   };
+  useEffect(() => {
+    AsyncStorage.getItem("login_email").then((res) => {
+      if (res != null) {
+        state.setEmail(res);
+        state.setRememberEmail(true);
+      }
+    });
+  }, []);
 
   const login = () => {
     if (state.email == "") {

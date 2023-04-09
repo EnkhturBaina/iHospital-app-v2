@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const QAScreen = () => {
+const LanguageScreen = () => {
   return (
     <View>
-      <Text>QAScreen</Text>
+      <Text>LanguageScreen</Text>
     </View>
   );
 };
 
-export default QAScreen;
+export default LanguageScreen;
 
 const styles = StyleSheet.create({});

@@ -108,7 +108,8 @@ export default function IntroSliderScreen(props) {
         activeDotStyle={styles.activeDotStyle}
         showSkipButton
         onDone={() => {
-          state.setIsIntroShow(false), props.navigation.navigate("LoginScreen");
+          state.setIsIntroShow(false);
+          props.navigation.navigate("LoginScreen");
         }}
       />
       <View style={styles.checkShow}>

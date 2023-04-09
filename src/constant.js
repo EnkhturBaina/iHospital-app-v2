@@ -10,7 +10,7 @@ export const BUTTON_BORDER_RADIUS = 30;
 export const FONT_FAMILY_BOLD = "Inter-Bold";
 export const FONT_FAMILY_LIGHT = "Inter-Light";
 
-export const DEV_URL = "http://192.168.5.101:8000/";
+export const DEV_URL = "http://192.168.5.103:8000/";
 export const API_KEY =
   "cH5BFgWYzUxUpFVjA98Cbp8UzOBqsqAJYniFMRKJCEpX6dePoMp0rfhKXUa3U1aGItLAw4s9FHbT3q3Our8yDuAhu2kMicgcqRJjnxMFhJohvT8qlpcbTu2UCLZfE1tY";
 

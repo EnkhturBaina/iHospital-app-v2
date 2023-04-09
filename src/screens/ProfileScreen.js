@@ -98,7 +98,7 @@ const ProfileScreen = (props) => {
             onPress={() => props.navigation.navigate("AccountScreen")}
           >
             <View style={styles.stack1}>
-              <Text style={styles.cardText}>Дансны мэдээлэл</Text>
+              <Text style={styles.cardText}>И-Баримтны хялбар бүртгэл</Text>
             </View>
             <Icon
               name="keyboard-arrow-right"
@@ -123,10 +123,10 @@ const ProfileScreen = (props) => {
           <Divider style={{ marginHorizontal: 20 }} />
           <TouchableOpacity
             style={styles.profileMenuContainer}
-            onPress={() => props.navigation.navigate("QAScreen")}
+            onPress={() => props.navigation.navigate("LanguageScreen")}
           >
             <View style={styles.stack1}>
-              <Text style={styles.cardText}>Түгээмэл асуулт</Text>
+              <Text style={styles.cardText}>Хэл солих (Монгол хэл MN)</Text>
             </View>
             <Icon
               name="keyboard-arrow-right"

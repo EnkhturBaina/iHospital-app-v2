@@ -39,7 +39,7 @@ export const MainStore = (props) => {
     });
   };
 
-  const login = async (email, password, rememberEmail) => {
+  const login = async (userName, password, rememberEmail) => {
     //***** Нэвтрэх
     setIsLoading(true);
     await axios({
@@ -49,27 +49,36 @@ export const MainStore = (props) => {
         "X-API-KEY": API_KEY,
       },
       data: {
-        email: email,
-        password: password,
+        email: userName,
+        password,
       },
     })
       .then(async (response) => {
+        if (rememberEmail) {
+          //Нэвтрэх нэр сануулах CHECK хийсэн үед тухайн утсан дээр EMAIL хагалах
+          await AsyncStorage.setItem("login_email", userName);
+        } else {
+          //Нэвтрэх нэр сануулах UNCHECK хийсэн үед тухайн утсан дээрээс EMAIL устгах
+          await AsyncStorage.removeItem("login_email");
+        }
         // console.log("responee login", response.data);
         if (response.status == 200) {
           setLoginError("");
           //*** access token хадгалах
-          AsyncStorage.setItem(
-            "accessToken",
-            response.data.response.accessToken
-          );
-          //*** refresh token хадгалах
-          AsyncStorage.setItem(
+          await AsyncStorage.setItem(
             "refreshToken",
             response.data.response.refreshToken
-          );
-          setAccessToken(response.data.response.accessToken);
-          setRefreshToken(response.data.response.refreshToken);
-          getProfileData(response.data.response.accessToken);
+          ).then(async () => {
+            setRefreshToken(response.data.response.refreshToken);
+            //*** refresh token хадгалах
+            await AsyncStorage.setItem(
+              "accessToken",
+              response.data.response.accessToken
+            ).then(() => {
+              setAccessToken(response.data.response.accessToken);
+              getProfileData(response.data.response.accessToken);
+            });
+          });
         }
       })
       .catch(function (error) {
@@ -95,12 +104,13 @@ export const MainStore = (props) => {
         console.log("response get ProfileData", response.data);
         if (response.status == 200) {
           //*** user data хадгалах
-          AsyncStorage.setItem(
+          await AsyncStorage.setItem(
             "userData",
             JSON.stringify(response.data.response)
-          );
-          setUserData(response.data.response);
-          setIsLoggedIn(true);
+          ).then(() => {
+            setUserData(response.data.response);
+            setIsLoggedIn(true);
+          });
         }
         setIsLoading(false);
       })
@@ -108,39 +118,53 @@ export const MainStore = (props) => {
         setIsLoading(false);
       });
   };
-  const logout = () => {
-    AsyncStorage.removeItem("accessToken");
-    AsyncStorage.removeItem("refreshToken");
-    AsyncStorage.removeItem("userData");
-    setIsLoggedIn(false);
+  const logout = async () => {
+    setIsLoading(true);
+    await AsyncStorage.multiRemove([
+      "accessToken",
+      "refreshToken",
+      "userData",
+    ]).then((res) => {
+      setIsLoggedIn(false);
+      setIsLoading(false);
+    });
   };
 
-  const getLocalUserData = () => {
+  const getLocalUserData = async () => {
     //*** LocalStorage -с мэдээлэл уншиж авах
     try {
       //*** access token уншиж авах
-      AsyncStorage.getItem("accessToken")
-        .then((accessToken_local) => {
-          setAccessToken(accessToken_local);
-        })
-        .then(() => {
-          //*** refresh token уншиж авах
-          AsyncStorage.getItem("refreshToken")
-            .then((refreshToken_local) => {
-              setRefreshToken(refreshToken_local);
+      await AsyncStorage.getItem("introShow").then(
+        async (accessToken_local) => {
+          if (accessToken_local == "hide") {
+            setIsIntroShow(false);
+          }
+          await AsyncStorage.getItem("accessToken")
+            .then((accessToken_local) => {
+              setAccessToken(accessToken_local);
             })
-            .then(() => {
-              //*** user data уншиж авах
-              AsyncStorage.getItem("userData")
-                .then((userData_local) => {
-                  setUserData(JSON.parse(userData_local));
-                  userData_local ? setIsLoggedIn(true) : setIsLoggedIn(false);
+            .then(async () => {
+              //*** refresh token уншиж авах
+              await AsyncStorage.getItem("refreshToken")
+                .then((refreshToken_local) => {
+                  setRefreshToken(refreshToken_local);
                 })
-                .then(() => {
-                  setIsLoading(false);
+                .then(async () => {
+                  //*** user data уншиж авах
+                  await AsyncStorage.getItem("userData")
+                    .then((userData_local) => {
+                      setUserData(JSON.parse(userData_local));
+                      userData_local
+                        ? setIsLoggedIn(true)
+                        : setIsLoggedIn(false);
+                    })
+                    .then(() => {
+                      setIsLoading(false);
+                    });
                 });
             });
-        });
+        }
+      );
     } catch (error) {
       console.log("error");
       setIsLoggedIn(false);

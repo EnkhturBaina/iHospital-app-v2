@@ -27,7 +27,11 @@ const HeaderUser = ({ isContent }) => {
       <View style={styles.stack1}>
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center" }}
-          onPress={() => navigation.navigate("ProfileScreen")}
+          onPress={() =>
+            navigation.navigate("ProfileStack", {
+              screen: "ProfileScreen",
+            })
+          }
         >
           <View>
             <Image
@@ -51,7 +55,11 @@ const HeaderUser = ({ isContent }) => {
         </TouchableOpacity>
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("NotificationScreen")}
+            onPress={() =>
+              navigation.navigate("NotificationStack", {
+                screen: "NotificationScreen",
+              })
+            }
           >
             <Icon
               name="notifications-outline"
@@ -61,7 +69,13 @@ const HeaderUser = ({ isContent }) => {
               color="#fff"
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("ChatScreen")}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("ChatStack", {
+                screen: "ChatScreen",
+              })
+            }
+          >
             <Icon
               name="chatbox-ellipses-outline"
               type="ionicon"
