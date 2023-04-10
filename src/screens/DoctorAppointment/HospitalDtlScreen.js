@@ -5,42 +5,23 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ImageBackground,
   Platform,
 } from "react-native";
-import React, {
-  useLayoutEffect,
-  useRef,
-  useEffect,
-  useState,
-  useContext,
-} from "react";
+import React, { useLayoutEffect, useEffect, useContext } from "react";
 import hospitalbg from "../../../assets/hospitalbg.png";
 import hospital from "../../../assets/hospital.png";
 import {
-  API_KEY,
-  DEV_URL,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
-  MAIN_COLOR_GRAY_BG,
+  MAIN_COLOR_BG,
   TEXT_COLOR_GRAY,
 } from "../../constant";
-import { Icon, Divider } from "@rneui/base";
-import stethoscope from "../../../assets/stethoscope.png";
-import card_bg from "../../../assets/card-bg.png";
+import { Icon } from "@rneui/base";
 import MainContext from "../../contexts/MainContext";
-import axios from "axios";
-import Loader from "../../components/Loader";
-import Empty from "../../components/Empty";
-
-const HEADER_HEIGHT = 250;
 
 const HospitalDtlScreen = (props) => {
   const state = useContext(MainContext);
-  const [tabIndex, setIndex] = useState(0);
-  const [doctorList, setDoctorList] = useState([]);
-  const [loadingDoctors, setLoadingDoctors] = useState(false);
 
   useLayoutEffect(() => {
     // TabBar Hide хийх
@@ -52,41 +33,7 @@ const HospitalDtlScreen = (props) => {
     // TabBar Hide хийх
   }, [props.navigation]);
 
-  const getDoctors = async () => {
-    setDoctorList([]);
-    setLoadingDoctors(true);
-    //***** Эмчийн жагсаалт авах
-    await axios({
-      method: "get",
-      url: `${DEV_URL}mobile/employee`,
-      params: {
-        hospitalId: state.selectedHospital ? state.selectedHospital.id : null,
-      },
-      headers: {
-        "X-API-KEY": API_KEY,
-        Authorization: `Bearer ${state.accessToken}`,
-      },
-    })
-      .then(async (response) => {
-        console.log("response get Doctors", response.data.response);
-        if (response.status == 200) {
-          setDoctorList(response.data.response);
-        }
-        setLoadingDoctors(false);
-      })
-      .catch(function (error) {
-        setLoadingDoctors(false);
-        console.log("errr", error.response.data);
-        if (error?.response?.status == 401) {
-          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
-          state.logout();
-        }
-        // setIsLoading(false);
-      });
-  };
-  useEffect(() => {
-    getDoctors();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.mainContainer}>
@@ -148,60 +95,6 @@ const HospitalDtlScreen = (props) => {
             aWhen false, if there is a small amount of space available around a
           </Text>
         </View>
-        {loadingDoctors ? (
-          <Loader />
-        ) : !loadingDoctors && doctorList == "" ? (
-          <Empty text="Эмч олдсонгүй" subtext="" type="empty" />
-        ) : (
-          <>
-            {doctorList &&
-              doctorList?.map((el, index) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      state.setSelectedDoctor(el);
-                      props.navigation.navigate("DoctorDtlScreen");
-                    }}
-                    style={styles.doctorTopContainer}
-                    key={index}
-                  >
-                    <Image
-                      source={stethoscope}
-                      resizeMode="contain"
-                      style={styles.avatar}
-                    />
-                    <View style={styles.titleContainer}>
-                      <Text style={styles.doctorName}>
-                        {el.lastName?.substr(0, 1) + ". " + el.firstName}
-                      </Text>
-                      <Divider style={{ marginTop: 5, marginRight: 10 }} />
-                      <Text style={styles.doctorPosition}>Арьсны эмч</Text>
-                      <Text style={styles.doctorHospital}>
-                        {el.hospital?.name}
-                      </Text>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          marginTop: 5,
-                        }}
-                      >
-                        {/* <Icon
-                          name="staro"
-                          type="antdesign"
-                          size={20}
-                          color={MAIN_COLOR}
-                        /> */}
-                        <Text style={styles.count}>
-                          {el.workingYear ?? 0} жил ажилласан
-                        </Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              })}
-          </>
-        )}
       </ScrollView>
       <TouchableOpacity
         style={{
@@ -209,22 +102,23 @@ const HospitalDtlScreen = (props) => {
           bottom: Platform.OS == "ios" ? 20 : 10,
           width: "95%",
           alignSelf: "center",
+          flexDirection: "row",
+          alignItems: "center",
+          borderColor: MAIN_COLOR,
+          borderRadius: 8,
+          borderWidth: 1,
+          backgroundColor: MAIN_COLOR,
+          justifyContent: "center",
+          paddingVertical: 10,
         }}
         onPress={() => {
           state.resetAppontmentData();
           props.navigation.navigate("DoctorAppointmentStep1");
         }}
       >
-        <ImageBackground
-          source={card_bg}
-          style={styles.menuContainer}
-          resizeMode="cover"
-        >
-          <Icon name="calendar" type="feather" size={15} color="#fff" />
-          <Text numberOfLines={1} style={styles.menuText}>
-            Цаг авах
-          </Text>
-        </ImageBackground>
+        <Text numberOfLines={1} style={styles.menuText}>
+          Цаг захиалах
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -235,7 +129,7 @@ export default HospitalDtlScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: MAIN_COLOR_GRAY_BG,
+    backgroundColor: MAIN_COLOR_BG,
   },
   hospitalDtlContainer: {
     flexDirection: "column",
@@ -274,17 +168,6 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY_LIGHT,
     color: TEXT_COLOR_GRAY,
     marginLeft: 5,
-  },
-  menuContainer: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    borderColor: MAIN_COLOR,
-    borderRadius: 8,
-    borderWidth: 1,
-    backgroundColor: MAIN_COLOR,
-    justifyContent: "center",
-    paddingVertical: 10,
   },
   menuText: {
     fontFamily: FONT_FAMILY_BOLD,
