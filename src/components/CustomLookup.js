@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomLookup = ({ label, value, press, disabled }) => (
+const CustomLookup = ({ label, value, press, disabled, placeholder }) => (
   <View style={styles.container}>
     {label ? <Text style={styles.label}>{label}</Text> : null}
     <TouchableOpacity
@@ -45,7 +45,7 @@ const CustomLookup = ({ label, value, press, disabled }) => (
       onPress={!disabled ? press : null}
     >
       <Text style={styles.textInput} numberOfLines={1}>
-        {value}
+        {value ?? placeholder}
       </Text>
       <Icon name="caret-down-outline" type="ionicon" size={15} />
     </TouchableOpacity>

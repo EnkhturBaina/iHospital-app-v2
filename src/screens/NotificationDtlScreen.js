@@ -25,12 +25,12 @@ const NotificationDtlScreen = (props) => {
       showsVerticalScrollIndicator={false}
       bounces={false}
     >
-      <Text style={styles.title}>Paying the Price for Sun Damage</Text>
       <Image
         source={require("../../assets/image11.png")}
         resizeMode="cover"
         style={styles.blogImg}
       />
+      <Text style={styles.title}>Paying the Price for Sun Damage</Text>
       <Text style={styles.bodyText}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -87,16 +87,20 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: FONT_FAMILY_BOLD,
     fontSize: 20,
+    marginTop: 10,
+    textAlign: "center",
   },
   mainContainer: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: MAIN_COLOR_BG,
     paddingHorizontal: 20,
     paddingBottom: 20,
   },
   blogImg: {
-    width: "100%",
-    height: 180,
+    width: "80%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    height: 160,
     borderRadius: 8,
     marginTop: 10,
   },

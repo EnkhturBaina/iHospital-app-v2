@@ -6,20 +6,49 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  RefreshControl,
 } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useCallback,
+} from "react";
 import hospital from "../../../assets/hospital.png";
 import {
+  API_KEY,
+  DEV_URL,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
+  MAIN_COLOR_BG,
   MAIN_COLOR_GRAY,
   TEXT_COLOR_GRAY,
 } from "../../constant";
 import { Icon } from "@rneui/base";
+import axios from "axios";
+import MainContext from "../../contexts/MainContext";
+import Loader from "../../components/Loader";
 
 const HospitalListScreen = (props) => {
-  const [text, setText] = useState("");
+  const state = useContext(MainContext);
+  const [searchValue, setSearchValue] = useState("");
+  const [hospitalList, setHospitalList] = useState([]);
+  const [loadingHospitals, setLoadingHospitals] = useState(false);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getHospitalList();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   useLayoutEffect(() => {
     // TabBar Hide хийх
     props.navigation.getParent()?.setOptions({
@@ -34,80 +63,107 @@ const HospitalListScreen = (props) => {
     // TabBar Hide хийх
   }, [props.navigation]);
 
-  const hospitalList = [
-    {
-      value: 0,
-      title: "Арьсны өвчин судлалын үндэсний төв",
-      type: "Улсын эмнэлэг",
-      address: "СБД 11-р хороо, Цагдаагийн гудамж - 78",
-    },
-    {
-      value: 1,
-      title: "Синдрелла - 13 салбар",
-      type: "Хувийн эмнэлэг",
-      address: "БЗД 13-р хороо, 12-р хороолол - 2",
-    },
-    {
-      value: 2,
-      title: "Улсын нэгдүгээр төв эмнэлэг",
-      type: "Улсын эмнэлэг",
-      address: "СБД 1-р хороо, С.Зоригийн гудамж",
-    },
-  ];
+  useEffect(() => {
+    getHospitalList();
+  }, []);
+
+  const getHospitalList = async () => {
+    setHospitalList([]);
+    setLoadingHospitals(true);
+    //***** Эмнэлэгийн жагсаалт авах
+    await axios({
+      method: "get",
+      url: `${DEV_URL}organization/hospital`,
+      headers: {
+        "X-API-KEY": API_KEY,
+        Authorization: `Bearer ${state.accessToken}`,
+      },
+    })
+      .then(async (response) => {
+        console.log("response get HospitalList", response.data);
+        if (response.status == 200) {
+          setHospitalList(response.data.response.data);
+        }
+        setLoadingHospitals(false);
+      })
+      .catch(function (error) {
+        setLoadingHospitals(false);
+        console.log("errr", error.response.status);
+        if (error?.response?.status == 401) {
+          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          state.logout();
+        }
+        // setIsLoading(false);
+      });
+  };
+
+  const navigateHospitalDtl = (hospital_data) => {
+    state.setSelectedHospital(hospital_data);
+    props.navigation.navigate("HospitalDtlScreen");
+  };
   return (
     <View style={styles.mainContainer}>
       <View style={styles.searchContainer}>
         <Icon name="search" type="feather" size={20} color={TEXT_COLOR_GRAY} />
         <TextInput
-          style={{
-            fontFamily: FONT_FAMILY_BOLD,
-            color: TEXT_COLOR_GRAY,
-            marginLeft: 10,
-            width: "90%",
-          }}
-          onChangeText={(text) => setText(text)}
-          value={text}
+          style={styles.searchInput}
+          onChangeText={setSearchValue}
+          value={searchValue}
           placeholder="Хайх"
         />
+        <Icon name="sliders" type="feather" size={20} color={TEXT_COLOR_GRAY} />
       </View>
       <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          marginTop: 20,
-          paddingHorizontal: 10,
-        }}
+        contentContainerStyle={styles.mainScroller}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={MAIN_COLOR}
+            colors={[MAIN_COLOR]}
+          />
+        }
       >
-        {hospitalList.map((el, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.hospitalContainer}
-              onPress={() => props.navigation.navigate("HospitalDtlScreen")}
-              activeOpacity={0.6}
-            >
-              <Image
-                source={hospital}
-                resizeMode="contain"
-                style={styles.logo}
-              />
-              <View style={styles.hospitalDtlContainer}>
-                <Text style={styles.title}>{el.title}</Text>
-                <Text style={styles.type}>{el.type}</Text>
-                <View style={styles.addressContainer}>
-                  <Icon
-                    name="location"
-                    type="ionicon"
-                    size={15}
-                    color={TEXT_COLOR_GRAY}
+        {loadingHospitals ? (
+          <Loader />
+        ) : (
+          hospitalList &&
+          hospitalList
+            ?.filter((obj) => obj.name?.includes(searchValue))
+            ?.map((el, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.hospitalContainer}
+                  onPress={() => navigateHospitalDtl(el)}
+                  activeOpacity={0.6}
+                >
+                  <Image
+                    source={hospital}
+                    resizeMode="contain"
+                    style={styles.logo}
                   />
-                  <Text numberOfLines={1} style={styles.address}>
-                    {el.address}
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+                  <View style={styles.hospitalDtlContainer}>
+                    <Text style={styles.title}>{el.name}</Text>
+                    <Text style={styles.type}>
+                      {el.isCountry ? "Улсын эмнэлэг" : "Хувийн эмнэлэг"}
+                    </Text>
+                    <View style={styles.addressContainer}>
+                      <Icon
+                        name="location"
+                        type="ionicon"
+                        size={15}
+                        color={TEXT_COLOR_GRAY}
+                      />
+                      <Text numberOfLines={1} style={styles.address}>
+                        {el.address}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            })
+        )}
       </ScrollView>
     </View>
   );
@@ -118,14 +174,25 @@ export default HospitalListScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    // paddingHorizontal: 10,
-    backgroundColor: "#fff",
+    backgroundColor: MAIN_COLOR_BG,
+    paddingTop: 10,
+  },
+  searchInput: {
+    fontFamily: FONT_FAMILY_BOLD,
+    color: TEXT_COLOR_GRAY,
+    marginLeft: 10,
+    width: "85%",
+  },
+  mainScroller: {
+    flexGrow: 1,
+    marginTop: 10,
+    paddingHorizontal: 10,
   },
   searchContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: MAIN_COLOR_GRAY,
+    backgroundColor: "#fff",
     borderRadius: 8,
     padding: 10,
     marginHorizontal: 10,

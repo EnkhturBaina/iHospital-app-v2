@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     height: 160,
     borderRadius: 280,
     borderColor: MAIN_COLOR,
-    borderWidth: 5,
+    borderWidth: 3,
     alignSelf: "center",
     marginVertical: 10,
   },

@@ -19,6 +19,7 @@ const BottomSheet = ({
   displayName,
   lookUpType,
   handle,
+  action,
 }) => {
   const state = useContext(MainContext);
   const sheetRef = useRef(); //Bottomsheet
@@ -44,13 +45,17 @@ const BottomSheet = ({
   }, [heightBottomSheet]);
 
   const functionCombined = (e) => {
-    sheetRef.current.close();
-    if (lookUpType == "appointment") {
-      state.setAppointmentData((prevState) => ({
-        ...prevState,
-        [fieldName]: e,
-      }));
+    if (action) {
+      action(e);
+    } else {
+      if (lookUpType == "appointment") {
+        state.setAppointmentData((prevState) => ({
+          ...prevState,
+          [fieldName]: e,
+        }));
+      }
     }
+    sheetRef.current.close();
   };
 
   return (

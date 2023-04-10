@@ -7,7 +7,7 @@ import { API_KEY, DEV_URL } from "../constant";
 const MainContext = React.createContext();
 
 export const MainStore = (props) => {
-  const [email, setEmail] = useState("dorj0501@gmail.com");
+  const [email, setEmail] = useState("eegii.111.gg@gmail.com");
   const [rememberEmail, setRememberEmail] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [accessToken, setAccessToken] = useState("");
@@ -19,9 +19,15 @@ export const MainStore = (props) => {
   const [isIntroShow, setIsIntroShow] = useState(true);
   const [termCheck, setTermCheck] = useState(false);
 
+  //Цаг захиалга
+  const [selectedHospital, setSelectedHospital] = useState("");
+  const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [invoiceData, setInvoiceData] = useState("");
+
   const [appointmentData, setAppointmentData] = useState({
-    inspectionType: "",
-    doctorId: "",
+    department: "",
+    doctor: "",
+    schedule: "",
     date: "",
     time: "",
   });
@@ -171,7 +177,6 @@ export const MainStore = (props) => {
       setIsLoading(false);
     }
   };
-
   const resetAppontmentData = () => {
     setAppointmentData({
       inspectionType: "",
@@ -202,8 +207,15 @@ export const MainStore = (props) => {
         setEmail,
         rememberEmail,
         setRememberEmail,
-        loginError,
         userData,
+        selectedHospital,
+        setSelectedHospital,
+        loginError,
+        setLoginError,
+        invoiceData,
+        setInvoiceData,
+        selectedDoctor,
+        setSelectedDoctor,
       }}
     >
       {props.children}

@@ -20,9 +20,23 @@ const PrivacyScreen = () => {
         backgroundColor: MAIN_BACKGROUND_COLOR_GRAY,
         paddingHorizontal: 20,
         justifyContent: "space-between",
+        paddingTop: 20,
       }}
     >
-      <View>
+      <View
+        style={{
+          borderRadius: 12,
+          backgroundColor: "#fff",
+          shadowOpacity: 0.2,
+          shadowRadius: 3,
+          shadowOffset: {
+            height: 1,
+            width: 0,
+          },
+          elevation: 2,
+          paddingHorizontal: 10,
+        }}
+      >
         <View style={styles.eachSection}>
           <Text style={styles.textStyle}>Намайг санах</Text>
           <Switch
@@ -63,7 +77,7 @@ const PrivacyScreen = () => {
             </Text>
           }
           color="#fff"
-          radius={BUTTON_BORDER_RADIUS}
+          radius={12}
           onPress={() => {}}
           titleStyle={{
             fontWeight: "bold",
@@ -84,7 +98,7 @@ const PrivacyScreen = () => {
             </Text>
           }
           color="#fff"
-          radius={BUTTON_BORDER_RADIUS}
+          radius={12}
           onPress={() => {}}
           titleStyle={{
             fontWeight: "bold",
@@ -118,6 +132,5 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 16,
-    fontWeight: "bold",
   },
 });

@@ -39,7 +39,7 @@ const HomeScreen = (props) => {
     {
       img: require("../../assets/homeMenus/receiptsearch.png"),
       label: "Оношилгооны хариу",
-      nav: "ExaminationResultScreen",
+      nav: "XrayResultScreen",
       active: true,
     },
     {
@@ -50,7 +50,7 @@ const HomeScreen = (props) => {
     },
     {
       img: require("../../assets/homeMenus/buliding.png"),
-      label: "Цаг захиалах",
+      label: "Эмнэлэг",
       nav: "HospitalListScreen",
       active: true,
     },
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
     fontWeight: "500",
-    lineHeight: 14,
+    lineHeight: 16,
   },
   newsScrollContainer: {
     paddingVertical: 5,

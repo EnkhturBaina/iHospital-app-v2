@@ -16,8 +16,8 @@ import {
 } from "../../constant";
 import { Icon } from "@rneui/base";
 
-//Шинжилгээний хариу
-const ExaminationResultScreen = (props) => {
+//Оношилгооны хариу
+const XrayResultScreen = (props) => {
   const [refreshing, setRefreshing] = useState(false);
   useLayoutEffect(() => {
     // TabBar Hide хийх
@@ -67,7 +67,7 @@ const ExaminationResultScreen = (props) => {
   );
 };
 
-export default ExaminationResultScreen;
+export default XrayResultScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
