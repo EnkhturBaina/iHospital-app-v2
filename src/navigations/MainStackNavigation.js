@@ -46,6 +46,7 @@ import { useNavigation } from "@react-navigation/native";
 import XrayResultScreen from "../screens/Xray/XrayResultScreen";
 import HospitalStructuresScreen from "../screens/DoctorAppointment/HospitalStructuresScreen";
 import DoctorsScreen from "../screens/DoctorAppointment/DoctorsScreen";
+import ExResultDtlScreen from "../screens/ExaminationResult/ExResultDtlScreen";
 
 const Stack = createStackNavigator();
 
@@ -344,6 +345,29 @@ const MainStackNavigator = (props) => {
       <Stack.Screen
         name="ExaminationResultScreen"
         component={ExaminationResultScreen}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.headerLeftContainer}
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            >
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Шинжилгээний хариу</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ExResultDtlScreen"
+        component={ExResultDtlScreen}
         options={{
           title: "",
           headerStyle: {
@@ -837,7 +861,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily: FONT_FAMILY_BOLD,
     fontSize: 16,
-    color: "#000",
+    color: "#fff",
     textAlign: "center",
   },
 });

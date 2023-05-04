@@ -15,17 +15,12 @@ import {
   MAIN_COLOR,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
-  MAIN_BACKGROUND_COLOR_GRAY,
   TEXT_COLOR_GRAY,
 } from "../constant";
 import { TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/base";
-import { Snackbar } from "react-native-paper";
 import MainContext from "../contexts/MainContext";
 import logo_blue from "../../assets/logo_blue.png";
-import facebook from "../../assets/facebook.png";
-import google from "../../assets/google.png";
-import apple from "../../assets/apple.png";
 import { useHeaderHeight } from "@react-navigation/elements";
 import CustomSnackbar from "../components/CustomSnackbar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -104,7 +99,6 @@ const LoginScreen = (props) => {
           topPos={30}
         />
         <Image source={logo_blue} style={styles.logo} />
-        <Text>PASSWORD: WETITr</Text>
         {state.loginError != "" ? (
           <Text
             style={{

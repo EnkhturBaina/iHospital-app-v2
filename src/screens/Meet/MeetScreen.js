@@ -81,7 +81,7 @@ const MeetScreen = () => {
             />
             <View style={{ marginLeft: 10 }}>
               <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
-                Эмнэлэгийн нэр
+                Universal Med
               </Text>
               <Text
                 style={{

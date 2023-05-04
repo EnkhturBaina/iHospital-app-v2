@@ -6,7 +6,7 @@ export const MAIN_COLOR_GRAY = "#F2F2F2";
 export const TEXT_COLOR_GRAY = "#616E7C";
 export const MAIN_BACKGROUND_COLOR_GRAY = "#efefef";
 export const INPUT_BORDER_RADIUS = 12;
-export const BUTTON_BORDER_RADIUS = 30;
+export const BUTTON_BORDER_RADIUS = 12;
 export const FONT_FAMILY_BOLD = "Inter-Bold";
 export const FONT_FAMILY_LIGHT = "Inter-Light";
 
