@@ -11,7 +11,6 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { Button, CheckBox } from "@rneui/themed";
 import {
-  BUTTON_BORDER_RADIUS,
   INPUT_BORDER_RADIUS,
   MAIN_COLOR,
   FONT_FAMILY_BOLD,
@@ -231,7 +230,7 @@ const LoginScreen = (props) => {
           <Button
             title="Нэвтрэх"
             color={MAIN_COLOR}
-            radius={BUTTON_BORDER_RADIUS}
+            radius={12}
             onPress={login}
             titleStyle={{
               fontFamily: FONT_FAMILY_BOLD,

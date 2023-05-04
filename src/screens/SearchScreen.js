@@ -76,6 +76,10 @@ const SearchScreen = (props) => {
     state.getDoctors();
   }, []);
 
+  const navigateHospitalDtl = async (hospital_data) => {
+    state.setSelectedHospital(hospital_data);
+    props.navigation.navigate("HospitalStructuresScreen");
+  };
   const RenderHospitals = () => {
     // console.log("state.hospitalList", state.hospitalList);
     const [hospitalSearchValue, setHospitalSearchValue] = useState("");
@@ -131,9 +135,7 @@ const SearchScreen = (props) => {
                   <TouchableOpacity
                     key={index}
                     style={styles.hospitalContainer}
-                    onPress={() =>
-                      props.navigation.navigate("HospitalDtlScreen")
-                    }
+                    onPress={() => navigateHospitalDtl(el)}
                     activeOpacity={0.6}
                   >
                     <Image

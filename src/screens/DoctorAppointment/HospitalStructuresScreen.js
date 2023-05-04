@@ -4,30 +4,11 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
-  TextInput,
-  RefreshControl,
+  Platform,
 } from "react-native";
-import React, {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-  useCallback,
-} from "react";
-import hospital from "../../../assets/hospital.png";
-import {
-  API_KEY,
-  BUTTON_BORDER_RADIUS,
-  DEV_URL,
-  FONT_FAMILY_BOLD,
-  FONT_FAMILY_LIGHT,
-  MAIN_COLOR,
-  MAIN_COLOR_BG,
-  MAIN_COLOR_GRAY,
-  TEXT_COLOR_GRAY,
-} from "../../constant";
-import { Icon, Button } from "@rneui/themed";
+import React, { useContext, useEffect, useState } from "react";
+import { API_KEY, DEV_URL, FONT_FAMILY_BOLD, MAIN_COLOR } from "../../constant";
+import { Button } from "@rneui/themed";
 import axios from "axios";
 import MainContext from "../../contexts/MainContext";
 import Loader from "../../components/Loader";
@@ -44,10 +25,7 @@ const HospitalStructuresScreen = (props) => {
     //***** Эмнэлэгийн тасагийн жагсаалт
     await axios({
       method: "get",
-      url: `${DEV_URL}organization/structure`,
-      params: {
-        hospitalId: state.selectedHospital ? state.selectedHospital.id : null,
-      },
+      url: `${DEV_URL}mobile/department/${state.selectedHospital.id}`,
       headers: {
         "X-API-KEY": API_KEY,
         Authorization: `Bearer ${state.accessToken}`,
@@ -71,10 +49,16 @@ const HospitalStructuresScreen = (props) => {
   };
   useEffect(() => {
     getStructureList();
+    return () => {
+      state.setSelectedStructure("");
+    };
   }, []);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
+      {hospitalStructures == "" && !loadingStructures ? (
+        <Empty type="empty" text="Тасаг олдсонгүй" />
+      ) : null}
       <ScrollView contentContainerStyle={styles.mainScroller} bounces={false}>
         {loadingStructures ? (
           <Loader />
@@ -105,6 +89,7 @@ const HospitalStructuresScreen = (props) => {
                           : MAIN_COLOR,
                     },
                   ]}
+                  numberOfLines={2}
                 >
                   {el.name}
                 </Text>
@@ -119,10 +104,12 @@ const HospitalStructuresScreen = (props) => {
           width: "80%",
           marginRight: "auto",
           marginLeft: "auto",
-          marginTop: 20,
+          marginTop: 10,
+          marginBottom: Platform.OS == "ios" ? 20 : 10,
         }}
       >
         <Button
+          disabled={state.selectedStructure == ""}
           title="Үргэлжлүүлэх (1/5)"
           color={MAIN_COLOR}
           radius={12}
@@ -148,10 +135,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start", // if you want to fill rows left to right
     marginTop: 10,
+    paddingBottom: 10,
   },
   menuItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderRadius: 12,
     backgroundColor: "#fff",
     width: "45%",
@@ -173,6 +161,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
     fontWeight: "500",
-    lineHeight: 16,
   },
 });

@@ -15,7 +15,6 @@ import {
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
 import {
-  BUTTON_BORDER_RADIUS,
   FONT_FAMILY_BOLD,
   MAIN_BACKGROUND_COLOR_GRAY,
   MAIN_COLOR,
@@ -93,7 +92,7 @@ const OTPScreen = (props) => {
           containerStyle={{ marginTop: 10 }}
           title="Баталгаажуулах"
           color={MAIN_COLOR}
-          radius={BUTTON_BORDER_RADIUS}
+          radius={12}
           onPress={() => {
             props.navigation.navigate("NewPasswordScreen");
           }}

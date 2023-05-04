@@ -15,7 +15,6 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import hospital from "../../../assets/hospital.png";
 import {
   API_KEY,
   DEV_URL,
@@ -23,7 +22,6 @@ import {
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
   MAIN_COLOR_BG,
-  MAIN_COLOR_GRAY,
   TEXT_COLOR_GRAY,
 } from "../../constant";
 import { Icon } from "@rneui/base";
@@ -31,7 +29,6 @@ import axios from "axios";
 import MainContext from "../../contexts/MainContext";
 import Loader from "../../components/Loader";
 import hospitalAvatar from "../../../assets/hospitalAvatar.png";
-import Empty from "../../components/Empty";
 
 const HospitalListScreen = (props) => {
   const state = useContext(MainContext);
@@ -67,10 +64,11 @@ const HospitalListScreen = (props) => {
     state.getHospitalList();
   }, []);
 
-  const navigateHospitalDtl = (hospital_data) => {
+  const navigateHospitalDtl = async (hospital_data) => {
     state.setSelectedHospital(hospital_data);
     props.navigation.navigate("HospitalStructuresScreen");
   };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.searchContainer}>

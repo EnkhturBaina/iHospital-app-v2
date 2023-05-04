@@ -22,6 +22,7 @@ const MainDrawerNavigation = () => {
         initialRouteName={state.isLoggedIn ? "HomeNav" : "LoginStack"}
         screenOptions={{
           headerShown: false,
+          swipeEdgeWidth: 0, //Drawer swipe хийхийг хаах
         }}
         useLegacyImplementation
       >

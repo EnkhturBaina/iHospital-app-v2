@@ -72,7 +72,7 @@ export const MainStore = (props) => {
       })
       .catch(function (error) {
         setLoadingHospitals(false);
-        console.log("errr", error.response.status);
+        console.log("errr getHospitalList", error.response.status);
         if (error?.response?.status == 401) {
           setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
           logout();

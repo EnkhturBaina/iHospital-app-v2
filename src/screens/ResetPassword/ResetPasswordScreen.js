@@ -11,7 +11,6 @@ import React, { useState } from "react";
 import doctor_health from "../../../assets/doctor_health.png";
 import {
   API_KEY,
-  BUTTON_BORDER_RADIUS,
   DEV_URL,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
@@ -139,7 +138,7 @@ const ResetPasswordScreen = (props) => {
             </>
           }
           color={MAIN_COLOR}
-          radius={BUTTON_BORDER_RADIUS}
+          radius={12}
           onPress={() => {
             props.navigation.navigate("OTPScreen");
           }}

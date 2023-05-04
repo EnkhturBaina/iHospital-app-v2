@@ -1,10 +1,6 @@
 import { StyleSheet, Text, Image, View } from "react-native";
 import React from "react";
-import {
-  BUTTON_BORDER_RADIUS,
-  FONT_FAMILY_BOLD,
-  MAIN_COLOR,
-} from "../constant";
+import { FONT_FAMILY_BOLD, MAIN_COLOR } from "../constant";
 import { Dialog } from "@rneui/themed";
 
 export default function ({
@@ -31,7 +27,7 @@ export default function ({
       overlayStyle={{
         padding: 10,
         backgroundColor: "#fff",
-        borderRadius: BUTTON_BORDER_RADIUS,
+        borderRadius: 12,
         alignItems: "center",
       }}
     >
@@ -61,7 +57,7 @@ export default function ({
             title={confirmBtnText}
             onPress={() => confirmFunction()}
             containerStyle={styles.dialogBtn}
-            radius={BUTTON_BORDER_RADIUS}
+            radius={12}
             titleStyle={{
               fontFamily: FONT_FAMILY_BOLD,
               color: "#fff",
@@ -72,7 +68,7 @@ export default function ({
               title={DeclineBtnText}
               onPress={() => declineFunction()}
               containerStyle={styles.dialogDeclineBtn}
-              radius={BUTTON_BORDER_RADIUS}
+              radius={12}
               titleStyle={{
                 fontFamily: FONT_FAMILY_BOLD,
                 color: "#000",

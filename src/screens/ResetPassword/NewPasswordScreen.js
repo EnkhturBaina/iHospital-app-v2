@@ -12,7 +12,6 @@ import {
 import React, { useState, useEffect } from "react";
 import police from "../../../assets/police.png";
 import {
-  BUTTON_BORDER_RADIUS,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   INPUT_BORDER_RADIUS,
@@ -268,7 +267,7 @@ const NewPasswordScreenjs = (props) => {
           containerStyle={styles.btnContainer}
           title="Баталгаажуулах"
           color={MAIN_COLOR}
-          radius={BUTTON_BORDER_RADIUS}
+          radius={12}
           onPress={() => {
             props.navigation.navigate("NewPasswordScreen");
           }}

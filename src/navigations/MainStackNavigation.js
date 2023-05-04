@@ -172,7 +172,6 @@ const LoginStackNavigator = (props) => {
         options={{
           title: "",
           headerStyle: {
-            backgroundColor: MAIN_BACKGROUND_COLOR_GRAY,
             borderBottomWidth: 0,
             shadowColor: "transparent", // this covers iOS
             backgroundColor: "#fff",
@@ -268,7 +267,7 @@ const MainStackNavigator = (props) => {
               }}
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
-              <Text style={styles.headerLeftText}>Цаг захиалах</Text>
+              <Text style={styles.headerLeftText}>Тасаг сонгох</Text>
             </TouchableOpacity>
           ),
         }}
@@ -291,7 +290,7 @@ const MainStackNavigator = (props) => {
               }}
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
-              <Text style={styles.headerLeftText}>Цаг захиалах</Text>
+              <Text style={styles.headerLeftText}>Эмч сонгох</Text>
             </TouchableOpacity>
           ),
         }}
@@ -838,7 +837,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily: FONT_FAMILY_BOLD,
     fontSize: 16,
-    color: "#fff",
+    color: "#000",
     textAlign: "center",
   },
 });

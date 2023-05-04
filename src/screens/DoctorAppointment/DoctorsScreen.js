@@ -4,30 +4,16 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
-  TextInput,
-  RefreshControl,
 } from "react-native";
-import React, {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-  useCallback,
-} from "react";
-import hospital from "../../../assets/hospital.png";
+import React, { useContext, useEffect, useState } from "react";
 import {
   API_KEY,
-  BUTTON_BORDER_RADIUS,
   DEV_URL,
   FONT_FAMILY_BOLD,
-  FONT_FAMILY_LIGHT,
   MAIN_COLOR,
-  MAIN_COLOR_BG,
-  MAIN_COLOR_GRAY,
   TEXT_COLOR_GRAY,
 } from "../../constant";
-import { Icon, Button } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import axios from "axios";
 import MainContext from "../../contexts/MainContext";
 import Loader from "../../components/Loader";
@@ -41,12 +27,13 @@ const DoctorsScreen = (props) => {
   const getDoctorList = async () => {
     setHospitalDoctors([]);
     setLoadingDoctors(true);
-    //***** Эмч нарын жагсаалт
+    //***** Эмчийн жагсаалт
     await axios({
       method: "get",
-      url: `${DEV_URL}organization/employee`,
+      url: `${DEV_URL}mobile/department-doctors`,
       params: {
-        structureId: state.selectedStructure?.id,
+        hospitalId: state.selectedHospital.id,
+        departmentId: state.selectedStructure?.id,
       },
       headers: {
         "X-API-KEY": API_KEY,
@@ -71,10 +58,16 @@ const DoctorsScreen = (props) => {
   };
   useEffect(() => {
     getDoctorList();
+    return () => {
+      state.setSelectedDoctor("");
+    };
   }, []);
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
+      {hospitalDoctors == "" && !loadingDoctors ? (
+        <Empty type="empty" text="Эмч олдсонгүй" />
+      ) : null}
       <ScrollView contentContainerStyle={styles.mainScroller} bounces={false}>
         {loadingDoctors ? (
           <Loader />
@@ -130,10 +123,12 @@ const DoctorsScreen = (props) => {
           width: "80%",
           marginRight: "auto",
           marginLeft: "auto",
-          marginTop: 20,
+          marginTop: 10,
+          marginBottom: Platform.OS == "ios" ? 20 : 10,
         }}
       >
         <Button
+          disabled={state.selectedDoctor == ""}
           title="Үргэлжлүүлэх (2/5)"
           color={MAIN_COLOR}
           radius={12}
@@ -157,10 +152,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexDirection: "column",
     marginTop: 10,
-    justifyContent: "center",
   },
   menuItem: {
-    flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 12,

@@ -1,10 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from "react-native";
 import React, { useState } from "react";
-import {
-  BUTTON_BORDER_RADIUS,
-  MAIN_BACKGROUND_COLOR_GRAY,
-  MAIN_COLOR,
-} from "../constant";
+import { MAIN_BACKGROUND_COLOR_GRAY, MAIN_COLOR } from "../constant";
 import { Button, Switch } from "@rneui/themed";
 
 const PrivacyScreen = () => {

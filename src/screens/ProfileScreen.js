@@ -93,7 +93,7 @@ const ProfileScreen = (props) => {
             />
           </TouchableOpacity>
           <Divider style={{ marginHorizontal: 20 }} />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("AccountScreen")}
           >
@@ -106,7 +106,7 @@ const ProfileScreen = (props) => {
               color="#86909C"
             />
           </TouchableOpacity>
-          <Divider style={{ marginHorizontal: 20 }} />
+          <Divider style={{ marginHorizontal: 20 }} /> */}
           <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("PrivacyScreen")}
