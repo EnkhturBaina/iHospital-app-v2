@@ -7,8 +7,15 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  RefreshControl,
 } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
@@ -23,10 +30,26 @@ import hospital from "../../assets/hospital.png";
 import hospitalAvatar from "../../assets/hospitalAvatar.png";
 import { Divider } from "react-native-paper";
 import { Icon } from "@rneui/base";
+import Empty from "../components/Empty";
+import MainContext from "../contexts/MainContext";
+import Loader from "../components/Loader";
 
 const SearchScreen = (props) => {
+  const state = useContext(MainContext);
   const [selectedMenu, setSelectedMenu] = useState(1);
-  const [text, setText] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = useCallback((refresh_type) => {
+    console.log("refresh_type", refresh_type);
+    setRefreshing(true);
+    refresh_type == "hospital" ? state.getHospitalList() : null;
+    refresh_type == "doctor" ? state.getDoctors() : null;
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
 
   useLayoutEffect(() => {
     // TabBar Hide хийх
@@ -47,55 +70,30 @@ const SearchScreen = (props) => {
     { value: 3, label: "Эмийн сан" },
     { value: 4, label: "Багц шинжилгээ" },
   ];
-
-  const hospitalList = [
-    {
-      value: 0,
-      title: "Арьсны өвчин судлалын үндэсний төв",
-      type: "Улсын эмнэлэг",
-      address: "СБД 11-р хороо, Цагдаагийн гудамж - 78",
-    },
-    {
-      value: 1,
-      title: "Синдрелла - 13 салбар",
-      type: "Хувийн эмнэлэг",
-      address: "БЗД 13-р хороо, 12-р хороолол - 2",
-    },
-    {
-      value: 2,
-      title: "Улсын нэгдүгээр төв эмнэлэг",
-      type: "Улсын эмнэлэг",
-      address: "СБД 1-р хороо, С.Зоригийн гудамж",
-    },
-  ];
+  useEffect(() => {
+    console.log("RenderHospitals");
+    state.getHospitalList();
+    state.getDoctors();
+  }, []);
 
   const RenderHospitals = () => {
+    // console.log("state.hospitalList", state.hospitalList);
+    const [hospitalSearchValue, setHospitalSearchValue] = useState("");
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <View style={styles.searchContainer}>
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-            }}
-          >
-            <Icon
-              name="search"
-              type="feather"
-              size={20}
-              color={TEXT_COLOR_GRAY}
-            />
-            <Text
-              style={{
-                fontFamily: FONT_FAMILY_BOLD,
-                color: TEXT_COLOR_GRAY,
-                marginLeft: 10,
-              }}
-            >
-              Хайх
-            </Text>
-          </View>
+          <Icon
+            name="search"
+            type="feather"
+            size={20}
+            color={TEXT_COLOR_GRAY}
+          />
+          <TextInput
+            style={styles.searchInput}
+            onChangeText={setHospitalSearchValue}
+            value={hospitalSearchValue}
+            placeholder="Хайх"
+          />
           <Icon
             name="sliders"
             type="feather"
@@ -103,74 +101,75 @@ const SearchScreen = (props) => {
             color={TEXT_COLOR_GRAY}
           />
         </View>
-        {hospitalList.map((el, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.hospitalContainer}
-              onPress={() => props.navigation.navigate("HospitalDtlScreen")}
-              activeOpacity={0.6}
-            >
-              <Image
-                source={hospitalAvatar}
-                resizeMode="contain"
-                style={styles.logo}
-              />
-              <View style={styles.hospitalDtlContainer}>
-                <Text style={styles.title}>{el.title}</Text>
-                <Text style={styles.type}>{el.type}</Text>
-                <View style={styles.addressContainer}>
-                  <Icon
-                    name="location"
-                    type="ionicon"
-                    size={15}
-                    color={TEXT_COLOR_GRAY}
-                  />
-                  <Text numberOfLines={1} style={styles.address}>
-                    {el.address}
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+        <ScrollView
+          contentContainerStyle={styles.mainScroller}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => onRefresh("hospital")}
+              tintColor={MAIN_COLOR}
+              colors={[MAIN_COLOR]}
+            />
+          }
+          showsVerticalScrollIndicator={false}
+        >
+          {state.loadingHospitals ? <Loader /> : null}
+          {state.hospitalList == "" &&
+          !refreshing &&
+          !state.loadingHospitals ? (
+            <Empty type="empty" text="Үр дүн олдсонгүй." />
+          ) : (
+            state.hospitalList &&
+            state.hospitalList
+              ?.filter((obj) =>
+                obj.name
+                  ?.toLowerCase()
+                  ?.includes(hospitalSearchValue?.toLowerCase())
+              )
+              ?.map((el, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.hospitalContainer}
+                    onPress={() =>
+                      props.navigation.navigate("HospitalDtlScreen")
+                    }
+                    activeOpacity={0.6}
+                  >
+                    <Image
+                      source={hospitalAvatar}
+                      // source={logoId ? logoId : hospitalAvatar}
+                      resizeMode="contain"
+                      style={styles.logo}
+                    />
+                    <View style={styles.hospitalDtlContainer}>
+                      <Text style={styles.title}>{el.name}</Text>
+                      <Text style={styles.type}>
+                        {el.isCountry ? "Улсын эмнэлэг" : "Хувийн эмнэлэг"}
+                      </Text>
+                      <View style={styles.addressContainer}>
+                        <Icon
+                          name="location"
+                          type="ionicon"
+                          size={15}
+                          color={TEXT_COLOR_GRAY}
+                        />
+                        <Text numberOfLines={1} style={styles.address}>
+                          {el.address}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })
+          )}
+        </ScrollView>
       </View>
     );
   };
   const RenderDoctors = () => {
     return (
       <View>
-        <View style={styles.searchContainer}>
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-            }}
-          >
-            <Icon
-              name="search"
-              type="feather"
-              size={20}
-              color={TEXT_COLOR_GRAY}
-            />
-            <Text
-              style={{
-                fontFamily: FONT_FAMILY_BOLD,
-                color: TEXT_COLOR_GRAY,
-                marginLeft: 10,
-              }}
-            >
-              Хайх
-            </Text>
-          </View>
-          <Icon
-            name="sliders"
-            type="feather"
-            size={20}
-            color={TEXT_COLOR_GRAY}
-          />
-        </View>
         <TouchableOpacity
           style={styles.doctorTopContainer}
           onPress={() => props.navigation.navigate("DoctorDtlScreen")}
@@ -203,22 +202,22 @@ const SearchScreen = (props) => {
   };
   const RenderMedicine = () => {
     return (
-      <View>
-        <Text>RenderMedicine</Text>
+      <View style={{ flex: 1 }}>
+        <Empty type="empty" text="Үр дүн олдсонгүй." />
       </View>
     );
   };
   const RenderPackage = () => {
     return (
-      <View>
-        <Text>RenderPackage</Text>
+      <View style={{ flex: 1 }}>
+        <Empty type="empty" text="Үр дүн олдсонгүй." />
       </View>
     );
   };
 
   return (
     <View style={styles.mainContainer}>
-      <View style={{ height: 50, paddingVertical: 5 }}>
+      <View style={{ height: 50, paddingVertical: 5, marginVertical: 10 }}>
         <ScrollView
           horizontal={true}
           contentContainerStyle={{ flexGrow: 1, marginHorizontal: 10 }}
@@ -243,6 +242,10 @@ const SearchScreen = (props) => {
                   style={[
                     styles.menuText,
                     {
+                      fontFamily:
+                        el.value == selectedMenu
+                          ? FONT_FAMILY_BOLD
+                          : FONT_FAMILY_LIGHT,
                       color: el.value == selectedMenu ? "#fff" : "#4E5969",
                     },
                   ]}
@@ -255,12 +258,12 @@ const SearchScreen = (props) => {
         </ScrollView>
       </View>
 
-      <ScrollView contentContainerStyle={styles.renderContainer}>
+      <View style={styles.renderContainer}>
         {selectedMenu == 1 ? <RenderHospitals /> : null}
         {selectedMenu == 2 ? <RenderDoctors /> : null}
         {selectedMenu == 3 ? <RenderMedicine /> : null}
         {selectedMenu == 4 ? <RenderPackage /> : null}
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -268,44 +271,37 @@ const SearchScreen = (props) => {
 export default SearchScreen;
 
 const styles = StyleSheet.create({
+  mainScroller: {
+    flexGrow: 1,
+  },
   mainContainer: {
     flex: 1,
     backgroundColor: MAIN_COLOR_BG,
   },
   menuContainer: {
     borderRadius: 30,
-    paddingVertical: 10,
     paddingHorizontal: 20,
     marginLeft: 10,
+    justifyContent: "center",
   },
   menuText: {
-    fontFamily: FONT_FAMILY_LIGHT,
+    fontSize: 16,
   },
   searchContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#fff",
-    borderRadius: 12,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    width: "100%",
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginBottom: 5,
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    elevation: 2,
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
   },
   searchInput: {
-    fontFamily: FONT_FAMILY_BOLD,
+    fontFamily: FONT_FAMILY_LIGHT,
     color: TEXT_COLOR_GRAY,
     marginLeft: 10,
-    width: "90%",
+    width: "85%",
+    height: 20,
   },
   doctorTopContainer: {
     marginTop: 10,
@@ -342,9 +338,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   renderContainer: {
-    flexGrow: 1,
+    flex: 1,
     paddingHorizontal: 20,
-    marginTop: 10,
     paddingBottom: 30,
   },
   count: {
@@ -361,7 +356,7 @@ const styles = StyleSheet.create({
   hospitalContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    marginBottom: 10,
     paddingVertical: 10,
     borderRadius: 12,
     backgroundColor: "#fff",

@@ -37,7 +37,7 @@ const LoginScreen = (props) => {
 
   const regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("WETITr");
   const [hidePassword, setHidePassword] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState("");
   const [borderColor, setBorderColor] = useState("");
@@ -105,7 +105,7 @@ const LoginScreen = (props) => {
           topPos={30}
         />
         <Image source={logo_blue} style={styles.logo} />
-        <Text>PASSWORD: Xd9jbo</Text>
+        <Text>PASSWORD: WETITr</Text>
         {state.loginError != "" ? (
           <Text
             style={{

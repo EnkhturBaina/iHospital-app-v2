@@ -30,12 +30,12 @@ import { Icon } from "@rneui/base";
 import axios from "axios";
 import MainContext from "../../contexts/MainContext";
 import Loader from "../../components/Loader";
+import hospitalAvatar from "../../../assets/hospitalAvatar.png";
+import Empty from "../../components/Empty";
 
 const HospitalListScreen = (props) => {
   const state = useContext(MainContext);
   const [searchValue, setSearchValue] = useState("");
-  const [hospitalList, setHospitalList] = useState([]);
-  const [loadingHospitals, setLoadingHospitals] = useState(false);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -45,7 +45,7 @@ const HospitalListScreen = (props) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    getHospitalList();
+    state.getHospitalList();
     wait(1000).then(() => setRefreshing(false));
   }, []);
 
@@ -64,42 +64,12 @@ const HospitalListScreen = (props) => {
   }, [props.navigation]);
 
   useEffect(() => {
-    getHospitalList();
+    state.getHospitalList();
   }, []);
-
-  const getHospitalList = async () => {
-    setHospitalList([]);
-    setLoadingHospitals(true);
-    //***** Эмнэлэгийн жагсаалт авах
-    await axios({
-      method: "get",
-      url: `${DEV_URL}organization/hospital`,
-      headers: {
-        "X-API-KEY": API_KEY,
-        Authorization: `Bearer ${state.accessToken}`,
-      },
-    })
-      .then(async (response) => {
-        console.log("response get HospitalList", response.data);
-        if (response.status == 200) {
-          setHospitalList(response.data.response.data);
-        }
-        setLoadingHospitals(false);
-      })
-      .catch(function (error) {
-        setLoadingHospitals(false);
-        console.log("errr", error.response.status);
-        if (error?.response?.status == 401) {
-          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
-          state.logout();
-        }
-        // setIsLoading(false);
-      });
-  };
 
   const navigateHospitalDtl = (hospital_data) => {
     state.setSelectedHospital(hospital_data);
-    props.navigation.navigate("HospitalDtlScreen");
+    props.navigation.navigate("HospitalStructuresScreen");
   };
   return (
     <View style={styles.mainContainer}>
@@ -124,13 +94,15 @@ const HospitalListScreen = (props) => {
           />
         }
       >
-        {loadingHospitals ? (
+        {state.loadingHospitals ? (
           <Loader />
         ) : (
-          hospitalList &&
-          hospitalList
-            ?.filter((obj) => obj.name?.includes(searchValue))
-            ?.map((el, index) => {
+          state.hospitalList &&
+          state.hospitalList
+            ?.filter((obj) =>
+              obj.name?.toLowerCase()?.includes(searchValue?.toLowerCase())
+            )
+            .map((el, index) => {
               return (
                 <TouchableOpacity
                   key={index}
@@ -139,7 +111,8 @@ const HospitalListScreen = (props) => {
                   activeOpacity={0.6}
                 >
                   <Image
-                    source={hospital}
+                    source={hospitalAvatar}
+                    // source={logoId ? logoId : hospitalAvatar}
                     resizeMode="contain"
                     style={styles.logo}
                   />
@@ -185,7 +158,6 @@ const styles = StyleSheet.create({
   },
   mainScroller: {
     flexGrow: 1,
-    marginTop: 10,
     paddingHorizontal: 10,
   },
   searchContainer: {
@@ -207,22 +179,15 @@ const styles = StyleSheet.create({
   hospitalContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginTop: 10,
     paddingVertical: 10,
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    elevation: 2,
     borderRadius: 12,
     backgroundColor: "#fff",
   },
   logo: {
-    width: 30,
-    height: 30,
-    marginHorizontal: 20,
+    width: 50,
+    height: 50,
+    marginHorizontal: 10,
   },
   title: {
     fontFamily: FONT_FAMILY_BOLD,
@@ -240,5 +205,6 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY_LIGHT,
     color: TEXT_COLOR_GRAY,
     marginLeft: 5,
+    fontSize: 12,
   },
 });

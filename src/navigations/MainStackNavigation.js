@@ -44,6 +44,8 @@ import MeetDtlScreen from "../screens/Meet/MeetDtlScreen";
 
 import { useNavigation } from "@react-navigation/native";
 import XrayResultScreen from "../screens/Xray/XrayResultScreen";
+import HospitalStructuresScreen from "../screens/DoctorAppointment/HospitalStructuresScreen";
+import DoctorsScreen from "../screens/DoctorAppointment/DoctorsScreen";
 
 const Stack = createStackNavigator();
 
@@ -228,6 +230,52 @@ const MainStackNavigator = (props) => {
       <Stack.Screen
         name="HospitalListScreen"
         component={HospitalListScreen}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.headerLeftContainer}
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            >
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Цаг захиалах</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="HospitalStructuresScreen"
+        component={HospitalStructuresScreen}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.headerLeftContainer}
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            >
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Цаг захиалах</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="DoctorsScreen"
+        component={DoctorsScreen}
         options={{
           title: "",
           headerStyle: {

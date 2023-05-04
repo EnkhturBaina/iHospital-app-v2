@@ -7,7 +7,7 @@ import { API_KEY, DEV_URL } from "../constant";
 const MainContext = React.createContext();
 
 export const MainStore = (props) => {
-  const [email, setEmail] = useState("eegii.111.gg@gmail.com");
+  const [email, setEmail] = useState("gantuya467@gmail.com");
   const [rememberEmail, setRememberEmail] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [accessToken, setAccessToken] = useState("");
@@ -22,7 +22,13 @@ export const MainStore = (props) => {
   //Цаг захиалга
   const [selectedHospital, setSelectedHospital] = useState("");
   const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [selectedStructure, setSelectedStructure] = useState("");
   const [invoiceData, setInvoiceData] = useState("");
+
+  const [hospitalList, setHospitalList] = useState([]);
+  const [doctorList, setDoctorList] = useState([]);
+  const [loadingHospitals, setLoadingHospitals] = useState(false);
+  const [loadingDoctors, setLoadingDoctors] = useState(false);
 
   const [appointmentData, setAppointmentData] = useState({
     department: "",
@@ -45,6 +51,66 @@ export const MainStore = (props) => {
     });
   };
 
+  const getHospitalList = async () => {
+    setHospitalList([]);
+    setLoadingHospitals(true);
+    //***** Эмнэлэгийн жагсаалт авах
+    await axios({
+      method: "get",
+      url: `${DEV_URL}organization/hospital`,
+      headers: {
+        "X-API-KEY": API_KEY,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then(async (response) => {
+        console.log("response get HospitalList", response.data);
+        if (response.status == 200) {
+          setHospitalList(response.data.response.data);
+        }
+        setLoadingHospitals(false);
+      })
+      .catch(function (error) {
+        setLoadingHospitals(false);
+        console.log("errr", error.response.status);
+        if (error?.response?.status == 401) {
+          setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          logout();
+        }
+      });
+  };
+
+  const getDoctors = async () => {
+    setDoctorList([]);
+    setLoadingDoctors(true);
+    //***** Эмчийн жагсаалт авах
+    await axios({
+      method: "get",
+      url: `${DEV_URL}mobile/employee`,
+      params: {
+        hospitalId: selectedHospital ? selectedHospital.id : null,
+      },
+      headers: {
+        "X-API-KEY": API_KEY,
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then(async (response) => {
+        console.log("response get Doctors", response.data.response);
+        if (response.status == 200) {
+          setDoctorList(response.data.response);
+        }
+        setLoadingDoctors(false);
+      })
+      .catch(function (error) {
+        setLoadingDoctors(false);
+        console.log("errr", error.response);
+        if (error?.response?.status == 401) {
+          setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          logout();
+        }
+      });
+  };
   const login = async (userName, password, rememberEmail) => {
     //***** Нэвтрэх
     setIsLoading(true);
@@ -216,6 +282,14 @@ export const MainStore = (props) => {
         setInvoiceData,
         selectedDoctor,
         setSelectedDoctor,
+        hospitalList,
+        doctorList,
+        getHospitalList,
+        getDoctors,
+        loadingHospitals,
+        loadingDoctors,
+        selectedStructure,
+        setSelectedStructure,
       }}
     >
       {props.children}

@@ -62,14 +62,14 @@ const ProfileScreen = (props) => {
           <View style={{ alignItems: "center" }}>
             <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>И-мэйл</Text>
             <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#86909C" }}>
-              tuul123@email.com
+              {state.userData ? state.userData?.email : null}
             </Text>
           </View>
           <Divider orientation="vertical" style={{ width: 1, height: "60%" }} />
           <View style={{ alignItems: "center" }}>
             <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>Утасны дугаар</Text>
             <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#86909C" }}>
-              (+976) 8803-2985
+              {state.userData ? state.userData?.employee?.phoneNo : null}
             </Text>
           </View>
         </View>
