@@ -64,10 +64,10 @@ const DoctorAppointmentStep2 = (props) => {
       method: "get",
       url: `${DEV_URL}mobile/schedule/`,
       params: {
-        hospitalId: state.selectedHospital?.id,
+        hospitalId: state.appointmentData.hospital?.id,
         type: 1,
         doctor: state.appointmentData.doctor.id,
-        departmentId: state.appointmentData.department.id,
+        departmentId: state.appointmentData.structure.id,
         startDate: "2023-01-01",
         endDate: "2023-02-28",
       },
@@ -111,7 +111,7 @@ const DoctorAppointmentStep2 = (props) => {
       method: "get",
       url: `${DEV_URL}mobile/slots/`,
       params: {
-        hospitalId: state.selectedHospital?.id,
+        hospitalId: state.appointmentData.hospital?.id,
         scheduleId: schedule_id,
         isActive: true,
       },
@@ -200,7 +200,7 @@ const DoctorAppointmentStep2 = (props) => {
           Authorization: `Bearer ${state.accessToken}`,
         },
         data: {
-          hospitalId: state.selectedHospital?.id,
+          hospitalId: state.appointmentData.hospital?.id,
           slotId: state.appointmentData.time?.id,
         },
       })

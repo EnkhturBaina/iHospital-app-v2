@@ -25,7 +25,7 @@ const HospitalStructuresScreen = (props) => {
     //***** Эмнэлэгийн тасагийн жагсаалт
     await axios({
       method: "get",
-      url: `${DEV_URL}mobile/department/${state.selectedHospital.id}`,
+      url: `${DEV_URL}mobile/department/${state.appointmentData.hospital.id}`,
       headers: {
         "X-API-KEY": API_KEY,
         Authorization: `Bearer ${state.accessToken}`,
@@ -50,7 +50,10 @@ const HospitalStructuresScreen = (props) => {
   useEffect(() => {
     getStructureList();
     return () => {
-      state.setSelectedStructure("");
+      state.setAppointmentData((prevState) => ({
+        ...prevState,
+        structure: "",
+      }));
     };
   }, []);
 
@@ -71,12 +74,17 @@ const HospitalStructuresScreen = (props) => {
                   styles.menuItem,
                   {
                     backgroundColor:
-                      state.selectedStructure.id == el.id ? MAIN_COLOR : "#fff",
+                      state.appointmentData.structure.id == el.id
+                        ? MAIN_COLOR
+                        : "#fff",
                   },
                 ]}
                 key={index}
                 onPress={() => {
-                  state.setSelectedStructure(el);
+                  state.setAppointmentData((prevState) => ({
+                    ...prevState,
+                    structure: el,
+                  }));
                 }}
               >
                 <Text
@@ -84,7 +92,7 @@ const HospitalStructuresScreen = (props) => {
                     styles.menuText,
                     {
                       color:
-                        state.selectedStructure.id == el.id
+                        state.appointmentData.structure.id == el.id
                           ? "#fff"
                           : MAIN_COLOR,
                     },
@@ -109,7 +117,7 @@ const HospitalStructuresScreen = (props) => {
         }}
       >
         <Button
-          disabled={state.selectedStructure == ""}
+          disabled={state.appointmentData.structure == ""}
           title="Үргэлжлүүлэх (1/5)"
           color={MAIN_COLOR}
           radius={12}

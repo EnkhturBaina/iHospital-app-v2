@@ -54,10 +54,10 @@ const HospitalDtlScreen = (props) => {
           <Image source={hospital} resizeMode="contain" style={styles.logo} />
           <View style={styles.hospitalDtlContainer}>
             <Text style={styles.title}>
-              {state.selectedHospital.name ?? "-"}
+              {state.appointmentData.hospital.name ?? "-"}
             </Text>
             <Text style={styles.type}>
-              {state.selectedHospital.databaseName ?? "-"}
+              {state.appointmentData.hospital.databaseName ?? "-"}
             </Text>
             <View style={styles.addressContainer}>
               <View style={styles.scheduleContainer}>
@@ -79,7 +79,7 @@ const HospitalDtlScreen = (props) => {
                   color={TEXT_COLOR_GRAY}
                 />
                 <Text style={styles.address}>
-                  {state.selectedHospital.address ?? "-"}
+                  {state.appointmentData.hospital.address ?? "-"}
                 </Text>
               </View>
             </View>

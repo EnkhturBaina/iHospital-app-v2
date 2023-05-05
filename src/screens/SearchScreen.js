@@ -77,7 +77,10 @@ const SearchScreen = (props) => {
   }, []);
 
   const navigateHospitalDtl = async (hospital_data) => {
-    state.setSelectedHospital(hospital_data);
+    state.setAppointmentData((prevState) => ({
+      ...prevState,
+      hospital: hospital_data,
+    }));
     props.navigation.navigate("HospitalStructuresScreen");
   };
   const RenderHospitals = () => {

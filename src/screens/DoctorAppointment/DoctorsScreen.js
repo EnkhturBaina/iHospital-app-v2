@@ -32,8 +32,8 @@ const DoctorsScreen = (props) => {
       method: "get",
       url: `${DEV_URL}mobile/department-doctors`,
       params: {
-        hospitalId: state.selectedHospital.id,
-        departmentId: state.selectedStructure?.id,
+        hospitalId: state.appointmentData.hospital.id,
+        departmentId: state.appointmentData.structure?.id,
       },
       headers: {
         "X-API-KEY": API_KEY,
@@ -59,7 +59,10 @@ const DoctorsScreen = (props) => {
   useEffect(() => {
     getDoctorList();
     return () => {
-      state.setSelectedDoctor("");
+      state.setAppointmentData((prevState) => ({
+        ...prevState,
+        doctor: "",
+      }));
     };
   }, []);
 
@@ -80,12 +83,17 @@ const DoctorsScreen = (props) => {
                   styles.menuItem,
                   {
                     backgroundColor:
-                      state.selectedDoctor.id == el.id ? MAIN_COLOR : "#fff",
+                      state.appointmentData.doctor.id == el.id
+                        ? MAIN_COLOR
+                        : "#fff",
                   },
                 ]}
                 key={index}
                 onPress={() => {
-                  state.setSelectedDoctor(el);
+                  state.setAppointmentData((prevState) => ({
+                    ...prevState,
+                    doctor: el,
+                  }));
                 }}
               >
                 <Text
@@ -93,7 +101,9 @@ const DoctorsScreen = (props) => {
                     styles.menuText,
                     {
                       color:
-                        state.selectedDoctor.id == el.id ? "#fff" : MAIN_COLOR,
+                        state.appointmentData.doctor.id == el.id
+                          ? "#fff"
+                          : MAIN_COLOR,
                     },
                   ]}
                 >
@@ -104,7 +114,7 @@ const DoctorsScreen = (props) => {
                     styles.depText,
                     {
                       color:
-                        state.selectedDoctor.id == el.id
+                        state.appointmentData.doctor.id == el.id
                           ? "#fff"
                           : TEXT_COLOR_GRAY,
                     },
@@ -128,7 +138,7 @@ const DoctorsScreen = (props) => {
         }}
       >
         <Button
-          disabled={state.selectedDoctor == ""}
+          disabled={state.appointmentData.doctor == ""}
           title="Үргэлжлүүлэх (2/5)"
           color={MAIN_COLOR}
           radius={12}

@@ -20,9 +20,6 @@ export const MainStore = (props) => {
   const [termCheck, setTermCheck] = useState(false);
 
   //Цаг захиалга
-  const [selectedHospital, setSelectedHospital] = useState("");
-  const [selectedDoctor, setSelectedDoctor] = useState("");
-  const [selectedStructure, setSelectedStructure] = useState("");
   const [invoiceData, setInvoiceData] = useState("");
 
   const [hospitalList, setHospitalList] = useState([]);
@@ -31,7 +28,8 @@ export const MainStore = (props) => {
   const [loadingDoctors, setLoadingDoctors] = useState(false);
 
   const [appointmentData, setAppointmentData] = useState({
-    department: "",
+    hospital: "",
+    structure: "",
     doctor: "",
     schedule: "",
     date: "",
@@ -88,7 +86,9 @@ export const MainStore = (props) => {
       method: "get",
       url: `${DEV_URL}mobile/employee`,
       params: {
-        hospitalId: selectedHospital ? selectedHospital.id : null,
+        hospitalId: appointmentData.hospital
+          ? appointmentData.hospital.id
+          : null,
       },
       headers: {
         "X-API-KEY": API_KEY,
@@ -274,22 +274,16 @@ export const MainStore = (props) => {
         rememberEmail,
         setRememberEmail,
         userData,
-        selectedHospital,
-        setSelectedHospital,
         loginError,
         setLoginError,
         invoiceData,
         setInvoiceData,
-        selectedDoctor,
-        setSelectedDoctor,
         hospitalList,
         doctorList,
         getHospitalList,
         getDoctors,
         loadingHospitals,
         loadingDoctors,
-        selectedStructure,
-        setSelectedStructure,
       }}
     >
       {props.children}
