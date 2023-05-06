@@ -47,6 +47,8 @@ import XrayResultScreen from "../screens/Xray/XrayResultScreen";
 import HospitalStructuresScreen from "../screens/DoctorAppointment/HospitalStructuresScreen";
 import DoctorsScreen from "../screens/DoctorAppointment/DoctorsScreen";
 import ExResultDtlScreen from "../screens/ExaminationResult/ExResultDtlScreen";
+import DoctorAppointmentStep4 from "../screens/DoctorAppointment/DoctorAppointmentStep4";
+import DoctorAppointmentStep3 from "../screens/DoctorAppointment/DoctorAppointmentStep3";
 
 const Stack = createStackNavigator();
 
@@ -114,7 +116,9 @@ const LoginStackNavigator = (props) => {
               }}
             >
               <Icon type="feather" name="chevron-left" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Text style={[styles.headerLeftText, { color: "#000" }]}>
+                Буцах
+              </Text>
             </TouchableOpacity>
           ),
         }}
@@ -138,7 +142,9 @@ const LoginStackNavigator = (props) => {
               }}
             >
               <Icon type="feather" name="chevron-left" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Text style={[styles.headerLeftText, { color: "#000" }]}>
+                Буцах
+              </Text>
             </TouchableOpacity>
           ),
         }}
@@ -162,7 +168,9 @@ const LoginStackNavigator = (props) => {
               }}
             >
               <Icon type="feather" name="chevron-left" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Text style={[styles.headerLeftText, { color: "#000" }]}>
+                Буцах
+              </Text>
             </TouchableOpacity>
           ),
         }}
@@ -185,7 +193,9 @@ const LoginStackNavigator = (props) => {
               }}
             >
               <Icon type="feather" name="chevron-left" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Text style={[styles.headerLeftText, { color: "#000" }]}>
+                Буцах
+              </Text>
             </TouchableOpacity>
           ),
         }}
@@ -483,6 +493,53 @@ const MainStackNavigator = (props) => {
       <Stack.Screen
         name="DoctorAppointmentStep2"
         component={DoctorAppointmentStep2}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.headerLeftContainer}
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            >
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Буцах</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="DoctorAppointmentStep3"
+        component={DoctorAppointmentStep3}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.headerLeftContainer}
+              onPress={() => {
+                props.navigation.goBack();
+              }}
+            >
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Буцах</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="DoctorAppointmentStep4"
+        component={DoctorAppointmentStep4}
         options={{
           title: "",
           headerStyle: {
@@ -829,7 +886,7 @@ const ChatStackNavigator = (props) => {
               }}
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
-              <Text style={styles.headerLeftText}>Буцах</Text>
+              <Text style={styles.headerLeftText}>Мессеж</Text>
             </TouchableOpacity>
           ),
         }}

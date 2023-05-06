@@ -11,9 +11,11 @@ import {
   NativeModules,
   Dimensions,
 } from "react-native";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import {
+  API_KEY,
+  DEV_URL,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   INPUT_BORDER_RADIUS,
@@ -35,11 +37,79 @@ import confirmed from "../../../assets/confirmed.png";
 import declined from "../../../assets/declined.png";
 import flag from "../../../assets/flag.png";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import MainContext from "../../contexts/MainContext";
+import { RefreshControl } from "react-native-gesture-handler";
+import moment from "moment";
+import "moment/locale/mn";
 
 const MeetScreen = () => {
+  const state = useContext(MainContext);
+
+  const [loading, setLoading] = useState(false);
+  const [refundList, setRefundList] = useState([]);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const [customDatesStyles, setCustomDatesStyles] = useState([]); //Боломжит өдрүүд харуулах
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getMeetHistory();
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   const navigation = useNavigation();
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
+  const getMeetHistory = async () => {
+    setLoading(true);
+    setRefundList([]);
+    await axios({
+      method: "get",
+      url: `${DEV_URL}mobile/appointment`,
+      params: {
+        statusis: [1, 2, 3, 4],
+      },
+      headers: {
+        "X-API-KEY": API_KEY,
+        Authorization: `Bearer ${state.accessToken}`,
+      },
+    })
+      .then(async (response) => {
+        console.log("getMeet History", response.data.response);
+        if (response.status == 200) {
+          setRefundList(response.data.response);
+
+          response.data.response?.map((el) => {
+            setCustomDatesStyles((customDatesStyles) => [
+              ...customDatesStyles,
+              {
+                date: el.workDate,
+                style: { backgroundColor: MAIN_COLOR_BG },
+                textStyle: { color: MAIN_COLOR, fontFamily: FONT_FAMILY_BOLD },
+              },
+            ]);
+          });
+        }
+        setLoading(false);
+      })
+      .catch(function (error) {
+        console.log("error get MeetHistory", error);
+        setLoading(false);
+        if (error.response.status == 400) {
+        }
+      });
+  };
+
+  useEffect(() => {
+    getMeetHistory();
+  }, []);
+
   return (
     <SafeAreaProvider
       style={{
@@ -66,52 +136,82 @@ const MeetScreen = () => {
           previousTitleStyle={{ fontFamily: FONT_FAMILY_BOLD, padding: 10 }}
           selectYearTitle="Он сонгох"
           selectMonthTitle="Сар сонгох "
+          customDatesStyles={customDatesStyles}
         />
       </View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <TouchableOpacity
-          style={styles.cardContainer}
-          onPress={() => navigation.navigate("MeetDtlScreen")}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image
-              source={confirmed}
-              style={{ width: 40, height: 40 }}
-              resizeMode="contain"
-            />
-            <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
-                Universal Med
-              </Text>
-              <Text
-                style={{
-                  fontFamily: FONT_FAMILY_LIGHT,
-                  color: "#8D9095",
-                  fontSize: 12,
-                }}
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={MAIN_COLOR}
+            colors={[MAIN_COLOR]}
+          />
+        }
+      >
+        {refundList &&
+          refundList?.map((el, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={styles.cardContainer}
+                onPress={() => navigation.navigate("MeetDtlScreen")}
               >
-                Уулзалт цуцлагдсан
-              </Text>
-            </View>
-          </View>
-          <View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Icon
-                name="calendar"
-                type="ant-design"
-                size={15}
-                color="#86909C"
-              />
-              <Text style={{ color: "#86909C", marginLeft: 5 }}>
-                2023/04/02
-              </Text>
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Icon name="clock" type="feather" size={15} color="#86909C" />
-              <Text style={{ color: "#86909C", marginLeft: 5 }}>09:00</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Image
+                    source={confirmed}
+                    style={{ width: 40, height: 40 }}
+                    resizeMode="contain"
+                  />
+                  <View style={{ marginLeft: 10 }}>
+                    <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
+                      {el.name}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: FONT_FAMILY_LIGHT,
+                        color: "#8D9095",
+                        fontSize: 12,
+                      }}
+                    >
+                      Уулзалт цуцлагдсан
+                    </Text>
+                  </View>
+                </View>
+                <View style={{ alignItems: "flex-end" }}>
+                  <View
+                    style={{ flexDirection: "row", alignItems: "flex-end" }}
+                  >
+                    <Icon
+                      name="calendar"
+                      type="ant-design"
+                      size={15}
+                      color="#86909C"
+                    />
+                    <Text style={{ color: "#86909C", marginLeft: 5 }}>
+                      {moment(el.createdAt)
+                        .locale("mn")
+                        .format("dddd, YYYY/MM/DD")}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Icon
+                      name="clock"
+                      type="feather"
+                      size={15}
+                      color="#86909C"
+                    />
+                    <Text style={{ color: "#86909C", marginLeft: 5 }}>
+                      {moment(el.createdAt).format("HH:MM")}
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
       </ScrollView>
     </SafeAreaProvider>
   );

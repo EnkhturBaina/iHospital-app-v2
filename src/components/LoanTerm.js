@@ -6,7 +6,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   BUTTON_BORDER_RADIUS,
   FONT_FAMILY_BOLD,
@@ -16,11 +16,15 @@ import {
 import { Button, CheckBox } from "@rneui/base";
 import RBSheet from "react-native-raw-bottom-sheet";
 import MainContext from "../contexts/MainContext";
+import Loader from "./Loader";
+import { WebView } from "react-native-webview";
 
 export default function (props) {
   const state = useContext(MainContext);
   const refRBSheet = useRef();
+  const webview = useRef();
   const screen = Dimensions.get("screen");
+  const [visibleDialogLoader, setVisibleDialogLoader] = useState(false);
   return (
     <View style={styles.termSection}>
       <View style={styles.termContainer}>
@@ -76,35 +80,32 @@ export default function (props) {
           },
         }}
       >
-        <View style={styles.bottomSheetContainer}>
-          <View style={styles.lookupcontainer}>
-            <ScrollView
-              contentContainerStyle={{
-                paddingBottom: 40,
-                marginHorizontal: 20,
-              }}
-            >
-              <Text style={styles.cardTopText}>Ерөнхий заалт</Text>
-              <View>
-                <Text style={styles.generalText}>aaaaaaaaaaaaaa</Text>
-              </View>
-
-              <Button
-                title="Зөвшөөрөх"
-                containerStyle={styles.loginBtn}
-                color={MAIN_COLOR}
-                radius={BUTTON_BORDER_RADIUS}
-                onPress={() => {
-                  state.setTermCheck(true);
-                  refRBSheet.current.close();
-                }}
-                titleStyle={{
-                  fontFamily: FONT_FAMILY_BOLD,
-                }}
-              />
-            </ScrollView>
-          </View>
-        </View>
+        <WebView
+          style={{
+            width: screen.width,
+            overflow: "hidden",
+          }}
+          source={{
+            uri: "https://ihospital.mn/privacy",
+          }}
+          ref={webview}
+          onLoadStart={() => setVisibleDialogLoader(true)}
+          onLoad={() => setVisibleDialogLoader(false)}
+        />
+        {visibleDialogLoader ? <Loader /> : null}
+        <Button
+          title="Зөвшөөрөх"
+          containerStyle={styles.confirmButton}
+          color={MAIN_COLOR}
+          radius={BUTTON_BORDER_RADIUS}
+          onPress={() => {
+            state.setTermCheck(true);
+            refRBSheet.current.close();
+          }}
+          titleStyle={{
+            fontFamily: FONT_FAMILY_BOLD,
+          }}
+        />
       </RBSheet>
     </View>
   );
@@ -140,5 +141,9 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY_BOLD,
     textAlign: "justify",
     marginBottom: 10,
+  },
+  confirmButton: {
+    marginVertical: 10,
+    paddingHorizontal: 10,
   },
 });

@@ -69,7 +69,7 @@ const ProfileScreen = (props) => {
           <View style={{ alignItems: "center" }}>
             <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>Утасны дугаар</Text>
             <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#86909C" }}>
-              {state.userData ? state.userData?.employee?.phoneNo : null}
+              {state.userData ? state.userData?.phoneNo : null}
             </Text>
           </View>
         </View>

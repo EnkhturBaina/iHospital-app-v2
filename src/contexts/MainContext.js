@@ -7,7 +7,7 @@ import { API_KEY, DEV_URL } from "../constant";
 const MainContext = React.createContext();
 
 export const MainStore = (props) => {
-  const [email, setEmail] = useState("gantuya467@gmail.com");
+  const [email, setEmail] = useState("eegii.111.gg@gmail.com");
   const [rememberEmail, setRememberEmail] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [accessToken, setAccessToken] = useState("");

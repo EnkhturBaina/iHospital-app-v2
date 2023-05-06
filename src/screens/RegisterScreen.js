@@ -30,7 +30,7 @@ import CustomSnackbar from "../components/CustomSnackbar";
 import CustomDialog from "../components/CustomDialog";
 import MainContext from "../contexts/MainContext";
 
-const RegisterScreen = () => {
+const RegisterScreen = (props) => {
   const state = useContext(MainContext);
   const headerHeight = useHeaderHeight();
   const [lastName, setLastName] = useState("");
@@ -65,6 +65,7 @@ const RegisterScreen = () => {
   const [loadingAction, setLoadingAction] = useState(false);
 
   const registerUser = async () => {
+    console.log("email", email);
     //***** Хэрэглэгч бүртгэх
     if (lastName == "") {
       onToggleSnackBar("Овог оруулна уу");
@@ -91,7 +92,7 @@ const RegisterScreen = () => {
           "X-API-KEY": API_KEY,
         },
         data: {
-          email,
+          email: email.toLowerCase(),
           firstName,
           lastName,
           phoneNo: phone,
@@ -101,7 +102,11 @@ const RegisterScreen = () => {
       })
         .then(async (response) => {
           console.log("responee register User", response.data);
-          if (response.status == 200) {
+          console.log("responee register User", response.status);
+          if (response.status == 201) {
+            setDialogType("success");
+            setDialogText("Таны нэвтрэх мэдээллийг и-мэйлээр илгээлээ");
+            setVisibleDialog(true);
           }
           setLoadingAction(false);
         })
@@ -129,7 +134,7 @@ const RegisterScreen = () => {
         visible={visibleSnack}
         dismiss={onDismissSnackBar}
         text={snackBarMsg}
-        topPos={30}
+        topPos={0}
       />
       <ScrollView bounces={false} contentContainerStyle={styles.mainContainer}>
         <View style={styles.sectionStyle}>
@@ -144,7 +149,6 @@ const RegisterScreen = () => {
             placeholder="Овог"
             value={lastName}
             onChangeText={setLastName}
-            keyboardType="phone-address"
             style={styles.generalInput}
           />
         </View>
@@ -160,7 +164,6 @@ const RegisterScreen = () => {
             placeholder="Нэр"
             value={firstName}
             onChangeText={setFirstName}
-            keyboardType="phone-address"
             style={styles.generalInput}
           />
         </View>
@@ -270,6 +273,7 @@ const RegisterScreen = () => {
           visible={visibleDialog}
           confirmFunction={() => {
             setVisibleDialog(false);
+            dialogType == "success" ? props.navigation.goBack() : null;
           }}
           declineFunction={() => {}}
           text={dialogText}
