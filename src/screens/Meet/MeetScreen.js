@@ -2,8 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  useWindowDimensions,
-  SafeAreaView,
   ScrollView,
   TouchableOpacity,
   Image,
@@ -12,22 +10,18 @@ import {
   Dimensions,
 } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import {
   API_KEY,
   DEV_URL,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
-  INPUT_BORDER_RADIUS,
   MAIN_COLOR,
   MAIN_COLOR_BG,
   MONTHS,
-  TEXT_COLOR_GRAY,
   WEEKDAYS,
 } from "../../constant";
 import Empty from "../../components/Empty";
-import avatar from "../../../assets/avatar.png";
-import { Divider, Icon } from "@rneui/base";
+import { Icon } from "@rneui/base";
 import HeaderUser from "../../components/HeaderUser";
 import MyStatusBar from "../../components/CustomStatusBar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -42,11 +36,12 @@ import MainContext from "../../contexts/MainContext";
 import { RefreshControl } from "react-native-gesture-handler";
 import moment from "moment";
 import "moment/locale/mn";
+import Loader from "../../components/Loader";
 
-const MeetScreen = () => {
+const MeetScreen = (props) => {
   const state = useContext(MainContext);
 
-  const [loading, setLoading] = useState(false);
+  const [loadingMeets, setLoadingMeets] = useState(false);
   const [refundList, setRefundList] = useState([]);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -67,7 +62,7 @@ const MeetScreen = () => {
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const getMeetHistory = async () => {
-    setLoading(true);
+    setLoadingMeets(true);
     setRefundList([]);
     await axios({
       method: "get",
@@ -81,27 +76,40 @@ const MeetScreen = () => {
       },
     })
       .then(async (response) => {
-        console.log("getMeet History", response.data.response);
+        // console.log("getMeet History", JSON.stringify(response.data.response));
         if (response.status == 200) {
           setRefundList(response.data.response);
 
-          response.data.response?.map((el) => {
-            setCustomDatesStyles((customDatesStyles) => [
-              ...customDatesStyles,
-              {
-                date: el.workDate,
-                style: { backgroundColor: MAIN_COLOR_BG },
-                textStyle: { color: MAIN_COLOR, fontFamily: FONT_FAMILY_BOLD },
-              },
-            ]);
-          });
+          response.data.response
+            ?.filter(
+              (obj) =>
+                obj["appointments"] !== undefined && obj.appointments.length > 0
+            )
+            ?.map((el) => {
+              el.appointments?.map((el) => {
+                setCustomDatesStyles((customDatesStyles) => [
+                  ...customDatesStyles,
+                  {
+                    date: el.slots?.schedule?.workDate,
+                    style: { backgroundColor: MAIN_COLOR },
+                    textStyle: {
+                      color: "#fff",
+                      fontFamily: FONT_FAMILY_BOLD,
+                    },
+                  },
+                ]);
+              });
+            });
         }
-        setLoading(false);
+        setLoadingMeets(false);
       })
       .catch(function (error) {
-        console.log("error get MeetHistory", error);
-        setLoading(false);
+        // console.log("error get MeetHistory", error);
+        setLoadingMeets(false);
         if (error.response.status == 400) {
+        } else if (error?.response?.status == 401) {
+          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          state.logout();
         }
       });
   };
@@ -128,8 +136,8 @@ const MeetScreen = () => {
           months={MONTHS}
           todayTextStyle={{ fontWeight: "bold", color: "#000" }}
           todayBackgroundColor={MAIN_COLOR_BG}
-          selectedDayColor={MAIN_COLOR}
-          selectedDayTextColor="#fff"
+          selectedDayColor="#fff"
+          selectedDayTextColor="#000"
           previousTitle="Өмнөх"
           nextTitle="Дараах"
           nextTitleStyle={{ fontFamily: FONT_FAMILY_BOLD, padding: 10 }}
@@ -140,7 +148,7 @@ const MeetScreen = () => {
         />
       </View>
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 10 }}
         bounces={false}
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -152,66 +160,102 @@ const MeetScreen = () => {
           />
         }
       >
-        {refundList &&
-          refundList?.map((el, index) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                style={styles.cardContainer}
-                onPress={() => navigation.navigate("MeetDtlScreen")}
-              >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Image
-                    source={confirmed}
-                    style={{ width: 40, height: 40 }}
-                    resizeMode="contain"
-                  />
-                  <View style={{ marginLeft: 10 }}>
-                    <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
-                      {el.name}
-                    </Text>
-                    <Text
-                      style={{
-                        fontFamily: FONT_FAMILY_LIGHT,
-                        color: "#8D9095",
-                        fontSize: 12,
-                      }}
-                    >
-                      Уулзалт цуцлагдсан
-                    </Text>
-                  </View>
+        {refundList == "" && !loadingMeets ? (
+          <Empty type="empty" text="Уулзалт олдсонгүй" />
+        ) : null}
+        {loadingMeets ? (
+          <Loader />
+        ) : (
+          refundList &&
+          refundList
+            ?.filter(
+              (obj) =>
+                obj["appointments"] !== undefined && obj.appointments.length > 0
+            )
+            .map((data, index) => {
+              return (
+                <View key={index}>
+                  {data.appointments?.map((el, index) => {
+                    return (
+                      <TouchableOpacity
+                        key={index}
+                        style={styles.cardContainer}
+                        onPress={() => {
+                          props.navigation.navigate("MeetDtlScreen", {
+                            hospitalData: data,
+                            appointmentData: el,
+                          });
+                        }}
+                      >
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
+                        >
+                          <Image
+                            source={confirmed}
+                            style={{ width: 40, height: 40 }}
+                            resizeMode="contain"
+                          />
+                          <View style={{ marginLeft: 10 }}>
+                            <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
+                              {data.name}
+                            </Text>
+                            <Text
+                              style={{
+                                fontFamily: FONT_FAMILY_LIGHT,
+                                color: "#8D9095",
+                                fontSize: 12,
+                              }}
+                            >
+                              Уулзалт цуцлагдсан
+                            </Text>
+                          </View>
+                        </View>
+                        <View style={{ alignItems: "flex-end" }}>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "flex-end",
+                            }}
+                          >
+                            <Icon
+                              name="calendar"
+                              type="ant-design"
+                              size={15}
+                              color="#86909C"
+                            />
+                            <Text style={{ color: "#86909C", marginLeft: 5 }}>
+                              {moment(el.slots?.schedule?.workDate)
+                                .locale("mn")
+                                .format("dddd, YYYY/MM/DD")}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Text style={{ color: "#86909C", marginRight: 5 }}>
+                              {el.slots?.startTime?.substr(0, 5)}
+                            </Text>
+                            <Icon
+                              name="clock"
+                              type="feather"
+                              size={15}
+                              color="#86909C"
+                            />
+                            <Text style={{ color: "#86909C", marginLeft: 5 }}>
+                              {el.slots?.endTime?.substr(0, 5)}
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
                 </View>
-                <View style={{ alignItems: "flex-end" }}>
-                  <View
-                    style={{ flexDirection: "row", alignItems: "flex-end" }}
-                  >
-                    <Icon
-                      name="calendar"
-                      type="ant-design"
-                      size={15}
-                      color="#86909C"
-                    />
-                    <Text style={{ color: "#86909C", marginLeft: 5 }}>
-                      {moment(el.createdAt)
-                        .locale("mn")
-                        .format("dddd, YYYY/MM/DD")}
-                    </Text>
-                  </View>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Icon
-                      name="clock"
-                      type="feather"
-                      size={15}
-                      color="#86909C"
-                    />
-                    <Text style={{ color: "#86909C", marginLeft: 5 }}>
-                      {moment(el.createdAt).format("HH:MM")}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+              );
+            })
+        )}
       </ScrollView>
     </SafeAreaProvider>
   );

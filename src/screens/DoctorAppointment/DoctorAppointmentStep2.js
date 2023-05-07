@@ -100,6 +100,9 @@ const DoctorAppointmentStep2 = (props) => {
         setLoadingSchedules(false);
         console.log("error get Schedules", error.response);
         if (error.response.status == 400) {
+        } else if (error?.response?.status == 401) {
+          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          state.logout();
         }
       });
   };
@@ -134,6 +137,9 @@ const DoctorAppointmentStep2 = (props) => {
         setLoadingSlots(false);
         console.log("error getS lots", error.response.data);
         if (error.response.status == 400) {
+        } else if (error?.response?.status == 401) {
+          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          state.logout();
         }
       });
   };
@@ -217,6 +223,9 @@ const DoctorAppointmentStep2 = (props) => {
           setLoadingAction(false);
           console.log("error create Invoice", error.response);
           if (error.response.status == 400) {
+          } else if (error?.response?.status == 401) {
+            state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+            state.logout();
           }
         });
     }

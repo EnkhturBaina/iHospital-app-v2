@@ -65,6 +65,9 @@ const DoctorAppointmentStep4 = (props) => {
           setDialogType("warning");
           setDialogText(error.response.data.message);
           setVisibleDialog(true);
+        } else if (error?.response?.status == 401) {
+          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          state.logout();
         }
       });
   };

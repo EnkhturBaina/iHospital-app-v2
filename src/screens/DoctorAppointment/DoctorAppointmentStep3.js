@@ -53,6 +53,9 @@ const DoctorAppointmentStep3 = (props) => {
         setLoadingAction(false);
         console.log("error create Invoice", error.response);
         if (error.response.status == 400) {
+        } else if (error?.response?.status == 401) {
+          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          state.logout();
         }
       });
   };

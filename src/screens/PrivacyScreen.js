@@ -10,7 +10,7 @@ const PrivacyScreen = () => {
     setChecked(!checked);
   };
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: MAIN_BACKGROUND_COLOR_GRAY,
@@ -102,7 +102,7 @@ const PrivacyScreen = () => {
           buttonStyle={{ height: 45 }}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: Platform.OS == "ios" ? 10 : 0,
+    marginVertical: Platform.OS == "ios" ? 5 : 0,
   },
   btnContainer: {
     marginRight: "auto",

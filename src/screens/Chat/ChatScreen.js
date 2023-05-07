@@ -61,7 +61,7 @@ const DoctorChatScreen = () => {
 const HospitalChatScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.mainScroller}>
-      <Text>HospitalChatScreen</Text>
+      {/* <Text>HospitalChatScreen</Text> */}
     </ScrollView>
   );
 };
