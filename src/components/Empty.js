@@ -18,7 +18,7 @@ const Empty = ({ text, type, subtext }) => {
       {type ? (
         <Image
           source={imageType}
-          style={{ width: "60%", height: "60%" }}
+          style={{ width: "80%", height: "80%" }}
           resizeMode="contain"
         />
       ) : null}

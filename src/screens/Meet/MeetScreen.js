@@ -37,9 +37,11 @@ import { RefreshControl } from "react-native-gesture-handler";
 import moment from "moment";
 import "moment/locale/mn";
 import Loader from "../../components/Loader";
+import { useIsFocused } from "@react-navigation/native";
 
 const MeetScreen = (props) => {
   const state = useContext(MainContext);
+  const isFocused = useIsFocused();
 
   const [loadingMeets, setLoadingMeets] = useState(false);
   const [refundList, setRefundList] = useState([]);
@@ -116,7 +118,7 @@ const MeetScreen = (props) => {
 
   useEffect(() => {
     getMeetHistory();
-  }, []);
+  }, [isFocused]);
 
   return (
     <SafeAreaProvider
@@ -149,7 +151,6 @@ const MeetScreen = (props) => {
       </View>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 10 }}
-        bounces={false}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
@@ -191,7 +192,15 @@ const MeetScreen = (props) => {
                           style={{ flexDirection: "row", alignItems: "center" }}
                         >
                           <Image
-                            source={confirmed}
+                            source={
+                              el.status == 1
+                                ? confirmed
+                                : el.status == 2
+                                ? flag
+                                : el.status == 3
+                                ? declined
+                                : null
+                            }
                             style={{ width: 40, height: 40 }}
                             resizeMode="contain"
                           />
@@ -206,7 +215,13 @@ const MeetScreen = (props) => {
                                 fontSize: 12,
                               }}
                             >
-                              Уулзалт цуцлагдсан
+                              {el.status == 1
+                                ? "Цаг захиалсан"
+                                : el.status == 2
+                                ? "Цаг сольсон"
+                                : el.status == 3
+                                ? "Цаг цуцлагдсан"
+                                : "-"}
                             </Text>
                           </View>
                         </View>

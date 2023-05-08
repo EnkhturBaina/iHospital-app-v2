@@ -1,22 +1,73 @@
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import moment from "moment";
 import "moment/locale/mn";
 import { Button, Icon } from "@rneui/base";
 import {
+  API_KEY,
+  DEV_URL,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
 } from "../../constant";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { Divider } from "react-native-paper";
+import axios from "axios";
+import MainContext from "../../contexts/MainContext";
+import CustomSnackbar from "../../components/CustomSnackbar";
 
 const MeetDtlScreen = (props) => {
+  const state = useContext(MainContext);
   const hospitalData = props.route?.params?.hospitalData;
   const appointmentData = props.route?.params?.appointmentData;
   const refRBSheet = useRef();
+
+  const [visibleSnack, setVisibleSnack] = useState(false);
+  const [snackBarMsg, setSnackBarMsg] = useState("");
+  //Snacbkbar харуулах
+  const onToggleSnackBar = (msg) => {
+    setVisibleSnack(!visibleSnack);
+    setSnackBarMsg(msg);
+  };
+
+  //Snacbkbar хаах
+  const onDismissSnackBar = () => setVisibleSnack(false);
+
+  const changeSlotStatus = async (app_id) => {
+    await axios({
+      method: "patch",
+      url: `${DEV_URL}mobile/return-appointment/${app_id}`,
+      headers: {
+        "X-API-KEY": API_KEY,
+        Authorization: `Bearer ${state.accessToken}`,
+      },
+      data: {
+        hospitalId: hospitalData.id,
+      },
+    })
+      .then(async (response) => {
+        console.log("get History", JSON.stringify(response.data));
+        if (response.status == 200) {
+          onToggleSnackBar("Уулзалт цуцлагдлаа.");
+        }
+      })
+      .catch(function (error) {
+        console.log("err", error);
+        console.log("error get History", error.response.data);
+        if (error?.response?.status == 401) {
+          state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+          state.logout();
+        }
+      });
+  };
   return (
     <ScrollView contentContainerStyle={styles.mainScroller}>
+      <CustomSnackbar
+        visible={visibleSnack}
+        dismiss={onDismissSnackBar}
+        text={snackBarMsg}
+        topPos={0}
+      />
       <Text style={styles.titleText}>Уулзалтын мэдээлэл</Text>
       <View style={styles.cardContainer}>
         <View style={styles.rowContainer}>
@@ -145,7 +196,7 @@ const MeetDtlScreen = (props) => {
             Төлбөрийн 50% ийг зөвхөн буцааж таны дансруу шилжүүлэх болхыг
             анхаарна уу!
           </Text>
-          <Divider style={{ marginVertical: 10 }} />
+          <Divider style={{ marginTop: 10, marginBottom: 20 }} />
           <View style={styles.bottomBtns}>
             <Button
               title="Буцах"
@@ -161,11 +212,18 @@ const MeetDtlScreen = (props) => {
               }}
             />
             <Button
-              title="Уулзалт цуцлах"
+              title={
+                appointmentData.status != 3
+                  ? "Уулзалт цуцлах"
+                  : "Уулзалт цуцлагдсан"
+              }
               containerStyle={{ width: "48%" }}
               color="#E34935"
               radius={12}
               onPress={() => {
+                appointmentData.status != 3
+                  ? changeSlotStatus(appointmentData.id)
+                  : null;
                 refRBSheet.current.close();
               }}
               titleStyle={{
