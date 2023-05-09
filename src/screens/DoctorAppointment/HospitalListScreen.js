@@ -16,8 +16,6 @@ import React, {
   useCallback,
 } from "react";
 import {
-  API_KEY,
-  DEV_URL,
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
@@ -25,7 +23,6 @@ import {
   TEXT_COLOR_GRAY,
 } from "../../constant";
 import { Icon } from "@rneui/base";
-import axios from "axios";
 import MainContext from "../../contexts/MainContext";
 import Loader from "../../components/Loader";
 import hospitalAvatar from "../../../assets/hospitalAvatar.png";

@@ -13,6 +13,7 @@ export const MainStore = (props) => {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [userData, setUserData] = useState("");
+  const [selectedBottomTab, setSelectedBottomTab] = useState("HomeTab");
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -62,7 +63,7 @@ export const MainStore = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("response get HospitalList", response.data);
+        // console.log("response get HospitalList", response.data);
         if (response.status == 200) {
           setHospitalList(response.data.response.data);
         }
@@ -96,7 +97,7 @@ export const MainStore = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("response get Doctors", response.data.response);
+        // console.log("response get Doctors", response.data.response);
         if (response.status == 200) {
           setDoctorList(response.data.response);
         }
@@ -173,14 +174,14 @@ export const MainStore = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("response get ProfileData", response.data);
+        // console.log("response get ProfileData", response.data);
         if (response.status == 200) {
           //*** user data хадгалах
           await AsyncStorage.setItem(
             "userData",
             JSON.stringify(response.data.response)
           ).then(() => {
-            setUserData(response.data.response);
+            setUserData(response.data?.response);
             setIsLoggedIn(true);
           });
         }
@@ -284,6 +285,9 @@ export const MainStore = (props) => {
         getDoctors,
         loadingHospitals,
         loadingDoctors,
+        setUserData,
+        selectedBottomTab,
+        setSelectedBottomTab,
       }}
     >
       {props.children}

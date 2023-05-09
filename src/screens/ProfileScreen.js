@@ -27,7 +27,7 @@ const ProfileScreen = (props) => {
   const [visibleDialog, setVisibleDialog] = useState(false); //Dialog харуулах
   const [dialogType, setDialogType] = useState("warning"); //Dialog харуулах төрөл
   return (
-    <ScrollView contentContainerStyle={styles.mainContainer}>
+    <ScrollView contentContainerStyle={styles.mainContainer} bounces={false}>
       <SafeAreaView>
         <View
           style={{
@@ -48,28 +48,35 @@ const ProfileScreen = (props) => {
               marginTop: 10,
             }}
           >
-            {state.userData
-              ? state.userData?.lastName?.substr(0, 1) +
+            {state.userData?.globalPatient
+              ? state.userData?.globalPatient?.lastName?.substr(0, 1) +
                 ". " +
-                state.userData?.firstName
+                state.userData?.globalPatient?.firstName
               : null}
           </Text>
           <Text style={{ fontFamily: FONT_FAMILY_LIGHT }}>
-            ID дугаар: {state.userData ? state.userData?.id : null}
+            ID дугаар:{" "}
+            {state.userData?.globalPatient
+              ? state.userData?.globalPatient?.id
+              : null}
           </Text>
         </View>
         <View style={styles.infoContainer}>
           <View style={{ alignItems: "center" }}>
             <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>И-мэйл</Text>
             <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#86909C" }}>
-              {state.userData ? state.userData?.email : null}
+              {state.userData?.globalPatient
+                ? state.userData?.globalPatient?.email
+                : null}
             </Text>
           </View>
           <Divider orientation="vertical" style={{ width: 1, height: "60%" }} />
           <View style={{ alignItems: "center" }}>
             <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>Утасны дугаар</Text>
             <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#86909C" }}>
-              {state.userData ? state.userData?.phoneNo : null}
+              {state.userData?.globalPatient
+                ? state.userData?.globalPatient?.phoneNo
+                : null}
             </Text>
           </View>
         </View>
@@ -107,7 +114,7 @@ const ProfileScreen = (props) => {
             />
           </TouchableOpacity>
           <Divider style={{ marginHorizontal: 20 }} /> */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("PrivacyScreen")}
           >
@@ -120,7 +127,7 @@ const ProfileScreen = (props) => {
               color="#86909C"
             />
           </TouchableOpacity>
-          <Divider style={{ marginHorizontal: 20 }} />
+          <Divider style={{ marginHorizontal: 20 }} /> */}
           <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("LanguageScreen")}

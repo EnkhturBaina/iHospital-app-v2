@@ -27,8 +27,6 @@ const DoctorAppointmentStep3 = (props) => {
   const state = useContext(MainContext);
   const [loadingAction, setLoadingAction] = useState(false);
   const createAppointment = async () => {
-    console.log("state.invoiceData", state.invoiceData);
-    console.log("state.selectedHospital", state.selectedHospital);
     setLoadingAction(true);
     await axios({
       method: "post",
@@ -43,9 +41,12 @@ const DoctorAppointmentStep3 = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("create Invoice", response.status);
+        // console.log("create Invoice", response.status);
         if (response.status == 201) {
-          props.navigation.navigate("HomeNavtab");
+          props.navigation.reset({
+            index: 0,
+            routes: [{ name: "HomeTab" }],
+          });
         }
         setLoadingAction(false);
       })

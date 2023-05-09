@@ -192,7 +192,6 @@ const DoctorAppointmentStep2 = (props) => {
   };
 
   const createInvoice = async () => {
-    console.log("state.appointmentData", state.appointmentData);
     if (state.appointmentData.date == "") {
       onToggleSnackBar("Үзлэгийн өдөр сонгоно уу.");
     } else if (state.appointmentData.time == "") {
@@ -212,7 +211,7 @@ const DoctorAppointmentStep2 = (props) => {
         },
       })
         .then(async (response) => {
-          console.log("create Invoice", response);
+          // console.log("create Invoice", response);
           if (response.status == 201) {
             state.setInvoiceData(response.data.response);
             props.navigation.navigate("DoctorAppointmentStep3");
@@ -317,7 +316,9 @@ const DoctorAppointmentStep2 = (props) => {
                     <View
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
-                      <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
+                      <Text
+                        style={{ fontFamily: FONT_FAMILY_BOLD, fontSize: 12 }}
+                      >
                         {el.startTime?.substr(0, 5)}
                       </Text>
                       <Icon
@@ -326,7 +327,9 @@ const DoctorAppointmentStep2 = (props) => {
                         size={15}
                         style={{ marginHorizontal: 5 }}
                       />
-                      <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
+                      <Text
+                        style={{ fontFamily: FONT_FAMILY_BOLD, fontSize: 12 }}
+                      >
                         {el.endTime?.substr(0, 5)}
                       </Text>
                     </View>

@@ -65,7 +65,6 @@ const RegisterScreen = (props) => {
   const [loadingAction, setLoadingAction] = useState(false);
 
   const registerUser = async () => {
-    console.log("email", email);
     //***** Хэрэглэгч бүртгэх
     if (lastName == "") {
       onToggleSnackBar("Овог оруулна уу");
@@ -101,8 +100,7 @@ const RegisterScreen = (props) => {
         },
       })
         .then(async (response) => {
-          console.log("responee register User", response.data);
-          console.log("responee register User", response.status);
+          // console.log("responee register User", response.data);
           if (response.status == 201) {
             setDialogType("success");
             setDialogText("Таны нэвтрэх мэдээллийг и-мэйлээр илгээлээ");

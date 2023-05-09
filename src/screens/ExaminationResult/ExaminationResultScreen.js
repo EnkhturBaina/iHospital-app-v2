@@ -104,9 +104,7 @@ const ExaminationResultScreen = (props) => {
       >
         {historyLoading ? (
           <Loader />
-        ) : !historyLoading &&
-          historyList?.length == 1 &&
-          historyList[0]?.inspectionNotes == "" ? (
+        ) : !historyLoading && historyList[0]?.inspectionNotes == "" ? (
           <Empty text="Танд захиалга байхгүй байна" subtext="" type="empty" />
         ) : (
           <>

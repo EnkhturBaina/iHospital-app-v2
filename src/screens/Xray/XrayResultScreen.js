@@ -15,6 +15,7 @@ import {
   TEXT_COLOR_GRAY,
 } from "../../constant";
 import { Icon } from "@rneui/base";
+import Empty from "../../components/Empty";
 
 //Оношилгооны хариу
 const XrayResultScreen = (props) => {
@@ -32,6 +33,7 @@ const XrayResultScreen = (props) => {
       });
     // TabBar Hide хийх
   }, [props.navigation]);
+
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -51,7 +53,7 @@ const XrayResultScreen = (props) => {
         />
       }
     >
-      <TouchableOpacity style={styles.examContainer} onPress={() => {}}>
+      {/* <TouchableOpacity style={styles.examContainer} onPress={() => {}}>
         <View style={styles.stack1}>
           <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>Эмнэлэгийн нэр</Text>
           <View style={styles.stack1Bottom}>
@@ -62,7 +64,8 @@ const XrayResultScreen = (props) => {
         <View style={styles.stack2}>
           <Icon name="chevron-right" type="feather" size={15} color="#fff" />
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <Empty text={"Мэдээлэл олдсонгүй"} type="empty" />
     </ScrollView>
   );
 };

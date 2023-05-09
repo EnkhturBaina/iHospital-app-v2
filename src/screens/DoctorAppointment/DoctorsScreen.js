@@ -41,7 +41,7 @@ const DoctorsScreen = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("response get HospitalList", response.data);
+        // console.log("response get HospitalList", response.data);
         if (response.status == 200) {
           setHospitalDoctors(response.data.response.data);
         }

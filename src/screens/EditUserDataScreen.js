@@ -10,35 +10,22 @@ import {
   ActivityIndicator,
   Image,
 } from "react-native";
-import React, { useState, useRef, useContext } from "react";
-import { MAIN_COLOR, REG_CHARS, MAIN_COLOR_BG } from "../constant";
+import React, { useState, useContext, useEffect } from "react";
+import { API_KEY, DEV_URL, MAIN_COLOR, MAIN_COLOR_BG } from "../constant";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { Button } from "@rneui/base";
-import BottomSheetReg from "../components/BottomSheetReg";
+import { Button, Icon } from "@rneui/base";
 import CustomSnackbar from "../components/CustomSnackbar";
 import CustomDialog from "../components/CustomDialog";
 import MainContext from "../contexts/MainContext";
-import CustomLookup from "../components/CustomLookup";
 import BottomSheet from "../components/BottomSheet";
 import avatar from "../../assets/avatar.png";
+import axios from "axios";
 
 const EditUserDataScreen = () => {
   const state = useContext(MainContext);
   const headerHeight = useHeaderHeight();
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [editableData, setEditableData] = useState("");
 
-  const [regCharA, setRegCharA] = useState("A");
-  const [regCharB, setRegCharB] = useState("A");
-  const [regNumber, setRegNumber] = useState("");
-
-  const refRBSheet = useRef();
-  const refRBSheet2 = useRef();
-  const testArr = [
-    { id: 1, name: "TEST1" },
-    { id: 2, name: "TEST2" },
-    { id: 3, name: "TEST3" },
-  ];
   const regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
   const [visibleSnack, setVisibleSnack] = useState(false);
@@ -52,34 +39,61 @@ const EditUserDataScreen = () => {
   //Snacbkbar хаах
   const onDismissSnackBar = () => setVisibleSnack(false);
 
-  const [data, setData] = useState(""); //BottomSheet рүү дамжуулах Дата
-  const [uselessParam, setUselessParam] = useState(false); //BottomSheet -г дуудаж байгааг мэдэх гэж ашиглаж байгамоо
-  const [fieldName, setFieldName] = useState(""); //Context -н аль утгыг OBJECT -с update хийхийг хадгалах
-  const [displayName, setDisplayName] = useState(""); //LOOKUP -д харагдах утга (display value)
-
   const [dialogText, setDialogText] = useState(""); //Dialog -н текст
   const [visibleDialog, setVisibleDialog] = useState(false); //Dialog харуулах
   const [dialogType, setDialogType] = useState("warning"); //Dialog харуулах төрөл
 
   const [loadingAction, setLoadingAction] = useState(false);
 
-  const setLookupData = (data, field, display) => {
-    // console.log("refRBSheet", refRBSheet);
-    setData(data); //Lookup -д харагдах дата
-    setFieldName(field); //Context -н object -н update хийх key
-    setDisplayName(display); //Lookup -д харагдах датаны текст талбар
-    setUselessParam(!uselessParam);
+  useEffect(() => {
+    setEditableData(state.userData?.globalPatient);
+  }, []);
+
+  const editUserData = async () => {
+    if (editableData.email == "") {
+      onToggleSnackBar("И-мэйл оруулна уу.");
+    } else if (!regex_email.test(editableData.email)) {
+      onToggleSnackBar("И-мэйл хаягаа зөв оруулна уу.");
+    } else if (editableData.phoneNo == "") {
+      onToggleSnackBar("Утасны дугаараа оруулна уу.");
+    } else {
+      setLoadingAction(true);
+      await axios({
+        method: "patch",
+        url: `${DEV_URL}mobile/patient-user`,
+        headers: {
+          "X-API-KEY": API_KEY,
+          Authorization: `Bearer ${state.accessToken}`,
+        },
+        data: {
+          id: editableData?.id,
+          email: editableData?.email,
+          phoneNo: editableData?.phoneNo,
+        },
+      })
+        .then(async (response) => {
+          if (response.status == 201) {
+            state.setUserData((prevState) => ({
+              ...prevState,
+              globalPatient: editableData,
+            }));
+            setDialogText("Мэдээлэл амжилттай засварлагдлаа");
+            setDialogType("success");
+            setVisibleDialog(true);
+          }
+          setLoadingAction(false);
+        })
+        .catch(function (error) {
+          setLoadingAction(false);
+          console.log("err", error);
+          console.log("error get History", error.response.data);
+          if (error?.response?.status == 401) {
+            state.setLoginError("Холболт салсан байна дахин нэвтэрнэ үү.");
+            state.logout();
+          }
+        });
+    }
   };
-
-  const [userData, setUserData] = useState({
-    lastName: "",
-    firstName: "",
-    email: "",
-    region: "",
-    phone: "",
-    gender: "",
-  });
-
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={headerHeight}
@@ -92,7 +106,7 @@ const EditUserDataScreen = () => {
         visible={visibleSnack}
         dismiss={onDismissSnackBar}
         text={snackBarMsg}
-        topPos={30}
+        topPos={0}
       />
       <ScrollView bounces={false} contentContainerStyle={styles.mainContainer}>
         <Image
@@ -102,65 +116,37 @@ const EditUserDataScreen = () => {
         />
         <View style={styles.sectionStyle}>
           <TextInput
+            editable={false}
             placeholder="Овог"
-            value={userData.lastName}
-            onChangeText={(e) =>
-              setUserData((prevState) => ({
-                ...prevState,
-                lastName: e,
-              }))
-            }
+            value={editableData.lastName}
             style={styles.generalInput}
           />
         </View>
         <View style={styles.sectionStyle}>
           <TextInput
+            editable={false}
             placeholder="Нэр"
-            value={userData.firstName}
-            onChangeText={(e) =>
-              setUserData((prevState) => ({
-                ...prevState,
-                firstName: e,
-              }))
-            }
+            value={editableData.firstName}
             style={styles.generalInput}
           />
         </View>
 
         <View style={styles.charContainer}>
-          <TouchableOpacity
-            onPress={() => refRBSheet.current.open()}
-            style={styles.regCharOpacity}
-          >
-            <Text style={styles.onlyChar}>{regCharA}</Text>
-            <BottomSheetReg
-              sheetRef={refRBSheet}
-              bodyText={REG_CHARS}
-              sheetheight={300}
-              setDataFunction={setRegCharA}
-              dragDown={true}
-              backClick={true}
-            />
+          <TouchableOpacity style={styles.regCharOpacity} disabled>
+            <Text style={styles.onlyChar}>
+              {editableData?.registerNumber?.substr(0, 1)}
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => refRBSheet2.current.open()}
-            style={styles.regCharOpacity}
-          >
-            <Text style={styles.onlyChar}>{regCharB}</Text>
-            <BottomSheetReg
-              sheetRef={refRBSheet2}
-              bodyText={REG_CHARS}
-              sheetheight={300}
-              setDataFunction={setRegCharB}
-              dragDown={true}
-              backClick={true}
-            />
+          <TouchableOpacity disabled style={styles.regCharOpacity}>
+            <Text style={styles.onlyChar}>
+              {editableData?.registerNumber?.substr(1, 1)}
+            </Text>
           </TouchableOpacity>
 
           <TextInput
+            editable={false}
             placeholder="Регистр"
-            value={regNumber}
-            onChangeText={setRegNumber}
+            value={editableData?.registerNumber?.substr(2, 8)}
             keyboardType="number-pad"
             style={styles.onlyRegNum}
             returnKeyType="done"
@@ -168,15 +154,27 @@ const EditUserDataScreen = () => {
           />
         </View>
         <View style={styles.sectionStyle}>
+          <Icon
+            style={styles.inputIcon}
+            name="edit"
+            type="feather"
+            size={20}
+            color="#000"
+          />
           <TextInput
             placeholder="И-мэйл"
-            value={email}
-            onChangeText={setEmail}
+            value={editableData?.email}
+            onChangeText={(e) =>
+              setEditableData((prevState) => ({
+                ...prevState,
+                email: e,
+              }))
+            }
             keyboardType="email-address"
-            style={styles.generalInput}
+            style={styles.generalInputIcon}
           />
         </View>
-        <CustomLookup
+        {/* <CustomLookup
           value={userData.region?.name}
           press={() => {
             setLookupData(testArr, "region", "name");
@@ -184,18 +182,31 @@ const EditUserDataScreen = () => {
           placeholder="Улс"
           iconType="ion-icons"
           iconName="flag"
-        />
+        /> */}
         <View style={styles.sectionStyle}>
+          <Icon
+            style={styles.inputIcon}
+            name="edit"
+            type="feather"
+            size={20}
+            color="#000"
+          />
           <TextInput
             placeholder="Утасны дугаар"
-            value={phone}
-            onChangeText={setPhone}
+            value={editableData?.phoneNo}
+            onChangeText={(e) =>
+              setEditableData((prevState) => ({
+                ...prevState,
+                phoneNo: e,
+              }))
+            }
             keyboardType="number-pad"
-            style={styles.generalInput}
+            style={styles.generalInputIcon}
             maxLength={8}
+            returnKeyType={"done"}
           />
         </View>
-        <CustomLookup
+        {/* <CustomLookup
           value={userData.gender?.name}
           press={() => {
             setLookupData(testArr, "gender", "name");
@@ -203,7 +214,7 @@ const EditUserDataScreen = () => {
           placeholder="Хүйс"
           iconType="material-community"
           iconName="heart-multiple"
-        />
+        /> */}
         <Button
           disabled={loadingAction}
           containerStyle={styles.btnContainer}
@@ -225,7 +236,7 @@ const EditUserDataScreen = () => {
           }
           color={MAIN_COLOR}
           radius={12}
-          onPress={() => {}}
+          onPress={() => editUserData()}
           titleStyle={{
             fontWeight: "bold",
           }}
@@ -241,21 +252,6 @@ const EditUserDataScreen = () => {
           confirmBtnText="Хаах"
           DeclineBtnText=""
           type={dialogType}
-        />
-        <BottomSheet
-          bodyText={data}
-          dragDown={true}
-          backClick={true}
-          type="lookup"
-          fieldName={fieldName}
-          displayName={displayName}
-          handle={uselessParam}
-          action={(e) =>
-            setUserData((prevState) => ({
-              ...prevState,
-              [fieldName]: e,
-            }))
-          }
         />
       </ScrollView>
     </KeyboardAvoidingView>
@@ -276,24 +272,18 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     width: "100%",
   },
-  sectionStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 50,
-    marginRight: "auto",
-    marginLeft: "auto",
-    width: "100%",
-    marginBottom: 10,
-  },
   inputIcon: {
     marginLeft: 15,
     marginHorizontal: 10,
   },
-  generalInput: {
-    width: "100%",
+  generalInputIcon: {
+    width: "80%",
     height: 50,
-    backgroundColor: "#fff",
-    borderRadius: 12,
+    paddingHorizontal: 10,
+  },
+  generalInput: {
+    width: "80%",
+    height: 50,
     paddingHorizontal: 20,
   },
   regCharOpacity: {
@@ -333,5 +323,20 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     alignSelf: "center",
     marginVertical: 10,
+  },
+  sectionStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 50,
+    marginRight: "auto",
+    marginLeft: "auto",
+    width: "100%",
+    marginBottom: 10,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+  },
+  inputIcon: {
+    marginLeft: 15,
+    marginHorizontal: 10,
   },
 });

@@ -1,17 +1,19 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "@rneui/themed";
 import { FONT_FAMILY_BOLD, MAIN_COLOR, TEXT_COLOR_GRAY } from "../constant";
 import {
   MainStackNavigator,
   MeetStackNavigator,
-  BlogStackNavigator,
   ReferenceStackNavigator,
+  AppointmentStackNavigator,
 } from "./MainStackNavigation";
+import MainContext from "../contexts/MainContext";
 
 const Tab = createBottomTabNavigator();
 const HomeScreenTabNavigation = (props) => {
+  const state = useContext(MainContext);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -22,6 +24,11 @@ const HomeScreenTabNavigation = (props) => {
       <Tab.Screen
         name="HomeTab"
         component={MainStackNavigator}
+        listeners={{
+          tabPress: (e) => {
+            state.setSelectedBottomTab("HomeTab");
+          },
+        }}
         options={{
           tabBarLabel: "Нүүр",
           headerShown: false,
@@ -45,8 +52,13 @@ const HomeScreenTabNavigation = (props) => {
       <Tab.Screen
         name="MeetTab"
         component={MeetStackNavigator}
+        listeners={{
+          tabPress: (e) => {
+            state.setSelectedBottomTab("MeetTab");
+          },
+        }}
         options={{
-          tabBarLabel: "Календарь",
+          tabBarLabel: "Уулзалт",
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Icon
@@ -66,15 +78,20 @@ const HomeScreenTabNavigation = (props) => {
         }}
       />
       <Tab.Screen
-        name="BlogTab"
-        component={BlogStackNavigator}
+        name="AppointmentTab"
+        component={AppointmentStackNavigator}
+        listeners={{
+          tabPress: (e) => {
+            state.setSelectedBottomTab("AppointmentTab");
+          },
+        }}
         options={{
-          tabBarLabel: "Мэдээ",
+          tabBarLabel: "Захиалга",
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Icon
-              name="clipboard-text-outline"
-              type="material-community"
+              name="doctor"
+              type="fontisto"
               size={25}
               style={styles.inputIcon}
               active={focused}
@@ -91,6 +108,11 @@ const HomeScreenTabNavigation = (props) => {
       <Tab.Screen
         name="ReferenceTab"
         component={ReferenceStackNavigator}
+        listeners={{
+          tabPress: (e) => {
+            state.setSelectedBottomTab("ReferenceTab");
+          },
+        }}
         options={{
           tabBarLabel: "Лавлах",
           headerShown: false,

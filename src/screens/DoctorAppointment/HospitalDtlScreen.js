@@ -113,7 +113,7 @@ const HospitalDtlScreen = (props) => {
         }}
         onPress={() => {
           state.resetAppontmentData();
-          props.navigation.navigate("DoctorAppointmentStep1");
+          props.navigation.navigate("HospitalListScreen");
         }}
       >
         <Text numberOfLines={1} style={styles.menuText}>

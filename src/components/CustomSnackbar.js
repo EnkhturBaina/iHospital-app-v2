@@ -9,14 +9,24 @@ export default function ({ visible, dismiss, text, topPos }) {
       visible={visible}
       onDismiss={dismiss}
       wrapperStyle={{ top: topPos ?? 0, zIndex: 9999 }}
-      duration={2000}
-      style={{ backgroundColor: MAIN_COLOR }}
+      duration={20000}
+      style={{
+        backgroundColor: MAIN_COLOR,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
       action={{
         label: "Хаах",
         onPress: dismiss,
       }}
     >
-      <Text style={{ fontFamily: FONT_FAMILY_BOLD, color: "#fff" }}>
+      <Text
+        style={{
+          justifyContent: "center",
+          fontFamily: FONT_FAMILY_BOLD,
+          color: "#fff",
+        }}
+      >
         {text}
       </Text>
     </Snackbar>

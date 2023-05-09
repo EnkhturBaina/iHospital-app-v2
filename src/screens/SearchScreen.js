@@ -44,7 +44,6 @@ const SearchScreen = (props) => {
   };
 
   const onRefresh = useCallback((refresh_type) => {
-    console.log("refresh_type", refresh_type);
     setRefreshing(true);
     refresh_type == "hospital" ? state.getHospitalList() : null;
     refresh_type == "doctor" ? state.getDoctors() : null;
@@ -71,7 +70,6 @@ const SearchScreen = (props) => {
     { value: 4, label: "Багц шинжилгээ" },
   ];
   useEffect(() => {
-    console.log("RenderHospitals");
     state.getHospitalList();
     state.getDoctors();
   }, []);

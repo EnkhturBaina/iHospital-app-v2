@@ -49,7 +49,7 @@ const DoctorAppointmentStep4 = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("responee register User", response.status);
+        // console.log("responee register User", response.status);
         if (response.status == 201) {
           setIsSuccess(true);
           setDialogType("success");

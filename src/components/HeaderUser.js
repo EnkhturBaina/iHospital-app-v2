@@ -42,14 +42,15 @@ const HeaderUser = ({ isContent }) => {
           </View>
           <View style={{ flexDirection: "column", marginLeft: 10 }}>
             <Text style={{ fontFamily: FONT_FAMILY_BOLD, color: "#fff" }}>
-              {state.userData
-                ? state.userData?.lastName?.substr(0, 1) +
+              {state.userData?.globalPatient
+                ? state.userData?.globalPatient.lastName?.substr(0, 1) +
                   ". " +
-                  state.userData?.firstName
+                  state.userData?.globalPatient?.firstName
                 : null}
             </Text>
             <Text style={{ fontFamily: FONT_FAMILY_LIGHT, color: "#fff" }}>
-              ID дугаар: {state.userData ? state.userData?.id : null}
+              ID дугаар:{" "}
+              {state.userData ? state.userData?.globalPatient?.id : null}
             </Text>
           </View>
         </TouchableOpacity>

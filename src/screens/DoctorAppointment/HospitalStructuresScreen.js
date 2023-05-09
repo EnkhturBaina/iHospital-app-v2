@@ -32,7 +32,7 @@ const HospitalStructuresScreen = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("response get HospitalList", response.data);
+        // console.log("response get HospitalList", response.data);
         if (response.status == 200) {
           setHospitalStructures(response.data.response.data);
         }

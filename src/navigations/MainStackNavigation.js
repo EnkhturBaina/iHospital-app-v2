@@ -49,6 +49,7 @@ import DoctorsScreen from "../screens/DoctorAppointment/DoctorsScreen";
 import ExResultDtlScreen from "../screens/ExaminationResult/ExResultDtlScreen";
 import DoctorAppointmentStep4 from "../screens/DoctorAppointment/DoctorAppointmentStep4";
 import DoctorAppointmentStep3 from "../screens/DoctorAppointment/DoctorAppointmentStep3";
+import AppointmentTabScreen from "../screens/Appointment/AppointmentTabScreen";
 
 const Stack = createStackNavigator();
 
@@ -204,6 +205,7 @@ const LoginStackNavigator = (props) => {
   );
 };
 const MainStackNavigator = (props) => {
+  const state = useContext(MainContext);
   return (
     <Stack.Navigator initialRouteName="HomeNavtab">
       <Stack.Screen
@@ -251,7 +253,12 @@ const MainStackNavigator = (props) => {
             <TouchableOpacity
               style={styles.headerLeftContainer}
               onPress={() => {
-                props.navigation.goBack();
+                state.selectedBottomTab == "AppointmentTab"
+                  ? props.navigation.reset({
+                      index: 0,
+                      routes: [{ name: "AppointmentTab" }],
+                    })
+                  : props.navigation.goBack();
               }}
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
@@ -366,7 +373,12 @@ const MainStackNavigator = (props) => {
             <TouchableOpacity
               style={styles.headerLeftContainer}
               onPress={() => {
-                props.navigation.goBack();
+                state.selectedBottomTab == "AppointmentTab"
+                  ? props.navigation.reset({
+                      index: 0,
+                      routes: [{ name: "AppointmentTab" }],
+                    })
+                  : props.navigation.goBack();
               }}
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
@@ -412,7 +424,12 @@ const MainStackNavigator = (props) => {
             <TouchableOpacity
               style={styles.headerLeftContainer}
               onPress={() => {
-                props.navigation.goBack();
+                state.selectedBottomTab == "AppointmentTab"
+                  ? props.navigation.reset({
+                      index: 0,
+                      routes: [{ name: "AppointmentTab" }],
+                    })
+                  : props.navigation.goBack();
               }}
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
@@ -894,6 +911,20 @@ const ChatStackNavigator = (props) => {
     </Stack.Navigator>
   );
 };
+const AppointmentStackNavigator = (props) => {
+  return (
+    <Stack.Navigator initialRouteName="AppointmentTabScreen">
+      <Stack.Screen
+        name="AppointmentTabScreen"
+        component={AppointmentTabScreen}
+        options={{
+          title: "",
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export {
   MainStackNavigator,
@@ -905,6 +936,7 @@ export {
   ReferenceStackNavigator,
   NotificationStackNavigator,
   ChatStackNavigator,
+  AppointmentStackNavigator,
 };
 
 const styles = StyleSheet.create({

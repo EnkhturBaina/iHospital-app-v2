@@ -46,7 +46,7 @@ const MeetDtlScreen = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("get History", JSON.stringify(response.data));
+        // console.log("get History", JSON.stringify(response.data));
         if (response.status == 200) {
           onToggleSnackBar("Уулзалт цуцлагдлаа.");
         }

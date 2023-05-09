@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 const { StatusBarManager } = NativeModules;
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useLayoutEffect, useRef, useState } from "react";
 import MainContext from "../contexts/MainContext";
 import { Icon } from "@rneui/base";
 import {
@@ -35,6 +35,19 @@ const HomeScreen = (props) => {
     require("../../assets/banner.png"),
   ]);
 
+  useLayoutEffect(() => {
+    // TabBar Hide хийх
+    props.navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "flex",
+      },
+    });
+    return () =>
+      props.navigation.getParent()?.setOptions({
+        tabBarStyle: undefined,
+      });
+    // TabBar Hide хийх
+  }, [props.navigation]);
   const menus = [
     {
       img: require("../../assets/homeMenus/receiptsearch.png"),
