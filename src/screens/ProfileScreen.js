@@ -80,7 +80,10 @@ const ProfileScreen = (props) => {
             </Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.resultContainer}>
+        <TouchableOpacity
+          style={styles.resultContainer}
+          onPress={() => props.navigation.navigate("XrayResultScreen")}
+        >
           <Text style={{ fontSize: 18, color: "#fff" }}>
             Шинжилгээ/Оношилгооны хариу
           </Text>

@@ -31,7 +31,7 @@ const LoginScreen = (props) => {
 
   const regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
-  const [password, setPassword] = useState("bgAp1V"); //WETITr
+  const [password, setPassword] = useState(""); //WETITr
   const [hidePassword, setHidePassword] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState("");
   const [borderColor, setBorderColor] = useState("");
@@ -138,7 +138,6 @@ const LoginScreen = (props) => {
             onBlur={() => onBlur("email")}
           />
         </View>
-        <Text>WETITr</Text>
         <View
           style={[
             styles.sectionStyle,

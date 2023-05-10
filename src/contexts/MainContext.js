@@ -134,7 +134,7 @@ export const MainStore = (props) => {
           //Нэвтрэх нэр сануулах UNCHECK хийсэн үед тухайн утсан дээрээс EMAIL устгах
           await AsyncStorage.removeItem("login_email");
         }
-        // console.log("responee login", response.data);
+        console.log("responee login", response.data);
         if (response.status == 200) {
           setLoginError("");
           //*** access token хадгалах
@@ -156,7 +156,8 @@ export const MainStore = (props) => {
       })
       .catch(function (error) {
         setIsLoading(false);
-        // console.log("error login", error.response);
+        console.log("error login", error.response.status);
+        console.log("error login", error.response);
         if (error.response.status == 400) {
           setLoginError("Нэвтрэх нэр эсвэл нууц үг буруу");
         }
@@ -174,7 +175,7 @@ export const MainStore = (props) => {
       },
     })
       .then(async (response) => {
-        // console.log("response get ProfileData", response.data);
+        console.log("response get ProfileData", response.data);
         if (response.status == 200) {
           //*** user data хадгалах
           await AsyncStorage.setItem(

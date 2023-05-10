@@ -26,6 +26,7 @@ import { Icon } from "@rneui/base";
 import MainContext from "../../contexts/MainContext";
 import Loader from "../../components/Loader";
 import hospitalAvatar from "../../../assets/hospitalAvatar.png";
+import MyStatusBar from "../../components/CustomStatusBar";
 
 const HospitalListScreen = (props) => {
   const state = useContext(MainContext);
@@ -71,6 +72,7 @@ const HospitalListScreen = (props) => {
 
   return (
     <View style={styles.mainContainer}>
+      <MyStatusBar backgroundColor={MAIN_COLOR} barStyle="light-content" />
       <View style={styles.searchContainer}>
         <Icon name="search" type="feather" size={20} color={TEXT_COLOR_GRAY} />
         <TextInput

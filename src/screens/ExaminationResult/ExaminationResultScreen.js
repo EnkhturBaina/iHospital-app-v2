@@ -35,6 +35,7 @@ import avatar from "../../../assets/avatar.png";
 import moment from "moment";
 import "moment/locale/mn";
 import { Divider, Icon } from "@rneui/base";
+import MyStatusBar from "../../components/CustomStatusBar";
 
 const ExaminationResultScreen = (props) => {
   const state = useContext(MainContext);
@@ -91,6 +92,7 @@ const ExaminationResultScreen = (props) => {
         backgroundColor: MAIN_COLOR_GRAY_BG,
       }}
     >
+      <MyStatusBar backgroundColor={MAIN_COLOR} barStyle="light-content" />
       <ScrollView
         contentContainerStyle={styles.mainContainer}
         refreshControl={

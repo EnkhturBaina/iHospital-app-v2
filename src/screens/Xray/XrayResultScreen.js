@@ -16,6 +16,7 @@ import {
 } from "../../constant";
 import { Icon } from "@rneui/base";
 import Empty from "../../components/Empty";
+import MyStatusBar from "../../components/CustomStatusBar";
 
 //Оношилгооны хариу
 const XrayResultScreen = (props) => {
@@ -53,6 +54,7 @@ const XrayResultScreen = (props) => {
         />
       }
     >
+      <MyStatusBar backgroundColor={MAIN_COLOR} barStyle="light-content" />
       {/* <TouchableOpacity style={styles.examContainer} onPress={() => {}}>
         <View style={styles.stack1}>
           <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>Эмнэлэгийн нэр</Text>

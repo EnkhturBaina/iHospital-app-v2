@@ -10,7 +10,8 @@ export const BUTTON_BORDER_RADIUS = 12;
 export const FONT_FAMILY_BOLD = "Inter-Bold";
 export const FONT_FAMILY_LIGHT = "Inter-Light";
 
-export const DEV_URL = "http://192.168.5.111:8000/";
+// export const DEV_URL = "http://192.168.5.111:8000/";
+export const DEV_URL = "https://ihospital.mn/api/";
 export const API_KEY =
   "cH5BFgWYzUxUpFVjA98Cbp8UzOBqsqAJYniFMRKJCEpX6dePoMp0rfhKXUa3U1aGItLAw4s9FHbT3q3Our8yDuAhu2kMicgcqRJjnxMFhJohvT8qlpcbTu2UCLZfE1tY";
 

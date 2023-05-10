@@ -88,9 +88,7 @@ const ResetPasswordScreen = (props) => {
           />
           <View style={styles.cardTextContainer}>
             <Text style={{ fontFamily: FONT_FAMILY_LIGHT }}>СМС илгээх:</Text>
-            <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
-              (+976) 86 ** ** 57
-            </Text>
+            <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>(+976)</Text>
           </View>
         </View>
       </TouchableOpacity>

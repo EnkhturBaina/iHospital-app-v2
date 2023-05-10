@@ -230,7 +230,7 @@ const MainStackNavigator = (props) => {
             <TouchableOpacity
               style={styles.headerLeftContainer}
               onPress={() => {
-                props.navigation.goBack();
+                props.navigation.navigate("HomeNavtab");
               }}
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
@@ -693,6 +693,7 @@ const BlogStackNavigator = (props) => {
   );
 };
 const ProfileStackNavigator = (props) => {
+  const state = useContext(MainContext);
   return (
     <Stack.Navigator initialRouteName="ProfileScreen">
       <Stack.Screen
@@ -807,6 +808,29 @@ const ProfileStackNavigator = (props) => {
             >
               <Icon type="feather" name="arrow-left" color="#fff" />
               <Text style={styles.headerLeftText}>Хэл солих</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="XrayResultScreen"
+        component={XrayResultScreen}
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: MAIN_COLOR,
+            borderBottomLeftRadius: 24,
+            borderBottomRightRadius: 24,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              style={styles.headerLeftContainer}
+              onPress={() => {
+                props.navigation.navigate("ProfileScreen");
+              }}
+            >
+              <Icon type="feather" name="arrow-left" color="#fff" />
+              <Text style={styles.headerLeftText}>Оношилгооны хариу</Text>
             </TouchableOpacity>
           ),
         }}

@@ -43,7 +43,16 @@ const BottomSheetReg = ({
     >
       <View style={styles.bottomSheetContainer}>
         <FlatList
-          style={{ width: "100%", padding: 10 }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            width: "100%",
+            padding: 10,
+            alignSelf: "center",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          showsVerticalScrollIndicator={false}
+          bounces={false}
           data={bodyText}
           renderItem={({ item }) => (
             <TouchableOpacity

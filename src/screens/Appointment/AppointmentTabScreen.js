@@ -64,7 +64,7 @@ const AppointmentTabScreen = (props) => {
     >
       <MyStatusBar backgroundColor={MAIN_COLOR} barStyle="light-content" />
 
-      <HeaderUser />
+      <HeaderUser isContent={false} />
       <ScrollView contentContainerStyle={styles.mainContainer}>
         <View style={styles.menusContainer}>
           {menus.map((el, index) => {

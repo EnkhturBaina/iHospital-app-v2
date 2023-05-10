@@ -175,7 +175,7 @@ const RegisterScreen = (props) => {
             <BottomSheetReg
               sheetRef={refRBSheet}
               bodyText={REG_CHARS}
-              sheetheight={300}
+              sheetheight={320}
               setDataFunction={setRegCharA}
               dragDown={true}
               backClick={true}
@@ -189,7 +189,7 @@ const RegisterScreen = (props) => {
             <BottomSheetReg
               sheetRef={refRBSheet2}
               bodyText={REG_CHARS}
-              sheetheight={300}
+              sheetheight={320}
               setDataFunction={setRegCharB}
               dragDown={true}
               backClick={true}

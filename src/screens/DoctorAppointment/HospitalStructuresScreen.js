@@ -26,6 +26,9 @@ const HospitalStructuresScreen = (props) => {
     await axios({
       method: "get",
       url: `${DEV_URL}mobile/department/${state.appointmentData.hospital.id}`,
+      params: {
+        type: 2, //type == 2 тасаг
+      },
       headers: {
         "X-API-KEY": API_KEY,
         Authorization: `Bearer ${state.accessToken}`,

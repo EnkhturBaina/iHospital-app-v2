@@ -78,7 +78,7 @@ const MeetScreen = (props) => {
       },
     })
       .then(async (response) => {
-        // console.log("getMeet History", JSON.stringify(response.data.response));
+        console.log("getMeet History", JSON.stringify(response.data.response));
         if (response.status == 200) {
           setRefundList(response.data.response);
 
@@ -161,7 +161,7 @@ const MeetScreen = (props) => {
           />
         }
       >
-        {refundList == "" && !loadingMeets ? (
+        {refundList.appointments == null && !loadingMeets ? (
           <Empty type="empty" text="Уулзалт олдсонгүй" />
         ) : null}
         {loadingMeets ? (

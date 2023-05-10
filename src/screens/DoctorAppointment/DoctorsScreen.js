@@ -41,13 +41,14 @@ const DoctorsScreen = (props) => {
       },
     })
       .then(async (response) => {
-        // console.log("response get HospitalList", response.data);
+        console.log("response get HospitalList", JSON.stringify(response.data));
         if (response.status == 200) {
           setHospitalDoctors(response.data.response.data);
         }
         setLoadingDoctors(false);
       })
       .catch(function (error) {
+        console.log("err", error);
         setLoadingDoctors(false);
         console.log("errr", error.response.status);
         if (error?.response?.status == 401) {
@@ -120,7 +121,7 @@ const DoctorsScreen = (props) => {
                     },
                   ]}
                 >
-                  {el.app?.name}
+                  {el.degree?.name}
                 </Text>
               </TouchableOpacity>
             );
@@ -162,6 +163,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexDirection: "column",
     marginTop: 10,
+    paddingBottom: 10,
   },
   menuItem: {
     paddingVertical: 10,
@@ -193,6 +195,5 @@ const styles = StyleSheet.create({
     width: "100%",
     color: MAIN_COLOR,
     flex: 1,
-    lineHeight: 14,
   },
 });
