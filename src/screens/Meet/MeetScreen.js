@@ -161,7 +161,7 @@ const MeetScreen = (props) => {
           />
         }
       >
-        {refundList.appointments == null && !loadingMeets ? (
+        {refundList.appointments?.length == 0 && !loadingMeets ? (
           <Empty type="empty" text="Уулзалт олдсонгүй" />
         ) : null}
         {loadingMeets ? (

@@ -31,7 +31,7 @@ const LoginScreen = (props) => {
 
   const regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
-  const [password, setPassword] = useState(""); //WETITr
+  const [password, setPassword] = useState("PSZPbF"); //WETITr
   const [hidePassword, setHidePassword] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState("");
   const [borderColor, setBorderColor] = useState("");
