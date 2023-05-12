@@ -20,7 +20,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ihospitalmn.app",
+      "bundleIdentifier": "com.ihospital.app",
       "buildNumber": "1.0.0"
     },
     "android": {

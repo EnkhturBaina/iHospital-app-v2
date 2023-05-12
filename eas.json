@@ -1,6 +1,8 @@
 {
-  "cli": {
-    "version": ">= 3.12.0"
+  "cli": {    "version": ">= 3.12.0",
+    "promptToConfigurePushNotifications": false
+
+
   },
   "build": {
     "development": {
@@ -13,6 +15,16 @@
     "production": {}
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "gurensoft2022@gmail.comm",
+        "ascAppId": "6448801282",
+        "appleTeamId": "FT8W3KLF833"
+      },
+      "android": {
+        "track": "internal",
+        "serviceAccountKeyPath": ".pc-api-6635485839288358845-714-eb7bee3c837bb.json"
+      }
+    }
   }
 }
