@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import React from "react";
 import avatar from "../../../assets/avatar.png";
+import icon from "../../../assets/icon.png";
 import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
@@ -73,11 +74,13 @@ const DoctorDtlScreen = () => {
         Миний тухай
       </Text>
       <Text style={{ fontFamily: FONT_FAMILY_LIGHT }}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat quis nostrud exercitation ullamco laboris nisi ut
-        aliquip ex ea commodo consequat
+        Намайг Б. Оюунчимэг гэдэг. Би АШУҮИС-ийг төгсөөд нийгмийн эрүүл мэндийн
+        чиглэлээр ажилласан. Дараа нь 2006 онд АНУ-ын Харвардын их сургуульд
+        нийгмийн эрүүл мэндийн магистр, 2013 онд Японы Тохокү их сургуульд
+        анагаах ухааны докторын зэрэг хамгаалсан. Одоо УНТЭ-ийн Бөөрний төвд их
+        эмчээр ажиллаж байна. Үндсэн ажлынхаа хажуугаар нийгмийн эрүүл мэндийн
+        чиглэлээр эмнэлгийн тусламж үйлчилгээ, хүн амын эрүүл мэндийг
+        сайжруулахад төслүүдэд ажилладаг.
       </Text>
       <Text style={{ fontFamily: FONT_FAMILY_BOLD, marginTop: 10 }}>
         Ажлын цаг
@@ -98,13 +101,13 @@ const DoctorDtlScreen = () => {
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Image
-              source={avatar}
+              source={icon}
               resizeMode="contain"
               style={styles.commentAvatar}
             />
             <View style={{ marginLeft: 10 }}>
               <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
-                Alicia J. Aldridge
+                Үйлчлүүлэгч О. Анар
               </Text>
               <Text style={{ fontFamily: FONT_FAMILY_LIGHT }}>03 Days Ago</Text>
             </View>
@@ -122,10 +125,7 @@ const DoctorDtlScreen = () => {
         </View>
 
         <Text style={{ fontFamily: FONT_FAMILY_LIGHT }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat
+          Маш ойлгомжтой цогц апп болсон байна.
         </Text>
       </View>
     </ScrollView>
