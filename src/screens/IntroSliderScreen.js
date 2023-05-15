@@ -82,18 +82,18 @@ export default function IntroSliderScreen(props) {
   const DATA = [
     {
       value: 0,
-      title: "1 Lorem Ipsum is simply dummy text ",
-      img: require("../../assets/hospitalbg.png"),
+      title: "Цахим эмчийн цаг захиалга",
+      img: require("../../assets/intro11.png"),
     },
     {
       value: 1,
-      title: "2 Lorem Ipsum is simply dummy text ",
-      img: require("../../assets/hospitalbg.png"),
+      title: "Эмчийн үзлэг зөвлөгөө",
+      img: require("../../assets/intro2.png"),
     },
     {
       value: 1,
-      title: "3 Lorem Ipsum is simply dummy text ",
-      img: require("../../assets/hospitalbg.png"),
+      title: "Оношилгоо, Шинжилгээний хариу",
+      img: require("../../assets/intro3.png"),
     },
   ];
   return (

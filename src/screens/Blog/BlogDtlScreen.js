@@ -13,7 +13,9 @@ const BlogDtlScreen = (props) => {
     // TabBar Hide хийх
     props.navigation.getParent()?.setOptions({
       tabBarStyle: {
-        display: "none",
+        backgroundColor: MAIN_COLOR,
+        borderBottomLeftRadius: 24,
+        borderBottomRightRadius: 24,
       },
     });
     return () =>
@@ -42,55 +44,35 @@ const BlogDtlScreen = (props) => {
         </Text>
       </View>
       <Image
-        source={require("../../../assets/image11.png")}
+        source={require("../../../assets/advice.jpg")}
         resizeMode="cover"
         style={styles.blogImg}
       />
       <Text style={styles.bodyText}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus
-        error sit voluptatem accusantium doloremque laudantium, totam rem
-        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-        beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-        voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-        dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-        est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-        sed quia non numquam eius modi tempora incidunt ut labore et dolore
-        magnam aliquam quaerat voluptatem. Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
-        quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam
-        eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-        voluptatem. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-        do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-        in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-        officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde
-        omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-        architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem
-        quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
-        magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-        quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-        adipisci velit, sed quia non numquam eius modi tempora incidunt ut
-        labore et dolore magnam aliquam quaerat voluptatem.
+        Насанд хүрсэн хүн биеийн дулааны гуравны нэг хувийг толгой хэсгээрээ
+        алддаг бол бага насны хүүхдүүд биеийн дулааны гуравны хоёр хэсгийг
+        алддаг байна. Хүний уураг тархинд нэг минутад ойролцоогоор 750 мл
+        (зүрхнээс тархи руу урсах цусны 15%) цус урсан тэжээлээр хангадаг бол
+        хүйтний улиралд даарах тохиолдолд биеийн дулаанаа алдаж, улмаар гүрээний
+        судас нарийсаж цусны урсгалын хурд удааширснаар тархины цусан хангамж
+        мууддаг байна. Ингэснээр дараах эрүүл мэндийн сөрөг нөлөөг үзүүлдэг
+        байна.
+      </Text>
+      <Text style={styles.bodyText}>&#8226; Архаг өвчин сэдрэх</Text>
+      <Text style={styles.bodyText}>&#8226; Тархиар хатгуулж өвдөх</Text>
+      <Text style={styles.bodyText}>&#8226; Хараа, сонсгол муудах</Text>
+      <Text style={styles.bodyText}>&#8226; Нулимс гоождог болох</Text>
+      <Text style={styles.bodyText}>&#8226; Нойр муудах</Text>
+      <Text style={styles.bodyText}>&#8226; Мэдрэлийн суурь өвчин үүсэх</Text>
+      <Text style={styles.bodyText}>&#8226; Ой тогтоолт муудах</Text>
+      <Text style={styles.bodyText}>
+        &#8226; Стресст өртөж ажлын чадвар буурах
+      </Text>
+      <Text style={styles.bodyText}>&#8226; Хуйхны эрүүл орчин алдагдах</Text>
+      <Text style={styles.bodyText}>&#8226; Үс хуурайшиж, өнгөө алдах</Text>
+      <Text style={styles.bodyText}>
+        Тиймээс өвлийн улиралд малгай өмссөнөөр хүн дээрх өвчлөлөөс өөрийгөө
+        хамгаална.
       </Text>
     </ScrollView>
   );

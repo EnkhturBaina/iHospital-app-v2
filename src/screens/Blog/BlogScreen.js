@@ -11,6 +11,7 @@ import {
   ImageBackground,
   RefreshControl,
   NativeModules,
+  TextInput,
 } from "react-native";
 import React, { useRef, useState, useCallback } from "react";
 import {
@@ -29,7 +30,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 const { StatusBarManager } = NativeModules;
 
 const BlogScreen = (props) => {
-  const [text, setText] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [refreshing, setRefreshing] = useState(false);
 
   const wait = (timeout) => {
@@ -59,32 +60,21 @@ const BlogScreen = (props) => {
       }}
     >
       <MyStatusBar backgroundColor={MAIN_COLOR} barStyle="light-content" />
-      <HeaderUser isContent={true} />
+      {/* <HeaderUser isContent={true} /> */}
       <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
         <View style={styles.searchContainer}>
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-            }}
-          >
-            <Icon
-              name="search"
-              type="feather"
-              size={20}
-              color={TEXT_COLOR_GRAY}
-            />
-            <Text
-              style={{
-                fontFamily: FONT_FAMILY_BOLD,
-                color: TEXT_COLOR_GRAY,
-                marginLeft: 10,
-              }}
-            >
-              Хайх
-            </Text>
-          </View>
+          <Icon
+            name="search"
+            type="feather"
+            size={20}
+            color={TEXT_COLOR_GRAY}
+          />
+          <TextInput
+            style={styles.searchInput}
+            onChangeText={setSearchValue}
+            value={searchValue}
+            placeholder="Хайх"
+          />
           <Icon
             name="sliders"
             type="feather"
@@ -92,7 +82,7 @@ const BlogScreen = (props) => {
             color={TEXT_COLOR_GRAY}
           />
         </View>
-        <Carousel
+        {/* <Carousel
           width={width - 24}
           ref={ref}
           data={images}
@@ -107,7 +97,7 @@ const BlogScreen = (props) => {
               activeOpacity={0.6}
               key={index}
               onPress={() => {
-                props.navigation.navigate("BlogDtlScreen");
+                props.navigation.navigate("BlogDtlScreenDrawer");
               }}
               style={{ flex: 1 }}
             >
@@ -133,7 +123,7 @@ const BlogScreen = (props) => {
               </View>
             </TouchableOpacity>
           )}
-        />
+        /> */}
         <ScrollView
           contentContainerStyle={styles.blogScrollContainer}
           bounces={false}
@@ -151,11 +141,11 @@ const BlogScreen = (props) => {
             style={styles.blogContainer}
             activeOpacity={0.6}
             onPress={() => {
-              props.navigation.navigate("BlogDtlScreen");
+              props.navigation.navigate("BlogDtlScreenDrawer");
             }}
           >
             <ImageBackground
-              source={require("../../../assets/image13.png")}
+              source={require("../../../assets/advice.jpg")}
               resizeMode="cover"
               style={styles.blogImg}
               imageStyle={{ borderRadius: 8 }}
@@ -166,18 +156,17 @@ const BlogScreen = (props) => {
                 }}
               >
                 <Text style={styles.imageText} numberOfLines={1}>
-                  Personal Health
+                  Зөвлөгөө
                 </Text>
               </View>
             </ImageBackground>
             <View style={styles.textContainer}>
               <Text style={styles.title} numberOfLines={2}>
-                Paying the Price for Sun Damage
+                Эмчийн зөвлөгөө
               </Text>
               <Text style={styles.body} numberOfLines={2}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit....
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit....
+                Хүйтний эрч чанга байгаа эдгээр өдрүүдэд малгайгаа өмсөж, дулаан
+                хувцаслаарай.
               </Text>
             </View>
           </TouchableOpacity>
@@ -196,24 +185,18 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#fff",
-    borderRadius: 12,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    width: "95%",
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: -50,
-    marginBottom: 5,
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    elevation: 2,
+    borderRadius: 8,
+    padding: 10,
+    marginHorizontal: 10,
+  },
+  searchInput: {
+    fontFamily: FONT_FAMILY_BOLD,
+    color: TEXT_COLOR_GRAY,
+    marginLeft: 10,
+    width: "85%",
   },
   blogScrollContainer: {
     flexGrow: 1,

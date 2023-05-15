@@ -130,7 +130,7 @@ const ProfileScreen = (props) => {
               color="#86909C"
             />
           </TouchableOpacity>
-          <Divider style={{ marginHorizontal: 20 }} /> */}
+          <Divider style={{ marginHorizontal: 20 }} /> 
           <TouchableOpacity
             style={styles.profileMenuContainer}
             onPress={() => props.navigation.navigate("LanguageScreen")}
@@ -143,7 +143,7 @@ const ProfileScreen = (props) => {
               type="material-icons"
               color="#86909C"
             />
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
           <Divider style={{ marginHorizontal: 20 }} />
           <TouchableOpacity
             style={styles.profileMenuContainer}

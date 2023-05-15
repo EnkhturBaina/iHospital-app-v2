@@ -66,8 +66,7 @@ const ResetPasswordScreen = (props) => {
         style={{ width: "100%", height: 200 }}
       />
       <Text style={styles.mainText}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry
+        Бүртгэлтэй утасны дугаар болон И-мэйлээр нууц үгээ сэргээх боломжтой
       </Text>
       <TouchableOpacity
         style={[

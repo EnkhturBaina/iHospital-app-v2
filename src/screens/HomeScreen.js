@@ -30,9 +30,8 @@ const HomeScreen = (props) => {
 
   const ref = useRef();
   const [images, setImages] = useState([
-    require("../../assets/image11.png"),
-    require("../../assets/image11.png"),
-    require("../../assets/banner.png"),
+    require("../../assets/istocl.jpg"),
+    require("../../assets/Prime_Hospital.jpg"),
   ]);
 
   useLayoutEffect(() => {
@@ -146,7 +145,8 @@ const HomeScreen = (props) => {
               activeOpacity={0.6}
               key={index}
               onPress={() => {
-                props.navigation.navigate("BannerScreen");
+                // props.navigation.navigate("BannerScreen");
+                props.navigation.navigate("BlogScreenDrawer");
               }}
               style={{ flex: 1 }}
             >
@@ -182,11 +182,11 @@ const HomeScreen = (props) => {
             );
           })}
         </View>
-        <Image
+        {/* <Image
           source={require("../../assets/bannersmall.png")}
           style={{ width: "100%", height: 85, borderRadius: 12 }}
           resizeMode="cover"
-        />
+        /> */}
         <View style={styles.showRow}>
           <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>
             Мэдээ, мэдээлэл (Зөвлөгөө)
@@ -198,15 +198,18 @@ const HomeScreen = (props) => {
           contentContainerStyle={styles.newsScrollContainer}
           showsHorizontalScrollIndicator={false}
         >
-          <TouchableOpacity style={styles.newsContainer}>
+          <TouchableOpacity
+            style={styles.newsContainer}
+            onPress={() => props.navigation.navigate("BlogDtlScreenDrawer")}
+          >
             <Image
-              source={require("../../assets/image13.png")}
+              source={require("../../assets/advice.jpg")}
               style={styles.newsImg}
               resizeMode="cover"
             />
             <Text numberOfLines={3} style={styles.newsText}>
-              Уламжлалын эмнэлэг байгуулах төсөл нийслэлийн эрүүл мэндийн газарт
-              тэнцсэннийслэлийн эрүүл мэндийн газарт тэнцсэн
+              Хүйтний эрч чанга байгаа эдгээр өдрүүдэд малгайгаа өмсөж, дулаан
+              хувцаслаарай.
             </Text>
           </TouchableOpacity>
         </ScrollView>

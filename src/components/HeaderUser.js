@@ -54,7 +54,7 @@ const HeaderUser = ({ isContent }) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <View style={{ flexDirection: "row" }}>
+        {/* <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("NotificationStack", {
@@ -84,7 +84,7 @@ const HeaderUser = ({ isContent }) => {
               color="#fff"
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   );

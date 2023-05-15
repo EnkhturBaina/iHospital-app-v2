@@ -36,7 +36,7 @@ export default function ReferenceScreen() {
             flexDirection: "column",
           }}
         >
-          <Text style={styles.phoneText}>7077 7111</Text>
+          <Text style={styles.phoneText}>8850 6997</Text>
           <Text style={styles.labelText}>Платформын лавлах</Text>
         </View>
         <Icon
@@ -52,7 +52,7 @@ export default function ReferenceScreen() {
             flexDirection: "column",
           }}
         >
-          <Text style={styles.phoneText}>7077 7111</Text>
+          <Text style={styles.phoneText}>8668 1325</Text>
           <Text style={styles.labelText}>Платформын лавлах</Text>
         </View>
         <Icon
@@ -68,7 +68,7 @@ export default function ReferenceScreen() {
             flexDirection: "column",
           }}
         >
-          <Text style={styles.phoneText}>7077 7111</Text>
+          <Text style={styles.phoneText}>8061 8989</Text>
           <Text style={styles.labelText}>Платформын лавлах</Text>
         </View>
         <Icon
