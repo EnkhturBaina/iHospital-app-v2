@@ -23,7 +23,7 @@
       },
       "android": {
         "track": "internal",
-        "serviceAccountKeyPath": ".pc-api-6635485839288358845-714-eb7bee3c837bb.json"
+        "serviceAccountKeyPath": "./ihospitalapp_service_key.json"
       }
     }
   }
