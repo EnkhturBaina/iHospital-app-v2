@@ -46,9 +46,25 @@ const MeetScreen = (props) => {
   const [loadingMeets, setLoadingMeets] = useState(false);
   const [refundList, setRefundList] = useState([]);
 
+  const [disabledDates, setDisabledDates] = useState([
+    new Date().toISOString().slice(0, 10),
+  ]);
+
   const [refreshing, setRefreshing] = useState(false);
 
-  const [customDatesStyles, setCustomDatesStyles] = useState([]); //Боломжит өдрүүд харуулах
+  const [customDatesStyles, setCustomDatesStyles] = useState([
+    {
+      date: new Date().toISOString().slice(0, 10),
+      style: {
+        backgroundColor: "#22A06B",
+      },
+      textStyle: {
+        color: "#fff",
+        fontFamily: FONT_FAMILY_BOLD,
+      },
+      allowDisabled: true,
+    },
+  ]); //Боломжит өдрүүд харуулах
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -78,7 +94,7 @@ const MeetScreen = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("getMeet History", JSON.stringify(response.data.response));
+        // console.log("getMeet History", JSON.stringify(response.data.response));
         if (response.status == 200) {
           setRefundList(response.data.response);
 
@@ -89,6 +105,10 @@ const MeetScreen = (props) => {
             )
             ?.map((el) => {
               el.appointments?.map((el) => {
+                setDisabledDates((disabledDates) => [
+                  ...disabledDates,
+                  el.slots?.schedule?.workDate,
+                ]);
                 setCustomDatesStyles((customDatesStyles) => [
                   ...customDatesStyles,
                   {
@@ -98,6 +118,7 @@ const MeetScreen = (props) => {
                       color: "#fff",
                       fontFamily: FONT_FAMILY_BOLD,
                     },
+                    allowDisabled: true,
                   },
                 ]);
               });
@@ -136,8 +157,6 @@ const MeetScreen = (props) => {
           onDateChange={() => {}}
           weekdays={WEEKDAYS}
           months={MONTHS}
-          todayTextStyle={{ fontWeight: "bold", color: "#000" }}
-          todayBackgroundColor={MAIN_COLOR_BG}
           selectedDayColor="#fff"
           selectedDayTextColor="#000"
           previousTitle="Өмнөх"
@@ -147,7 +166,39 @@ const MeetScreen = (props) => {
           selectYearTitle="Он сонгох"
           selectMonthTitle="Сар сонгох "
           customDatesStyles={customDatesStyles}
+          disabledDates={disabledDates}
+          todayTextStyle={{ fontFamily: FONT_FAMILY_BOLD, color: "#fff" }}
         />
+      </View>
+
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          marginHorizontal: 20,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Icon name="dot-single" type="entypo" size={30} color="#22A06B" />
+          <Text style={styles.attentionText}>Өнөөдөр</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Icon name="dot-single" type="entypo" size={30} color={MAIN_COLOR} />
+          <Text style={styles.attentionText}>Захиалгат өдрүүд</Text>
+        </View>
       </View>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, paddingBottom: 10 }}
@@ -315,5 +366,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
+  },
+  attentionText: {
+    fontFamily: FONT_FAMILY_BOLD,
   },
 });
