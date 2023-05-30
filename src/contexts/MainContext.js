@@ -122,7 +122,7 @@ export const MainStore = (props) => {
         "X-API-KEY": API_KEY,
       },
       data: {
-        email: userName,
+        email: userName?.toLowerCase(),
         password,
       },
     })
