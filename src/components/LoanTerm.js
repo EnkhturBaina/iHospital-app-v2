@@ -12,6 +12,7 @@ import {
   FONT_FAMILY_BOLD,
   FONT_FAMILY_LIGHT,
   MAIN_COLOR,
+  DEV_URL,
 } from "../constant";
 import { Button, CheckBox } from "@rneui/base";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -86,7 +87,7 @@ export default function (props) {
             overflow: "hidden",
           }}
           source={{
-            uri: "https://ihospital.mn/privacy",
+            uri: "http://202.21.101.115/privacy",
           }}
           ref={webview}
           onLoadStart={() => setVisibleDialogLoader(true)}
