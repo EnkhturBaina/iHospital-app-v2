@@ -107,12 +107,12 @@ const MeetScreen = (props) => {
               el.appointments?.map((el) => {
                 setDisabledDates((disabledDates) => [
                   ...disabledDates,
-                  el.slots?.schedule?.workDate,
+                  el.slot?.schedule?.workDate,
                 ]);
                 setCustomDatesStyles((customDatesStyles) => [
                   ...customDatesStyles,
                   {
-                    date: el.slots?.schedule?.workDate,
+                    date: el.slot?.schedule?.workDate,
                     style: { backgroundColor: MAIN_COLOR },
                     textStyle: {
                       color: "#fff",
@@ -127,7 +127,7 @@ const MeetScreen = (props) => {
         setLoadingMeets(false);
       })
       .catch(function (error) {
-        // console.log("error get MeetHistory", error);
+        console.log("error get MeetHistory", error);
         setLoadingMeets(false);
         if (error.response.status == 400) {
         } else if (error?.response?.status == 401) {
@@ -276,7 +276,12 @@ const MeetScreen = (props) => {
                             </Text>
                           </View>
                         </View>
-                        <View style={{ alignItems: "flex-end" }}>
+                        <View
+                          style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
                           <View
                             style={{
                               flexDirection: "row",
@@ -290,7 +295,7 @@ const MeetScreen = (props) => {
                               color="#86909C"
                             />
                             <Text style={{ color: "#86909C", marginLeft: 5 }}>
-                              {moment(el.slots?.schedule?.workDate)
+                              {moment(el.slot?.schedule?.workDate)
                                 .locale("mn")
                                 .format("dddd, YYYY/MM/DD")}
                             </Text>
@@ -302,7 +307,7 @@ const MeetScreen = (props) => {
                             }}
                           >
                             <Text style={{ color: "#86909C", marginRight: 5 }}>
-                              {el.slots?.startTime?.substr(0, 5)}
+                              {el.slot?.startTime?.substr(0, 5)}
                             </Text>
                             <Icon
                               name="clock"
@@ -311,7 +316,7 @@ const MeetScreen = (props) => {
                               color="#86909C"
                             />
                             <Text style={{ color: "#86909C", marginLeft: 5 }}>
-                              {el.slots?.endTime?.substr(0, 5)}
+                              {el.slot?.endTime?.substr(0, 5)}
                             </Text>
                           </View>
                         </View>

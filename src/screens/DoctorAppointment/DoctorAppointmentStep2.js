@@ -14,6 +14,7 @@ import {
   BUTTON_BORDER_RADIUS,
   DEV_URL,
   FONT_FAMILY_BOLD,
+  FONT_FAMILY_LIGHT,
   MAIN_COLOR,
   MAIN_COLOR_BG,
   MAIN_COLOR_GRAY_BG,
@@ -69,7 +70,7 @@ const DoctorAppointmentStep2 = (props) => {
         doctor: state.appointmentData.doctor.id,
         departmentId: state.appointmentData.structure.id,
         startDate: "2023-01-01",
-        endDate: "2023-02-28",
+        endDate: "2023-11-28",
       },
       headers: {
         "X-API-KEY": API_KEY,
@@ -77,10 +78,10 @@ const DoctorAppointmentStep2 = (props) => {
       },
     })
       .then(async (response) => {
-        // console.log(
-        //   "responee get Schedules",
-        //   JSON.stringify(response.data.response.data)
-        // );
+        console.log(
+          "responee get Schedules",
+          JSON.stringify(response.data.response.data)
+        );
         if (response.status == 200) {
           setScheduleList(response.data.response.data);
           response.data.response.data.map((el) => {
@@ -124,10 +125,10 @@ const DoctorAppointmentStep2 = (props) => {
       },
     })
       .then(async (response) => {
-        // console.log(
-        //   "responee getS lots",
-        //   JSON.stringify(response.data.response.data)
-        // );
+        console.log(
+          "responee get Slots",
+          JSON.stringify(response.data.response.data)
+        );
         if (response.status == 200) {
           setSlotList(response.data.response.data);
         }
@@ -242,7 +243,7 @@ const DoctorAppointmentStep2 = (props) => {
         text={snackBarMsg}
         topPos={0}
       />
-      <View style={{ paddingHorizontal: 20 }}>
+      <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
         <Text style={styles.labelText}>Өдөр сонгох</Text>
         {loadingSchedules ? (
           <Loader />
@@ -254,7 +255,10 @@ const DoctorAppointmentStep2 = (props) => {
                 onDateChange={onDateChange}
                 weekdays={WEEKDAYS}
                 months={MONTHS}
-                // todayTextStyle={{ fontWeight: "bold", color: "#000" }}
+                // todayTextStyle={{
+                //   fontFamily: FONT_FAMILY_BOLD,
+                //   color: MAIN_COLOR,
+                // }}
                 // todayBackgroundColor={MAIN_COLOR_BG}
                 selectedDayColor={MAIN_COLOR}
                 selectedDayTextColor="#fff"
@@ -267,20 +271,19 @@ const DoctorAppointmentStep2 = (props) => {
                 customDatesStyles={customDatesStyles}
               />
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "flex-end",
-              }}
-            >
-              <Icon
-                name="dot-single"
-                type="entypo"
-                size={30}
-                color={MAIN_COLOR}
-              />
-              <Text style={styles.attentionText}>Боломжит өдрүүд</Text>
+            <View style={styles.infoContainer}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={styles.attentionText}>Боломжит өдрүүд: </Text>
+                <View style={styles.bigCircle}>
+                  <View style={styles.smallCircle}></View>
+                </View>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={styles.attentionText}>Сонгогдсон өдөр: </Text>
+                <Text style={{ fontFamily: FONT_FAMILY_LIGHT }}>
+                  {state.appointmentData?.date}
+                </Text>
+              </View>
             </View>
           </>
         )}
@@ -439,7 +442,6 @@ const styles = StyleSheet.create({
   },
   attentionText: {
     fontFamily: FONT_FAMILY_BOLD,
-    marginVertical: 5,
   },
   timesContainer: {
     flexDirection: "row",
@@ -450,5 +452,35 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY_BOLD,
     padding: 10,
     color: MAIN_COLOR,
+  },
+  bigCircle: {
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    backgroundColor: MAIN_COLOR_BG,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 5,
+  },
+  smallCircle: {
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    backgroundColor: MAIN_COLOR,
+  },
+  infoContainer: {
+    padding: 10,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    shadowOffset: {
+      height: 1,
+      width: 0,
+    },
+    elevation: 2,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    marginTop: 10,
   },
 });

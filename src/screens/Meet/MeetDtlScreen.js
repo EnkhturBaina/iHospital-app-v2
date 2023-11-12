@@ -87,11 +87,11 @@ const MeetDtlScreen = (props) => {
             }}
           >
             <Text style={{ fontFamily: FONT_FAMILY_BOLD, marginRight: 5 }}>
-              {appointmentData.slots?.startTime?.substr(0, 5)}
+              {appointmentData.slot?.startTime?.substr(0, 5)}
             </Text>
             <Icon name="clock" type="feather" size={15} color="#000" />
             <Text style={{ fontFamily: FONT_FAMILY_BOLD, marginLeft: 5 }}>
-              {appointmentData.slots?.endTime?.substr(0, 5)}
+              {appointmentData.slot?.endTime?.substr(0, 5)}
             </Text>
           </View>
         </View>

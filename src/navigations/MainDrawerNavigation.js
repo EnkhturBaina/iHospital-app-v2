@@ -30,7 +30,6 @@ const MainDrawerNavigation = () => {
         screenOptions={{
           swipeEdgeWidth: 0, //Drawer swipe хийхийг хаах
         }}
-        useLegacyImplementation
       >
         {!state.isLoggedIn ? (
           <Drawer.Screen

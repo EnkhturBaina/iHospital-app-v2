@@ -2,7 +2,7 @@
   "expo": {
     "name": "iHospital.mn",
     "slug": "iHospital-app",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,18 +14,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*",
-      "./assets/fonts/*"
-    ],
+    "assetBundlePatterns": ["**/*", "./assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ihospital.app",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.2"
     },
     "android": {
       "package": "com.ihospitalmn.app",
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

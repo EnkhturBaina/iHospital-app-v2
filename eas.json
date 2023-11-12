@@ -1,8 +1,7 @@
 {
-  "cli": {    "version": ">= 3.12.0",
+  "cli": {
+    "version": ">= 3.12.0",
     "promptToConfigurePushNotifications": false
-
-
   },
   "build": {
     "development": {
@@ -23,7 +22,7 @@
       },
       "android": {
         "track": "internal",
-        "serviceAccountKeyPath": "./ihospitalapp_service_key.json"
+        "serviceAccountKeyPath": "./pc-api-6635485839288358845-714-7461f7c31fdb.json"
       }
     }
   }

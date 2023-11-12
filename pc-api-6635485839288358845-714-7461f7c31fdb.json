@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "pc-api-6635485839288358845-714",
+  "private_key_id": "7461f7c31fdb42ae60225222d887b3e2ad2c4ba7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD6VBAbhUCpFXBk\n7jxCHXWCvTSl9nZnjGqqlTKUdhxEe2hbkQ8bPEhjyYdF4+knCp7qBRVSI0PLe0S5\nFSI20ossYNbwsSWYKpL7R2qcfkpu0wYiJSZE6nEHZ1x7rXfs1YwSJ9VHIUoM/Wny\nB3FDLuomcxGZwBNtagKr6zLWs/g1nxqs8O5YjGIPxXySSQnwzgZ/ZkTZKsqla/za\ngPTWrc0KSQInRY+Jy3PIUZGQhgEotGeukWOD0iLWTb9w9DjmDVGTyYarMPdGnZ+5\nIvTJVyn5F8t3CbFOmSJZDc8YAJ7WlXs5PLkZzP2YKevRye6NHSPQ2tMTNq1o8bCi\nuvMQakQLAgMBAAECggEAaUOJJHFzv8YupZqSh0DJBcmXRoStxJxEzGeBxfEmsNtu\nBjco8Yx3alK3yfltNQgfzAuILCp9GydCPkv3P7NoZ6hvKfZr9yFL/lNJLvZiSVj+\ndsRFY+xrzC+4MZ+/0rz3sjjC1C7Y6z5y2x4rEBO9zZ5Mk+kzoipWZkG4dpVmNfFV\nSCjPWvnou3y8AXLfVnuDXu5pW61VKIlIbJCvIVVvlAFyPiDs0LAltWz4IrDHBCiT\nQHaNMun2merZpMBCnbRMo8VgK5XiZPnSmzmldwnwpLBSDnqHFOI4LEBn56ORVBdl\no7g1S9iQXVjBco31s4AZ7lQ+/2X27doY5ihv8Vz6GQKBgQD+Wj28bci3ZgIe8meh\nz0INhRu1ESBaIk1xcfYYbnvW6FtMPL5pM73p7/+wGKKHBGH281vBn2FWd5v6jYGI\nmH1wKovPOfUucdMAB/Aqt8aexh+sjIQHdypkvxO7PtVu7GQc41SFsAUn91mhQi/8\nO97TLuazVzW3X8cXmQ59Q5JW+QKBgQD78yYqC9wYfLlhN8HtXVbDwBdKiITA7l6s\nf5VnDNMfc7dbPzZpfNdAqIisXBdQdhTK5Kap2CY6Y6HT+mEt9cdVqWlggPurc0sW\n/p4zONv/0O9C2C33iv9HBgBy1M/wOcbvESAnq8X3Irgaj2JIUq9ipTGmGAr0DxL8\nlHLQdONgIwKBgFgbjnMtXHAbR/TMZ5Wno+vnBhgM3LYcV9NKdMM10nQ5fRbFm/f5\nUnotBtdLUVGP9ReEaW6C9Ubsm/2I8ywMFre6JUAdhY8XIs5J8an6izUI0IQHEN09\nLFRF1GHyfCC2hl9zaB3/QWn8xvGTaefoHWHuR0Asn5Dr/p1wCZLey1yRAoGAf4S3\nYjySb0phQVVJL+w4B+dnYm/qUQPUoxYH9hpFmPumZ+Z8kbN/9tfWJPaPTkgVigNk\nXz5pStA2jeWB3hMxiqeuEAv4VPSLot3IEEDNCJMlJf3odgvB3J6rB3OysvFrQIC4\nd5u3HLhT2g2MPvKqlhDqKhitIo2mnHQ+EEe49WUCgYEAyvSpNk1ymeMLwgXVGLNd\nddEE1kYkLzHm4c5OoF9Sb6RtiKVhVPfvSkYZelbYAyUXSL/jh4Sz9enfIx2/UZSg\nm95r7UbbShCMF/kNyaJJEFNHTCU6BuXXkIQ3Dc/CX4kfwsrKAkvHzqsXdAziZTjx\nsTCUdP/dCweyTrMJeM1uCMM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "ihospitalv2@pc-api-6635485839288358845-714.iam.gserviceaccount.com",
+  "client_id": "105714599658053470165",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ihospitalv2%40pc-api-6635485839288358845-714.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
