@@ -326,7 +326,11 @@ const styles = StyleSheet.create({
   imageStyle: {
     position: "absolute",
     zIndex: 999,
-    right: "5%",
+    right: "0%",
+    // backgroundColor: "red",
+    height: 50,
+    width: 50,
+    padding: 13,
   },
   headerLeftContainer: {
     marginLeft: 10,

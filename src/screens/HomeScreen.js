@@ -66,24 +66,25 @@ const HomeScreen = (props) => {
       nav: "HospitalListScreen",
       active: true,
     },
-    {
-      img: require("../../assets/homeMenus/hospital.png"),
-      label: "Эмийн сан",
-      nav: "",
-      active: false,
-    },
-    {
-      img: require("../../assets/homeMenus/profile.png"),
-      label: "Цахим эмч",
-      nav: "",
-      active: false,
-    },
-    {
-      img: require("../../assets/homeMenus/profile2user.png"),
-      label: "Сувилагч",
-      nav: "",
-      active: false,
-    },
+    // ,
+    // {
+    //   img: require("../../assets/homeMenus/hospital.png"),
+    //   label: "Эмийн сан",
+    //   nav: "",
+    //   active: false,
+    // },
+    // {
+    //   img: require("../../assets/homeMenus/profile.png"),
+    //   label: "Цахим эмч",
+    //   nav: "",
+    //   active: false,
+    // },
+    // {
+    //   img: require("../../assets/homeMenus/profile2user.png"),
+    //   label: "Сувилагч",
+    //   nav: "",
+    //   active: false,
+    // },
   ];
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;

@@ -29,7 +29,7 @@ const ResetPasswordScreen = (props) => {
     setLoadingAction(true);
     await axios({
       method: "post",
-      url: `${DEV_URL}authentication/forgotPassword`,
+      url: `${DEV_URL}authentication/forgot-password`,
       headers: {
         "X-API-KEY": API_KEY,
       },
@@ -38,13 +38,13 @@ const ResetPasswordScreen = (props) => {
       },
     })
       .then(async (response) => {
-        // console.log("responee login", response.data);
+        console.log("responee resetPassword", response.data);
         if (response.status == 200) {
         }
         setLoadingAction(false);
       })
       .catch(function (error) {
-        // console.log("error login", error.response);
+        console.log("error resetPassword", error.response);
         setLoadingAction(false);
         if (error.response.status == 400) {
         }
@@ -137,7 +137,7 @@ const ResetPasswordScreen = (props) => {
           color={MAIN_COLOR}
           radius={12}
           onPress={() => {
-            props.navigation.navigate("OTPScreen");
+            resetPassword();
           }}
           titleStyle={{
             fontFamily: FONT_FAMILY_BOLD,
