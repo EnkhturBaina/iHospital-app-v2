@@ -19,10 +19,15 @@ import {
 } from "../../constant";
 import { Button, Icon } from "@rneui/base";
 import axios from "axios";
+import CustomDialog from "../../components/CustomDialog";
 
 const ResetPasswordScreen = (props) => {
   const [selectedType, setSelectedType] = useState("");
   const [loadingAction, setLoadingAction] = useState(false);
+
+  const [dialogText, setDialogText] = useState(""); //Dialog -н текст
+  const [visibleDialog, setVisibleDialog] = useState(false); //Dialog харуулах
+  const [dialogType, setDialogType] = useState("warning"); //Dialog харуулах төрөл
 
   const resetPassword = async () => {
     //***** Нууц үг сэргээх
@@ -38,15 +43,21 @@ const ResetPasswordScreen = (props) => {
       },
     })
       .then(async (response) => {
-        console.log("responee resetPassword", response.data);
-        if (response.status == 200) {
+        // console.log("responee resetPassword", response?.data);
+        if (response?.status == 200) {
+          setDialogText("Амжилттай. Та мэйлээ шалгана уу.");
+          setDialogType("success");
+          setVisibleDialog(true);
         }
         setLoadingAction(false);
       })
       .catch(function (error) {
-        console.log("error resetPassword", error.response);
+        // console.log("error resetPassword", JSON.stringify(error.response));
         setLoadingAction(false);
-        if (error.response.status == 400) {
+        if (error.response?.status == 400) {
+          setDialogText("И-мэйл бүртгэлгүй байна.");
+          setDialogType("error");
+          setVisibleDialog(true);
         }
       });
   };
@@ -66,9 +77,9 @@ const ResetPasswordScreen = (props) => {
         style={{ width: "100%", height: 200 }}
       />
       <Text style={styles.mainText}>
-        Бүртгэлтэй утасны дугаар болон И-мэйлээр нууц үгээ сэргээх боломжтой
+        Бүртгэлтэй И-мэйлээр нууц үгээ сэргээх боломжтой
       </Text>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={[
           styles.cardContainer,
           { borderColor: selectedType == "sms" ? MAIN_COLOR : "#fff" },
@@ -90,7 +101,7 @@ const ResetPasswordScreen = (props) => {
             <Text style={{ fontFamily: FONT_FAMILY_BOLD }}>(+976)</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={[
           styles.cardContainer,
@@ -146,6 +157,17 @@ const ResetPasswordScreen = (props) => {
           disabled={selectedType != "" ? false : true || loadingAction}
         />
       </View>
+      <CustomDialog
+        visible={visibleDialog}
+        confirmFunction={() => {
+          setVisibleDialog(false);
+        }}
+        declineFunction={() => {}}
+        text={dialogText}
+        confirmBtnText="Хаах"
+        DeclineBtnText=""
+        type={dialogType}
+      />
     </ScrollView>
   );
 };
